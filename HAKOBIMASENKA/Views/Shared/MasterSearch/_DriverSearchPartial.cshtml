@@ -1,0 +1,181 @@
+﻿
+<div id="driverSearchPopup"
+     class="driver-search-overlay"
+     aria-hidden="true">
+
+    <div id="driverSearchWindow"
+         class="driver-search-window"
+         role="dialog"
+         aria-modal="true"
+         aria-labelledby="driverSearchTitle"
+         data-search-url="/SearchScreen/DriverSearch"
+         data-code-options-url="/SearchScreen/DriverCodeOptions">
+
+        <header class="driver-search-titlebar">
+            <span id="driverSearchTitle">運転手検索</span>
+
+            <div class="driver-search-window-controls">
+                <button type="button" id="btnDriverSearchMinimize"
+                        aria-label="最小化">
+                    −
+                </button>
+                <button type="button" id="btnDriverSearchMaximize"
+                        aria-label="最大化">
+                    □
+                </button>
+                <button type="button" id="btnDriverSearchClose"
+                        aria-label="閉じる">
+                    ×
+                </button>
+            </div>
+        </header>
+
+        <div class="driver-search-heading">
+            <label>運転手検索</label>
+            <strong id="driverSearchCount">件数:0</strong>
+        </div>
+
+        <section class="driver-search-conditions">
+
+            <div class="driver-search-row">
+                <label for="searchDriverFurigana">フリガナ</label>
+                <input type="text"
+                       id="searchDriverFurigana"
+                       autocomplete="off">
+            </div>
+
+            <div class="driver-search-row">
+                <label for="searchDriverName">運転手名</label>
+                <input type="text"
+                       id="searchDriverName"
+                       autocomplete="off">
+            </div>
+
+            <div class="driver-search-row">
+                <label for="searchDriverCategory">運転手区分</label>
+                <input type="text"
+                       id="searchDriverCategory"
+                       maxlength="1"
+                       autocomplete="off">
+
+                <div class="driver-category-options">
+                    <button type="button" data-value="0">0:自　社</button>
+                    <button type="button" data-value="1">1:傭　車</button>
+                    <button type="button" data-value="2">2:契　約</button>
+                </div>
+            </div>
+
+            <div class="driver-search-row">
+                <label for="searchDriverSubcontractor"
+                       id="driverCodeLabel"></label>
+
+                <input type="text"
+                       id="searchDriverSubcontractor"
+                       inputmode="numeric"
+                       maxlength="10"
+                       autocomplete="off">
+
+                <select id="driverCodeDropdown"
+                        aria-label="車輌・傭車選択"
+                        tabindex="-1"
+                        disabled>
+                    <option value="">選択してください</option>
+                </select>
+
+                <span id="driverCodeName" hidden></span>
+            </div>
+
+        </section>
+
+        <section class="driver-search-results">
+            <div class="driver-search-table-scroll">
+                <table class="driver-search-table" data-grid-columns>
+                    <thead>
+                        <tr>
+                            <th data-sort="driverCode">コード</th>
+                            <th data-sort="driverName">運転手名</th>
+                            <th data-sort="retirementDate">退職</th>
+                            <th data-sort="mobileNumber">携帯電話</th>
+                            <th data-sort="driverCategory">区分</th>
+                            <th data-sort="vehicleCode">車　輌</th>
+                            <th data-sort="subcontractorName">傭　車</th>
+                        </tr>
+                    </thead>
+                    <tbody id="driverSearchResults"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="driver-search-message">
+            <span>メッセージ：</span>
+            <span id="driverSearchMessage"
+                  role="status"
+                  aria-live="polite"></span>
+        </div>
+
+        <footer class="driver-search-footer">
+            <button type="button" id="btnDriverSearchSelect">F1:選 択</button>
+            <button type="button" disabled>F2:</button>
+            <button type="button" disabled>F3:</button>
+            <button type="button" disabled>F4:</button>
+            <button type="button" id="btnDriverSearchExecute">F5:検 索</button>
+            <button type="button" id="btnDriverSearchMasterSearch">F6:ﾏｽﾀ検索</button>
+            <button type="button" disabled>F7:</button>
+            <button type="button" disabled>F8:</button>
+            <button type="button" id="btnDriverSearchF9" disabled>F9:　　</button>
+            <button type="button" id="btnDriverSearchRegister">F10:ﾏｽﾀ登録</button>
+            <button type="button" id="btnDriverSearchCancel">F11:中 止</button>
+            <button type="button" id="btnDriverSearchExit">F12:終 了</button>
+        </footer>
+
+    </div>
+</div>
+
+<script src="~/js/grid_columns.js" asp-append-version="true"></script>
+
+
+@* ========================================= *@
+@* Driver Master Registration Modal *@
+@* ========================================= *@
+
+<div id="driverMasterModal"
+     class="driver-master-modal"
+     style="display: none;">
+
+    <div id="driverMasterWindow"
+         class="driver-master-modal-content">
+
+        <header class="driver-master-modal-header">
+
+            <span>運転手マスタ登録</span>
+
+            <div class="driver-master-window-controls">
+
+                <button type="button"
+                        id="btnDriverMasterMinimize"
+                        aria-label="最小化">
+                    −
+                </button>
+
+                <button type="button"
+                        id="btnDriverMasterMaximize"
+                        aria-label="最大化">
+                    □
+                </button>
+
+                <button type="button"
+                        id="btnDriverMasterClose"
+                        aria-label="閉じる">
+                    ×
+                </button>
+
+            </div>
+        </header>
+
+        <iframe id="driverMasterFrame"
+                title="運転手マスタ登録"
+                src="about:blank">
+        </iframe>
+
+    </div>
+</div>

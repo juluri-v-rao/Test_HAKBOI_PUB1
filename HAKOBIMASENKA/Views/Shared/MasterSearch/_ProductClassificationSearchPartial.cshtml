@@ -1,0 +1,150 @@
+﻿@* Product Classification Search Popup *@
+<div id="productClassificationSearchPopup"
+     class="product-classification-search-overlay"
+     aria-hidden="true">
+
+    <section id="productClassificationSearchWindow"
+             class="product-classification-search-window"
+             data-search-url="/SearchScreen/ProductClassificationSearch">
+
+        @* Title bar *@
+        <header class="product-classification-search-titlebar">
+            <span>品名区分名検索</span>
+
+            <div class="product-classification-search-window-controls">
+                <button type="button"
+                        id="btnProductClassificationSearchMinimize"
+                        aria-label="最小化">
+                    −
+                </button>
+
+                <button type="button"
+                        id="btnProductClassificationSearchMaximize"
+                        aria-label="最大化">
+                    □
+                </button>
+
+                <button type="button"
+                        id="btnProductClassificationSearchClose"
+                        aria-label="閉じる">
+                    ×
+                </button>
+            </div>
+        </header>
+
+        @* Heading and result count *@
+        <div class="product-classification-search-heading">
+            <label>品名区分名検索</label>
+            <strong id="productClassificationSearchCount">件数:0</strong>
+        </div>
+
+        @* Search condition *@
+        <div class="product-classification-search-conditions">
+            <div class="product-classification-search-row">
+                <label for="searchProductclassificationName">品名区分</label>
+
+                <input type="text"
+                       id="searchProductclassificationName"
+                       autocomplete="off" />
+            </div>
+        </div>
+
+        @* Search results *@
+        <div class="product-classification-search-results">
+            <div class="product-classification-search-table-scroll">
+                <table class="product-classification-search-table" data-grid-columns>
+                    <thead>
+                        <tr>
+                            <th data-sort="code">コード</th>
+                            <th data-sort="productCategoryName">名称</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="productClassificationSearchResults"></tbody>
+                </table>
+            </div>
+        </div>
+
+        @* Message area *@
+        @* <div id="productClassificationSearchMessage"
+             class="product-classification-search-message"></div> *@
+
+        <div class="product-classification-search-message">
+            <span>メッセージ：</span>
+            <span id="productClassificationSearchMessage"
+                  role="status"
+                  aria-live="polite"></span>
+        </div>
+
+        @* Function-key footer *@
+        <footer class="product-classification-search-footer">
+
+            <button type="button"
+                    id="btnProductClassificationSearchSelect">
+                F1:選 択
+            </button>
+
+            <button type="button" disabled>F2:　　</button>
+            <button type="button" disabled>F3:　　</button>
+            <button type="button" disabled>F4:　　</button>
+
+            <button type="button"
+                    id="btnProductClassificationSearchExecute">
+                F5:検 索
+            </button>
+            <button type="button" disabled>F6:　　</button>
+            <button type="button" disabled>F7:　　</button>
+            <button type="button" disabled>F8:　　</button>
+            <button type="button" disabled>F9:　　</button>
+
+            <button type="button"
+                    id="btnProductClassificationSearchRegister">
+                F10:ﾏｽﾀ登録
+            </button>
+
+            <button type="button"
+                    id="btnProductClassificationSearchCancel">
+                F11:中 止
+            </button>
+
+            <button type="button"
+                    id="btnProductClassificationSearchExit">
+                F12:終 了
+            </button>
+
+        </footer>
+
+    </section>
+</div>
+<script src="~/js/grid_columns.js" asp-append-version="true"></script>
+@* ========================================= *@
+@* Product Category Master Registration Modal *@
+@* ========================================= *@
+
+<div id="productCategoryMasterModal"
+     class="product-category-master-modal"
+     style="display: none;">
+
+    <div id="productCategoryMasterWindow"
+         class="product-category-master-modal-content">
+
+        <header class="product-search-titlebar">
+
+            <span>品名区分マスタ登録</span>
+
+            <div class="product-search-window-controls">
+
+                <button type="button" id="btnProductCategoryMasterMinimize">−</button>
+                <button type="button" id="btnProductCategoryMasterMaximize">□</button>
+                <button type="button" id="btnProductCategoryMasterClose">×</button>
+
+            </div>
+        </header>
+
+        <iframe id="productCategoryMasterFrame"
+                title="品名区分マスタ登録"
+                src="about:blank">
+        </iframe>
+
+    </div>
+</div>

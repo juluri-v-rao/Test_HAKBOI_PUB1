@@ -1,0 +1,268 @@
+﻿/* ==========================
+   GLOBAL
+   ========================== */
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: "MS Gothic", sans-serif;
+}
+
+/* ==========================
+   APPLICATION SHELL
+   Equivalent to MDIForm
+   ========================== */
+
+.main-shell {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* ==========================
+   HEADER
+   ========================== */
+
+.main-header {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    padding: 0 20px 0px 10px;
+    box-sizing: border-box;
+    background: #fff;
+    flex-shrink: 0;
+    margin-top: 5px;
+}
+
+.header-left {
+    display: flex;
+    align-items: flex-end;
+    gap: 25px;
+}
+
+    .header-left img {
+        height: 70px;
+        width: auto;
+    }
+
+.header-center {
+    align-self: flex-end;
+    font-style: italic;
+    font-size: 18px;
+    white-space: nowrap;
+    font-weight: bold;
+    margin-left: 4px;
+}
+
+.header-right {
+    margin-left: auto;
+    font-size: 18px;
+    white-space: nowrap;
+    padding-right: 1px;
+}
+
+/* ==========================
+   BODY
+   ========================== */
+
+.main-body {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 1fr 270px;
+    overflow: hidden;
+    padding: 6px;
+}
+
+/* ==========================
+   LEFT PANEL
+   ========================== */
+
+.menu-content {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    background-image: url('/images/mainmenu_background_5.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    padding: 5px;
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 1px solid;
+    border-color: #DCDCDC #696969 #696969 #DCDCDC;
+    box-shadow: inset 1px 1px 0 #fff, inset -1px -1px 0 #a0a0a0, inset 0 -2.5px 0 #fff;
+}
+
+/* ==========================
+   GRID
+   ========================== */
+
+.menu-grid {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+    grid-auto-flow: column;
+    gap: 2px;
+    padding: 2px;
+    box-sizing: border-box;
+}
+
+/* ==========================
+   MENU BUTTONS
+   ========================== */
+
+.menu-btn {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border: 1px solid;
+    font-family: "MS Gothic", sans-serif;
+    background: transparent;
+    color: black;
+    text-align: left;
+    padding-left: 20px;
+    font-size: clamp(16px, 1vw, 24px);
+    cursor: pointer;
+    border-color: #fff #9e9e9e #9e9e9e #fff;
+    overflow: hidden;
+}
+
+    .menu-btn:active {
+        border: 2px solid #c0c0c0;
+        border-color: #fff #9e9e9e #9e9e9e #fff;
+    }
+
+    .menu-btn:focus {
+        outline: none;
+        border: 2px solid #c0c0c0;
+        border-color: #fff #9e9e9e #9e9e9e #fff;
+    }
+
+    /* an item that cannot be used (legacy Button_Set: Enabled = False, grey text) */
+    .menu-btn:disabled {
+        color: #a0a0a0;
+        cursor: default;
+    }
+
+/* ==========================
+   COPYRIGHT
+   ========================== */
+
+.copyright-bar {
+    height: 24px;
+    flex-shrink: 0;
+    line-height: 24px;
+    text-align: right;
+    padding-right: 10px;
+    background: transparent;
+    font-size: 13px;
+    font-style: italic;
+    overflow: hidden;
+}
+
+/* ==========================
+   RIGHT MENU
+   ========================== */
+
+.side-tabs {
+    width: 270px;
+    display: grid;
+    grid-template-rows: repeat(15, 1fr);
+    height: 500px;
+    min-height: 500px;
+    border-color: #fff #9e9e9e #9e9e9e #fff;
+}
+
+/* ==========================
+   CATEGORY BUTTONS
+   ========================== */
+
+.menu-category {
+    width: 98%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-left: 4px;
+    text-align: left;
+    font-family: "MS Gothic", "ＭＳ ゴシック", sans-serif;
+    /*border: 2px solid #c0c0c0;*/
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+    border-left-width: 0px;
+    border-top-width: 1px;
+    border-right-style: solid;
+    border-bottom-style: solid;
+    border-color: #fff #9e9e9e #9e9e9e #fff;
+    background: #dcdcdc;
+    color: #0033cc;
+    font-size: clamp(16px, .9vw, 16px);
+    border-radius: 3px;
+    margin-left: -0.5px;
+
+    /* a tab is always one line, as in legacy */
+    white-space: nowrap;
+}
+
+    .menu-category.active {
+        width: 100%;
+        height: 106%;
+        background: #dcdcdc;
+        font-weight: bold;
+        border: 2px solid #c0c0c0;
+        border-color: #fff #9e9e9e #9e9e9e transparent;
+        margin-left: -3px;
+        margin-top:-2px;
+    }
+
+    .menu-category::before {
+        background-image: url('/images/circle.png');
+        content: "";
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        margin-right: 12px;
+        flex-shrink: 0;
+    }
+
+
+    /* ==========================
+            FOOTER
+   ========================== */
+    .main-footer {
+        height: 65px;
+        flex-shrink: 0;
+        padding: 5px;
+        box-sizing: border-box;
+    }
+
+/* ==========================
+   EXIT BUTTON
+   ========================== */
+
+.exit-btn {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #ff9090;
+    font-size: clamp(20px, 1.2vw, 28px);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+    .exit-btn:hover {
+        background: #ff7a7a;
+    }
+
+/* ==========================
+            Extras
+   ========================== */

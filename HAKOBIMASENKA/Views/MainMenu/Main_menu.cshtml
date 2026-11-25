@@ -1,0 +1,189 @@
+@model HAKOBIMASENKA.Models.ViewModels.MainMenuViewModel.MainMenuViewModel
+
+@{
+    ViewData["Title"] = "運びま専科";
+    }
+
+@section Styles
+    {
+    <link rel="stylesheet" href="~/css/main_menu.css" asp-append asp-append-version="true">
+    }
+
+    <div class="main-shell">
+
+        <header class="main-header">
+
+            <div class="header-left">
+            <img src="/images/logo5.png" alt="truck logo" />  @*images imported from old app*@
+            <img src="/images/eco.png" alt="tree logo" />   @*images imported from old app*@
+            </div>
+
+            <div class="header-center">
+                <div class="version">
+                @Model.Version  @*from <Version> in HAKOBIMASENKA.csproj*@
+                </div>
+            </div>
+            <div class="header-right">
+            @Model.CompanyName  @*管理マスタ.略称 (運びま専科デモ版 on a demo licence)*@
+            </div>
+
+        </header>
+
+        <main class="main-body">
+
+            <section class="menu-content">
+
+                <div class="menu-grid">
+
+                <button class="menu-btn" id="menu1"></button>
+
+                <button class="menu-btn" id="menu2"></button>
+
+                <button class="menu-btn" id="menu3"></button>
+
+                <button class="menu-btn" id="menu4"></button>
+
+                <button class="menu-btn" id="menu5"></button>
+
+                <button class="menu-btn" id="menu6"></button>
+
+                <button class="menu-btn" id="menu7"></button>
+
+                <button class="menu-btn" id="menu8"></button>
+
+                <button class="menu-btn" id="menu9"></button>
+
+                <button class="menu-btn" id="menu10"></button>
+
+                <button class="menu-btn" id="menu11"></button>
+
+                <button class="menu-btn" id="menu12"></button>
+
+                <button class="menu-btn" id="menu13"></button>
+
+                <button class="menu-btn" id="menu14"></button>
+
+                </div>
+
+
+                <div class="copyright-bar">
+
+                Copyright By BREXA Technology Co., Ltd.
+
+                </div>
+
+            </section>
+
+            <aside class="side-tabs">
+
+                <button class="menu-category active"
+                    data-category="custom">
+                カスタムメニュー
+                </button>
+
+                <button class="menu-category"
+                    data-category="daily-input">
+                日次処理 (入力)
+                </button>
+
+                <button class="menu-category"
+                    data-category="daily-print">
+                日次処理 (印刷)
+                </button>
+
+                <button class="menu-category"
+                    data-category="daily-view">
+                日次処理 (照会)
+                </button>
+
+                <button class="menu-category"
+                    data-category="daily-other">
+                日次処理 (その他)
+                </button>
+
+                <button class="menu-category"
+                    data-category="billing">
+                請求処理
+                </button>
+
+                <button class="menu-category"
+                    data-category="payment">
+                支払処理
+                </button>
+
+                <button class="menu-category"
+                    data-category="vehicle">
+                管理処理 (車輌)
+                </button>
+
+                <button class="menu-category"
+                    data-category="driver">
+                管理処理 (運転手)
+                </button>
+
+                <button class="menu-category"
+                    data-category="consignor">
+                管理処理 (荷主･傭車･仕入先)  @*half-width ( ･ ) as legacy, so it fits on one line*@
+                </button>
+
+                <button class="menu-category"
+                    data-category="analysis">
+                管理処理 (分析)
+                </button>
+
+                <button class="menu-category"
+                    data-category="master-basic">
+                マスタ処理 (基本)
+                </button>
+
+                <button class="menu-category"
+                    data-category="master-functional">
+                マスタ処理 (機能)
+                </button>
+
+                <button class="menu-category"
+                    data-category="master-functional2">
+                マスタ処理 (機能2)
+                </button>
+
+                <button class="menu-category"
+                    data-category="ad-hoc">
+                随時処理
+                </button>
+
+            </aside>
+
+        </main>
+
+        <footer class="main-footer">
+
+            <button class="exit-btn" id="X">
+            終了
+            </button>
+
+        </footer>
+
+    </div>
+
+@if (Model.ErrorMessage != null)
+    {
+    @* 管理マスタ has no 自社コード 01 row, or the demo has too many 運転日報 (legacy shows this and closes) *@
+    <script>alert(@Json.Serialize(Model.ErrorMessage));</script>
+    }
+
+@* the buttons that can be used (legacy Button_Set) and this terminal's カスタム buttons (legacy Custom_Set) *@
+    <script>
+    window.mainMenuAccess = @Json.Serialize(new
+        {
+            enabled = Model.EnabledMenuIds,
+            custom = Model.CustomMenu.Select(slot => new
+                {
+                    number = slot.並NO,
+                    id = slot.識別NO,
+                    title = slot.タイトル,
+                    blocked = slot.Blocked == 1
+                })
+        });
+    </script>
+
+<script src="~/js/main_menu.js" asp-append-version="true"></script>

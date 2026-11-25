@@ -1,0 +1,480 @@
+﻿/* Product Name Search Overlay */ 
+.product-name-search-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000020;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
+}
+
+    .product-name-search-overlay.is-open {
+        display: flex;
+    }
+
+/* Product Classification Search Popup */
+#productClassificationSearchPopup {
+    position: fixed;
+    inset: 0;
+    z-index: 1000025;
+}
+
+/*#openTransportationRecordSearchPopup {
+    position: fixed;
+    inset: 0;
+    z-index: 1000002;
+}*/
+/* Main search window */
+.product-name-search-window {
+    width: 600px;
+    max-width: 95vw;
+    height: min(700px, 92vh);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #d4d4d4;
+    border: 1px solid #808080;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    color: #111;
+    font-family: "MS Gothic", "ＭＳ ゴシック", sans-serif;
+    font-size: 12px;
+    box-sizing: border-box;
+    position: fixed;
+}
+
+    .product-name-search-window.is-minimized {
+        height: 100px;
+        flex: none;
+    }
+
+    .product-name-search-window.is-maximized {
+        width: 100%;
+        max-width: none;
+        height: 100%;
+    }
+
+/* Title bar */
+.product-name-search-titlebar {
+    height: 27px;
+    min-height: 27px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 7px;
+    background: #f2f2f2;
+    border-bottom: 1px solid #bdbdbd;
+    cursor: move;
+    user-select: none;
+}
+
+.product-name-search-window-controls {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+    .product-name-search-window-controls button {
+        width: 35px;
+        height: 26px;
+        border: none;
+        background: transparent;
+        color: #444;
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+        .product-name-search-window-controls button:hover {
+            background: #e5e5e5;
+        }
+
+#btnProductNameSearchClose:hover {
+    background: #e81123;
+    color: #fff;
+}
+
+/* Heading and result count */
+.product-name-search-heading {
+    min-height: 27px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 3px 4px;
+    background: #c4c4c4;
+    box-sizing: border-box;
+}
+
+    .product-name-search-heading label {
+        min-width: 110px;
+        padding: 4px 12px;
+        background: #444;
+        color: #fff;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .product-name-search-heading strong {
+        min-width: 110px;
+        padding: 4px 12px;
+        background: #080878;
+        color: #fff;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+/* Search conditions */
+.product-name-search-conditions {
+    flex-shrink: 0;
+    padding: 8px 10px;
+    border-bottom: 1px solid #aaa;
+}
+
+.product-name-search-row {
+    min-height: 23px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 3px;
+}
+
+    .product-name-search-row > label {
+        width: 110px;
+        min-width: 110px;
+        padding: 3px 5px;
+        background: #c5c5c5;
+        border: 1px solid #b8b8b8;
+        font-weight: bold;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    /* Main text inputs */
+    .product-name-search-row input[type="text"] {
+        min-width: 0;
+        height: 21px;
+        padding: 1px 4px;
+        border: 1px solid #bdbdbd;
+        background: #fff;
+        font: inherit;
+        box-sizing: border-box;
+    }
+
+/* Product name and furigana */
+#searchProductNameFurigana,
+#searchProductName {
+    width: 250px;
+}
+
+/* Four-digit code inputs */
+.product-name-search-row .product-name-code-input {
+    width: 40px;
+    min-width: 40px;
+    height: 21px;
+    background-color: #fff;
+    border: 1px solid #bdbdbd;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+/* Classification name inputs */
+.product-name-search-row input.product-name-description-input {
+    width: 135px;
+    min-width: 135px;
+    height: 21px;
+    padding: 1px 4px;
+    background-color: silver;
+    border: 1px solid #bdbdbd;
+    color: #111;
+    box-sizing: border-box;
+    cursor: default;
+}
+
+/* Focus styling for editable inputs */
+.product-name-search-row input:not([readonly]):focus {
+    background-color: rgb(128, 255, 255);
+    outline: none;
+    border-color: darkblue;
+}
+
+/* Keep description inputs silver */
+.product-name-search-row input.product-name-description-input:focus {
+    background-color: silver;
+    outline: none;
+    border-color: #bdbdbd;
+}
+
+.product-name-search-row input[readonly] {
+    cursor: default;
+}
+/* Results grid */
+.product-name-search-results {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    background: #bfbfbf;
+    border: 1px solid #000;
+    box-sizing: border-box;
+}
+
+.product-name-search-table-scroll {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: #bfbfbf;
+    box-sizing: border-box;
+}
+
+.product-name-search-table {
+    width: max-content;
+    min-width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-family: "MS Gothic", "Yu Gothic UI", Meiryo, sans-serif;
+    font-size: 15px;
+    color: #111;
+}
+
+    .product-name-search-table th:nth-child(1) {
+        width: 110px;
+    }
+
+    .product-name-search-table th:nth-child(2) {
+        width: 160px;
+    }
+
+    .product-name-search-table th:nth-child(3) {
+        width: 150px;
+    }
+
+    .product-name-search-table th:nth-child(4) {
+        width: 170px;
+    }
+
+    .product-name-search-table thead th {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        height: 21px;
+        padding: 1px 3px;
+        background: #fff;
+        color: #111;
+        border: 1px solid #999;
+        font-weight: normal;
+        text-align: center;
+        white-space: nowrap;
+        box-sizing: border-box;
+        cursor: pointer;
+    }
+
+    .product-name-search-table tbody td {
+        height: 21px;
+        padding: 1px 4px;
+        border: 1px solid #aaa;
+        overflow: hidden;
+        text-overflow: clip;
+        white-space: nowrap;
+        box-sizing: border-box;
+    }
+
+    .product-name-search-table tbody tr:nth-child(odd) {
+        background: #fff;
+    }
+
+    .product-name-search-table tbody tr:nth-child(even) {
+        background: #bfbfbf;
+    }
+
+    .product-name-search-table tbody tr.is-selected {
+        background: #0078d7 !important;
+        color: #fff !important;
+    }
+
+        .product-name-search-table tbody tr.is-selected td {
+            color: #fff;
+        }
+
+/* Message area */
+.product-name-search-message {
+    border-top: 1px solid #A0A0A0;
+    border-bottom: 1px solid #fff;
+    padding: 6px 0 6px 6px;
+    flex-shrink: 0;
+    min-height: 24px;
+    display: flex;
+    align-items: center;
+    margin-top: 6px;
+    margin-bottom: 2px;
+    font-weight: bold;
+    background: silver;
+    box-sizing: border-box;
+}
+
+/* Function-key footer */
+.product-name-search-footer {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+    margin-top: auto;
+    margin-bottom: 1px;
+}
+
+    .product-name-search-footer button {
+        flex: 1;
+        height: 35px;
+        font-size: 12px;
+        border: none;
+        border-radius: 4px;
+        background-color: #fff;
+    }
+
+        .product-name-search-footer button:enabled {
+            cursor: pointer;
+        }
+
+            .product-name-search-footer button:enabled:hover {
+                background-color: #D9EEFF;
+                border: 1px solid highlight;
+            }
+
+    /* Add spacing after the first and third buttons */
+    .product-name-search-footer > :nth-child(1),
+    .product-name-search-footer > :nth-child(3) {
+        margin-right: 12px;
+    }
+
+/* Align F9 button text to the left */
+#product-name-search-footer {
+    text-align: left;
+    text-indent: 30px;
+}
+
+.product-name-search-footer button:disabled {
+    color: #888;
+}
+
+/* Responsive layout */
+@media (max-width: 650px) {
+    .product-name-search-conditions {
+        padding: 4px;
+    }
+
+    .product-name-search-row > label {
+        width: 110px;
+        min-width: 110px;
+    }
+
+    .product-name-search-footer {
+        gap: 2px;
+    }
+
+        .product-name-search-footer button {
+            font-size: 10px;
+        }
+}
+/* Origin-destination input focus styling */
+#searchProductNameFurigana:focus,
+#searchProductName:focus,
+#searchProductCategoryCode:focus,
+#searchTransportationRecordCode:focus {
+    padding: 0 2px;
+    justify-content: center;
+    box-sizing: border-box;
+    border-color: darkblue;
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    border-right: 2px solid #fff;
+}
+
+/* Product Master Registration Modal */
+.product-master-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000030;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.35);
+    box-sizing: border-box;
+}
+
+/* Product Master Modal Content Layout */
+.product-master-modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: min(1000px, 95vw);
+    height: min(750px, 90vh);
+    background: #dcdcdc;
+    border: 1px solid #888;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* Product Master Modal Title Bar */
+.product-search-titlebar {
+    height: 27px;
+    min-height: 27px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 7px;
+   /* background: #f2f2f2;*/
+    border-bottom: 1px solid #bdbdbd;
+}
+
+/* Product Master Window Controls */
+.product-search-window-controls {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+    /* Product Master Window Control Buttons */
+    .product-search-window-controls button {
+        width: 35px;
+        height: 26px;
+        border: none;
+        background: transparent;
+        color: #444;
+        font-size: 15px;
+        cursor: pointer;
+    }
+
+        /* Highlight Window Controls on Hover */
+        .product-search-window-controls button:hover {
+            background: #e5e5e5;
+        }
+
+    /* Product Master Close Button */
+    .product-search-window-controls .product-window-close:hover {
+        background: #e81123;
+        color: #fff;
+    }
+
+/* Product Master Embedded Page Frame */
+#productMasterFrame {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    border: none;
+    background: #dcdcdc;
+    padding: 3px;
+    box-sizing: border-box;
+}
+
+/* Minimized Product Master Modal */
+.product-master-modal-content.is-minimized {
+    height: 28px;
+}
+
+/* Maximized Product Master Modal */
+.product-master-modal-content.is-maximized {
+    width: 100%;
+    height: 100%;
+}

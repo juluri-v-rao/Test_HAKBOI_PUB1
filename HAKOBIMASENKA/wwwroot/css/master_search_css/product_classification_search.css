@@ -1,0 +1,453 @@
+﻿
+/* Product Category Master Modal - Display Above Search Popup */
+.product-category-master-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000002;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
+}
+
+.product-category-master-modal-content {
+    position: relative;
+    z-index: 1000003;
+    width: 95vw;
+    height: 92vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #d4d4d4;
+    border: 1px solid #808080;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+    .product-category-master-modal-content iframe {
+        flex: 1;
+        width: 100%;
+        height: 100%;
+        border: none;
+        background: #fff;
+    }
+
+
+
+/* Product Classification Search overlay */
+.product-classification-search-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
+}
+
+    .product-classification-search-overlay.is-open {
+        display: flex;
+    }
+
+/* Main search window */
+.product-classification-search-window {
+    width: 440px;
+    max-width: 95vw;
+    height: min(700px, 92vh);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #d4d4d4;
+    border: 1px solid #808080;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    color: #111;
+    font-family: "MS Gothic", "ＭＳ ゴシック", sans-serif;
+    font-size: 12px;
+    box-sizing: border-box;
+    position: fixed;
+}
+
+    .product-classification-search-window.is-minimized {
+        height: 100px;
+        flex: none;
+    }
+
+    .product-classification-search-window.is-maximized {
+        width: 100%;
+        max-width: none;
+        height: 100%;
+    }
+
+/* Title bar */
+.product-classification-search-titlebar {
+    height: 27px;
+    min-height: 27px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 7px;
+    background: #f2f2f2;
+    border-bottom: 1px solid #bdbdbd;
+    cursor: move;
+    user-select: none;
+}
+
+.product-classification-search-window-controls {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+    .product-classification-search-window-controls button {
+        width: 35px;
+        height: 26px;
+        padding: 0;
+        border: none;
+        background: transparent;
+        color: #444;
+        font-size: 17px;
+        cursor: pointer;
+    }
+
+        .product-classification-search-window-controls button:hover {
+            background: #e5e5e5;
+        }
+
+#btnProductClassificationSearchClose:hover {
+    background: #e81123;
+    color: #fff;
+}
+
+/* Heading and result count */
+.product-classification-search-heading {
+    min-height: 27px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 3px 4px;
+    background: #c4c4c4;
+    box-sizing: border-box;
+}
+
+    .product-classification-search-heading label {
+        min-width: 140px;
+        padding: 4px 8px;
+        background: #444;
+        color: #fff;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .product-classification-search-heading strong {
+        min-width: 110px;
+        padding: 4px 8px;
+        background: #080878;
+        color: #fff;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+/* Search condition */
+.product-classification-search-conditions {
+    flex-shrink: 0;
+    padding: 8px 10px;
+    border-bottom: 1px solid #aaa;
+}
+
+.product-classification-search-row {
+    min-height: 23px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 3px;
+}
+
+    .product-classification-search-row > label {
+        width: 105px;
+        min-width: 105px;
+        padding: 3px 5px;
+        background: #c5c5c5;
+        border: 1px solid #b8b8b8;
+        font-weight: bold;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .product-classification-search-row input[type="text"] {
+        min-width: 0;
+        width: 135px;
+        height: 21px;
+        padding: 1px 4px;
+        border: 1px solid #bdbdbd;
+        background: #fff;
+        font: inherit;
+        box-sizing: border-box;
+    }
+
+    .product-classification-search-row input:focus {
+        background: rgb(128, 255, 255);
+        outline: none;
+        border-color: darkblue;
+    }
+
+/* Results grid */
+.product-classification-search-results {
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    background: #bfbfbf;
+    border: 1px solid #000;
+    box-sizing: border-box;
+}
+
+.product-classification-search-table-scroll {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: #bfbfbf;
+    box-sizing: border-box;
+}
+
+.product-classification-search-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-family: "MS Gothic", "ＭＳ ゴシック", Meiryo, sans-serif;
+    font-size: 15px;
+    color: #111;
+}
+
+    .product-classification-search-table th:nth-child(1) {
+        width: 100px;
+    }
+
+    .product-classification-search-table th:nth-child(2) {
+        width: auto;
+    }
+
+    .product-classification-search-table thead th {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        height: 21px;
+        padding: 1px 3px;
+        background: #fff;
+        color: #111;
+        border: 1px solid #999;
+        font-weight: normal;
+        text-align: center;
+        white-space: nowrap;
+        box-sizing: border-box;
+        cursor: pointer;
+    }
+
+    .product-classification-search-table tbody td {
+        height: 21px;
+        padding: 1px 4px;
+        border: 1px solid #aaa;
+        overflow: hidden;
+        text-overflow: clip;
+        white-space: nowrap;
+        box-sizing: border-box;
+    }
+
+    .product-classification-search-table tbody tr:nth-child(odd) {
+        background: #fff;
+    }
+
+    .product-classification-search-table tbody tr:nth-child(even) {
+        background: #bfbfbf;
+    }
+
+    .product-classification-search-table tbody tr.is-selected {
+        background: #0078d7 !important;
+        color: #fff !important;
+    }
+
+        .product-classification-search-table tbody tr.is-selected td {
+            color: #fff;
+        }
+
+/* Message area */
+.product-classification-search-message {
+    border-top: 1px solid #A0A0A0;
+    border-bottom: 1px solid #fff;
+    padding: 6px 0 6px 6px;
+    flex-shrink: 0;
+    min-height: 24px;
+    display: flex;
+    align-items: center;
+    margin-top: 6px;
+    margin-bottom: 2px;
+    font-weight: bold;
+    background: silver;
+    box-sizing: border-box;
+}
+
+/* Function-key footer */
+.product-classification-search-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    flex-shrink: 0;
+    margin-top: auto;
+    margin-bottom: 1px;
+}
+
+    .product-classification-search-footer button {
+        flex: 1;
+        min-width: 0;
+        height: 35px;
+        padding: 0 2px;
+        font-size: 11px;
+        white-space: nowrap;
+        border: none;
+        border-radius: 3px;
+        background-color: #fff;
+    }
+
+        /* Hide disabled function keys */
+        .product-classification-search-footer button:disabled {
+            display: none;
+        }
+
+        /* Enabled buttons */
+        .product-classification-search-footer button:enabled {
+            cursor: pointer;
+        }
+
+            .product-classification-search-footer button:enabled:hover {
+                background-color: #D9EEFF;
+                border: 1px solid highlight;
+            }
+
+/* Add Spacing After the 1 and Eighth 2 Buttons */
+    .product-classification-search-footer > :nth-child(1),
+    .product-classification-search-footer > :nth-child(2) {
+        margin-right: 12px;
+    }
+
+        .product-classification-search-footer button:disabled {
+            color: #888;
+        }
+
+@media (max-width: 450px) {
+    .product-classification-search-footer {
+        gap: 2px;
+    }
+
+        .product-classification-search-footer button {
+            font-size: 9px;
+        }
+}
+
+/* =========================================
+   product-name - Input Fields Focus Styling
+   ========================================= */
+
+/* Highlight product-name Inputs When Focused */
+#searchProductCategoryName:focus  {
+    /* background: rgb(128, 255, 255);
+    outline: none;
+    box-sizing: border-box;
+    border-color: darkblue;
+    border-top: 1px;
+    border-left: 1px;
+    border-right: 1px;*/
+    /*width: 122px;
+    height: 23px;*/
+    padding: 0 2px;
+    justify-content: center;
+    box-sizing: border-box;
+    border-color: darkblue;
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    border-right: 2px solid #fff;
+}
+
+/* =========================================
+   Product Category Master Modal
+   ========================================= */
+
+.product-category-master-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000002;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
+}
+
+.product-category-master-modal-content {
+    position: relative;
+    width: 95vw;
+    height: 92vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #d4d4d4;
+    border: 1px solid #808080;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+    /* Iframe */
+    .product-category-master-modal-content iframe {
+        flex: 1;
+        width: 100%;
+        min-height: 0;
+        border: none;
+        background: #fff;
+    }
+
+    /* Minimize */
+    .product-category-master-modal-content.is-minimized {
+        width: 440px;
+        height: 100px;
+    }
+
+        .product-category-master-modal-content.is-minimized iframe {
+            display: none;
+        }
+
+    /* Maximize */
+    .product-category-master-modal-content.is-maximized {
+        width: 100%;
+        height: 100%;
+        max-width: none;
+        max-height: none;
+    }
+
+/* Window control buttons */
+#btnProductCategoryMasterMinimize,
+#btnProductCategoryMasterMaximize,
+#btnProductCategoryMasterClose {
+    width: 35px;
+    height: 26px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    color: #444;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+    #btnProductCategoryMasterMinimize:hover,
+    #btnProductCategoryMasterMaximize:hover {
+        background: #e5e5e5;
+    }
+
+    #btnProductCategoryMasterClose:hover {
+        background: #e81123;
+        color: #fff;
+    }

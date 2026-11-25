@@ -1,0 +1,150 @@
+﻿@model List<HAKOBIMASENKA.Models.ViewModels.UnitMasterResultDto>
+
+@{
+    ViewData["Title"] = "単位マスタ";
+    bool isPopupMode = Context.Request.Query["popupMode"] == "true";
+}
+
+@section Styles
+{
+    <link rel="stylesheet" href="~/css/common.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/unit_master.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/listscreen.css" asp-append-version="true" />
+}
+
+<!-- Main Window -->
+<div class="main-container">
+
+    <!-- Screen Header -->
+    <header class="page-header">
+        <div class="screen-name">単位マスタ</div>
+        @* <button type="button" id="btnNew" class="new-button" disabled> 新  規</button> *@
+
+        <label type="button"
+               id="btnNew"
+               class="new-button">
+            新　規
+        </label>
+
+    </header>
+
+    <!-- Master Section -->
+    <section class="master-section">
+        <div class="master-row1">
+            <label>単位ｺｰﾄﾞ</label>
+            <input type="text"
+                   id="unitCode"
+                   maxlength="1"
+                   inputmode="numeric"
+                   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+        </div>
+        <div class="master-row">
+            <label>単　　位</label>
+            <input type="text" id="unitName">
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="mainContent-layout">
+
+        <!-- Editable Area -->
+        <section class="edit-panel">
+            <nav class="tab-navigation">
+                <button type="button" class="tab-button active" data-tab="basicSetting">基本設定</button>
+            </nav>
+
+            <section class="tab-container">
+                <section id="basicSetting" class="tab-content active">
+                    <div class="tab-details">
+                        <div class="tab-row">
+                            <label for="calculationType">計算区分</label>
+                            @* <input type="text" id="calculationType" inputmode="numeric" maxlength="1"> *@
+@*                             <input type="text" id="calculationType" inputmode="numeric" maxlength="1" oninput="this.value=this.value.replace(/[^0-9]/g,'')"> *@
+                            <input type="text" id="calculationType"
+                                   inputmode="numeric"
+                                   maxlength="1"
+                                   oninput="this.value = /^[0-9]$/.test(this.value) ? this.value : ''">
+                            <div class="calculation-type-options">
+                                <div>1:重量×単価</div>
+                                <div>2:数量×単価</div>
+                                <div>3:単価</div>
+                                <div>4:未計算</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </section>
+
+        <!-- Right Side Grid -->
+        <aside class="list-panel">
+            <table class="table-list">
+                <thead>
+                    <tr>
+                        @* <th>コード</th>
+                        <th>単位</th> *@
+                        <th id="sortUnitCode" style="cursor: pointer;">ｺｰﾄﾞ</th>
+                        <th id="sortUnitName" style="cursor: pointer;">単位</th>
+                    </tr>
+                </thead>
+                <tbody class="table-body" data-grid-columns>
+                    @foreach (var unit in Model)
+                    {
+                        <tr class="list-grid-row"
+                            data-code="@unit.UnitCode"
+                            data-name="@unit.UnitName"
+                            data-calculation-type="@unit.CalculationType">
+                            <td>@unit.UnitCode</td>
+                            <td>@unit.UnitName</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </aside>
+
+    </main>
+
+    <!-- Message -->
+    <section class="message-area">
+        <label>メッセージ：</label>
+    </section>
+
+    <!-- Function Keys -->
+    <footer class="function-footer">
+        <button id="btnRegister">F1:登 録</button>
+        <button id="btnCopy" disabled>F2:コピー</button>
+        <button id="btnF3" disabled>F3:　　</button>
+        <button id="btnDelete" disabled>F4:削 除</button>
+        <button id="btnF5" disabled>F5:　　</button>
+        <button type="button" id="btnMasterSearch" disabled>F6:　　</button>
+        <button id="btnF7" disabled>F7:　　</button>
+        <button id="btnF8" disabled>F8:　　</button>
+        <button type="button"
+                id="btnList"
+                disabled="@(!isPopupMode)">
+            @(isPopupMode ? "F9:　　" : "F9:リスト")
+        </button>
+        <button id="btnF10" disabled>F10:　　</button>
+        <button type="button" id="btnClear">F11:中 止</button>
+        <button type="button"
+                id="btnExit_F12"
+                data-exit-url="@Url.Action("Main_menu", "MainMenu")">
+            F12:終 了
+        </button>
+    </footer>
+
+</div>
+
+<!-- F9 List Popup -->
+<div id="printPopup" class="popup-overlay">
+    <div id="printPopupWindow" class="popup-window">
+        <partial name="~/Views/Shared/MasterList/_MasterListPartial.cshtml" />
+    </div>
+</div>
+
+<script src="~/js/common_master.js" asp-append-version="true"></script>
+<script src="~/js/unit_master.js" asp-append-version="true"></script>
+<script src="~/js/master_screen.js"></script>
+<script src="~/js/listscreen.js" asp-append-version="true"></script>
+
+<script src="~/js/grid_columns.js" asp-append-version="true"></script>

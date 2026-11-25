@@ -1,0 +1,148 @@
+﻿@* Vehicle Search Popup *@
+<div id="vehicleSearchPopup" class="vehicle-search-overlay" aria-hidden="true">
+    @* Vehicle Search window and endpoint configuration *@
+    <div id="vehicleSearchWindow" class="vehicle-search-window" role="dialog"
+         aria-modal="true" aria-labelledby="vehicleSearchTitle"
+         data-search-url="/SearchScreen/Search">
+
+        @* Title bar and window controls *@
+        <header class="vehicle-search-titlebar">
+            <span id="vehicleSearchTitle">車輌検索</span>
+            <div class="vehicle-search-window-controls">
+                <button type="button" id="btnVehicleSearchMinimize" aria-label="最小化">−</button>
+                <button type="button" id="btnVehicleSearchMaximize" aria-label="最大化">□</button>
+                <button type="button" id="btnVehicleSearchClose" class="vehicle-window-close" aria-label="閉じる">×</button>
+            </div>
+        </header>
+
+        @* Heading and result count *@
+        <div class="vehicle-search-heading">
+            <label>車輌検索</label>
+            <strong id="vehicleSearchCount">件数:0</strong>
+        </div>
+
+        @* Search conditions *@
+        <section class="vehicle-search-conditions">
+            @* Vehicle number *@
+            <div class="vehicle-search-row">
+                <label for="searchVehicleNumber">車　　番</label>
+                <input type="text" id="searchVehicleNumber" autocomplete="off">
+            </div>
+
+            @* Manufacturer name *@
+            <div class="vehicle-search-row">
+                <label for="searchVehicleMaker">ﾒｰｶｰ名</label>
+                <input type="text" id="searchVehicleMaker" autocomplete="off">
+            </div>
+
+            @* Vehicle model *@
+            <div class="vehicle-search-row">
+                <label for="searchVehicleModel">型　　式</label>
+                <input type="text" id="searchVehicleModel" autocomplete="off">
+            </div>
+
+            @* Vehicle category *@
+            <div class="vehicle-search-row">
+                <label for="searchVehicleCategory">車輌区分</label>
+                <input type="text" id="searchVehicleCategory" maxlength="1"
+                       inputmode="numeric" autocomplete="off">
+
+                @* Category options: 0 = Company-owned, 1 = Subcontracted, 2 = Contracted *@
+                <div class="vehicle-category-options">
+                    <button type="button" data-value="0">0:自　社</button>
+                    <button type="button" data-value="1">1:傭　車</button>
+                    <button type="button" data-value="2">2:契　約</button>
+                </div>
+            </div>
+             
+            @* Minimum and maximum load capacity *@
+            <div class="vehicle-search-row">
+                <label for="loadMin">最大積載量</label>
+
+                <input type="text"
+                       id="loadMin"
+                       inputmode="numeric"
+                       maxlength="5"
+                       pattern="[0-9]{0,5}"
+                       autocomplete="off" />
+
+                <span>Kg ～</span>
+
+                <input type="text"
+                       id="loadMax"
+                       inputmode="numeric"
+                       maxlength="5"
+                       pattern="[0-9]{0,5}"
+                       autocomplete="off" />
+
+                <span>Kg</span>
+            </div>
+        </section>
+
+        @* Vehicle search results *@
+        <section class="vehicle-search-results">
+            <div class="vehicle-search-table-scroll">
+                <table class="vehicle-search-table" data-grid-columns>
+                    @* Sortable column headers *@
+                    <thead>
+                        <tr>
+                            <th data-sort="vehicleCode">号　車</th>
+                            <th data-sort="vehicleNumber">車　　番</th>
+                            <th data-sort="makerName">ﾒｰｶｰ名</th>
+                            <th data-sort="retiredStatus">廃車</th>
+                            <th data-sort="model">型　　式</th>
+                            <th data-sort="registrationYear">登録年度</th>
+                            <th data-sort="loadWeight">積載量</th>
+                            <th data-sort="vehicleCategory">区分</th>
+                        </tr>
+                    </thead>
+                    <tbody id="vehicleSearchResults"></tbody>
+                </table>
+            </div>
+        </section>
+
+        @* Search messages and validation errors *@
+        <div class="vehicle-search-message">
+            <span>メッセージ：</span>
+            <span id="vehicleSearchMessage" role="status" aria-live="polite"></span>
+        </div>
+
+        @* Function-key footer *@
+        <div class="vehicle-search-footer">
+            <button type="button" id="btnVehicleSearchSelect">F1:選 択</button>
+            <button type="button" disabled>F2:　　</button>
+            <button type="button" disabled>F3:　　</button>
+            <button type="button" disabled>F4:　　</button>
+            <button type="button" id="btnVehicleSearchExecute">F5:検 索</button>
+            <button type="button" id="btnVehicleSearchF6" disabled>F6:　　</button>
+            <button type="button" disabled>F7:　　</button>
+            <button type="button" disabled>F8:　　</button>
+            <button type="button" id="btnVehicleSearchF9" disabled>F9:　　</button>
+            <button type="button" id="btnVehicleSearchRegister">F10:ﾏｽﾀ登録</button>
+            <button type="button" id="btnVehicleSearchCancel">F11:中 止</button>
+            <button type="button" id="btnVehicleSearchExit">F12:終 了</button>
+        </div>
+    </div>
+    @* <script src="~/js/grid_columns.js" asp-append-version="true"></script> *@
+    @* Vehicle Master registration modal *@
+    <div id="vehicleMasterModal" class="vehicle-master-modal" style="display: none;">
+        <div id="vehicleMasterWindow" class="vehicle-master-modal-content">
+
+            @* Modal title bar and window controls *@
+            <header class="vehicle-search-titlebar">
+                <span>車輌マスタ登録</span>
+                <div class="vehicle-search-window-controls">
+                    <button type="button" id="btnVehicleMasterMinimize" aria-label="最小化">−</button>
+                    <button type="button" id="btnVehicleMasterMaximize" aria-label="最大化">□</button>
+                    <button type="button" id="btnVehicleMasterClose"
+                            class="vehicle-window-close" aria-label="閉じる">
+                        ×
+                    </button>
+                </div>
+            </header>
+
+            @* Vehicle Master registration page *@
+            <iframe id="vehicleMasterFrame" title="車輌マスタ登録" src="about:blank"></iframe>
+        </div>
+    </div>
+</div>

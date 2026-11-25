@@ -1,0 +1,236 @@
+﻿@*
+=========================================
+Screen: Order Entry
+
+Navigation:
+    Main Menu
+        → Daily Processing(Entry)
+        → Order Entry
+
+Migrated From: FrmN_Juchu.designer.vb
+
+Purpose: Maintain Order Entry data.
+
+=========================================
+*@
+
+@{
+    ViewData["Title"] = "受注オーダー入力";
+}
+
+@section Styles
+{
+    <link rel="stylesheet" href="~/css/common.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/order_entry.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/japanesecalendar.css" asp-append-version="true" />
+
+    @* F5 伝票検索 and F6 ﾏｽﾀ検索 popups *@
+    <link rel="stylesheet" href="~/css/master_search_css/order_search.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/master_search_css/company_branch_search.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/master_search_css/shipper_search.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/master_search_css/driver_search.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/master_search_css/origin_destination_search.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/master_search_css/area_search.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/master_search_css/chartered_search.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/master_search_css/product_name_search.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/master_search_css/product_classification_search.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/master_search_css/transportation_record_search.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/master_search_css/vehicle_search.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/master_search_css/unit_search.css" asp-append-version="true" />
+
+}
+
+@* Main Window *@
+    <div class="main-container">
+
+    @Html.AntiForgeryToken()
+
+        <!-- Screen Header -->
+        <header class="page-header">
+
+            <div class="screen-name">
+            受注オーダー入力
+            </div>
+
+            <label type="button"
+               id="mode-lbl"
+               class="lbl-new">
+            新　規
+            </label>
+
+        </header>
+
+        <!-- Main Sections -->
+        <section class="master-sections">
+
+            <section id="firstSection">
+
+                <div class="master-rows">
+                    <div class="master-row">
+                        <label>受 注 日</label>
+                    @* calendar box like 管理マスタ: the date is in data-actual-value, the box shows the era text (order_entry.js) *@
+                    <input type="text" id = "orderDate" class="h-21 jp-calendar-input"
+                           data-no-era="false"
+                           data-show-day="true"
+                           data-actual-value="@Model.OrderDate?.ToString("yyyy-MM-dd")"
+                           autocomplete="off" />
+                        <button type="button" id="btnCopyVoucher" disabled>伝票複写</button>
+                    </div>
+
+                    <div class="master-row compBranch">
+                        <label>自社支店</label>
+                        <input type="text" id="depCmbKey" class="w-22 h-21" maxlength="2" value="@Model.BranchCode"/>
+                        <input type="text" id="depCmbValue" class="w-205 h-21" readOnly value="@Model.BranchName"/>
+                    </div>
+
+                    <div class="master-row vNumber">
+                        <label>伝票番号</label>
+                        <input type="text" id="voucherNumber" class="h-21" maxlength="10" value="@Model.OrderNo"/>
+                    </div>
+                </div>
+
+            </section>
+
+            <setion id="secondSection">
+                <section id="section1">
+
+                    <div id="detailContainer">
+                            
+                        <partial name="~/Views/DailyProcessingEntry/OrderEntry/_gridHeader.cshtml" />
+
+                            <div id="scrollArea" data-place-by-shipper="@(Model.PlaceByShipper ? "1" : "0")">
+
+                                    @for (int i = 0; i < Model.Details.Count; i++)
+                                    {
+                                        @await Html.PartialAsync("~/Views/DailyProcessingEntry/OrderEntry/_DetailGrid.cshtml",Model.Details[i],
+                                        new ViewDataDictionary(ViewData)
+                                        {
+                                            ["Index"] = i
+                                        })
+                                    }
+                            </div>
+
+                    </div>
+
+                </section>
+            </setion>
+
+        </section>
+
+    <!-- Message -->
+        <section class="message-area">
+
+        <label>ﾒｯｾｰｼﾞ:</label>
+
+        <span id="message-label"></span>
+
+        </section>
+
+    <!-- Function Footer -->
+        <footer class="function-footer">
+
+            <button id="btnRegister">
+            F1:登 録
+            </button>
+            
+            <button id="btnAddRow"
+                disabled>
+            F2:行追加
+            </button>
+
+            <button id="btnDeleteRow"
+                disabled>
+            F3:行削除
+            </button>
+
+            <button id="btnDelete"
+                disabled>
+            F4:削 除
+            </button>
+
+            <button type="button" id="btnF5" data-popup-url="@Url.Action("_OrderSearch", "MasterSearch")" >
+            F5:伝票検索
+            </button>
+
+            <button type="button" id="btnF6" data-popup-url="@Url.Action("_MasterSearch", "MasterSearch")" >
+            F6:ﾏｽﾀ検索
+            </button>
+
+            <button type="button" id="btnF7">
+            F7:≪ 前
+            </button>
+
+            <button type="button" id="btnF8">
+            F8:次 ≫
+            </button>
+
+            <button type="button"
+                id="btnList"
+                disabled>
+            F9:　　
+            </button>
+
+            <button id="btnCopy"
+                disabled>
+            F10:コピー
+            </button>
+
+            <button type="button" id="btnBack">
+            F11:中 止
+            </button>
+
+            <button type="button"
+                id="btnExit"
+                data-exit-url="@Url.Action("Main_menu", "MainMenu")" >
+            F12:終 了
+            </button>
+
+        </footer>
+
+    </div>
+
+@* Search popups, kept after the screen so the screen's own ids (such as btnF6) are found first *@
+
+@* F5 伝票検索 (legacy FrmDsp_Juchu) *@
+<partial name="~/Views/Shared/MasterSearch/_OrderSearch.cshtml" />
+
+@* F6 ﾏｽﾀ検索 (legacy FrmSeek_Mast4, User, Place, Hin, Tanto, Car, Mast1), opened by order_entry.js openMasterSearch *@
+<partial name="~/Views/Shared/MasterSearch/_CompanyBranchSearchPartial.cshtml" />
+<partial name="~/Views/Shared/MasterSearch/_ShipperSearchPartial.cshtml" />
+<partial name="~/Views/Shared/MasterSearch/_DriverSearchPartial.cshtml" />
+<partial name="~/Views/Shared/MasterSearch/_OriginDestinationSearchPartial.cshtml" />
+<partial name="~/Views/Shared/MasterSearch/_AreaSearchPartial.cshtml" />
+<partial name="~/Views/Shared/MasterSearch/_CharteredSearchPartial.cshtml" />
+<partial name="~/Views/Shared/MasterSearch/_ProductNameSearchPartial.cshtml" />
+<partial name="~/Views/Shared/MasterSearch/_ProductClassificationSearchPartial.cshtml" />
+<partial name="~/Views/Shared/MasterSearch/_TransportationRecordSearchPartial.cshtml" />
+<partial name="~/Views/Shared/MasterSearch/_VehicleSearchPartial.cshtml" />
+<partial name="~/Views/Shared/MasterSearch/_UnitSearchPartial.cshtml" />
+
+@* 運賃形態 list shown beside 車種 while it has focus (legacy Frame1B), filled by order_entry.js *@
+<div id="vehicleTypeList" class="vehicle-type-list" hidden></div>
+
+<script src="~/js/common_master.js" asp-append-version="true"></script>
+
+<script src="~/js/master_search_js/order_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/company_branch_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/shipper_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/driver_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/origin_destination_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/area_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/chartered_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/product_name_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/product_classification_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/transportation_record_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/vehicle_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/unit_search.js" asp-append-version="true"></script>
+
+@* date boxes typed slot by slot (積日 / 卸日) *@
+<script src="~/js/date_slots.js" asp-append-version="true"></script>
+
+<script src="~/js/order_entry.js" asp-append-version="true"></script>
+
+@* calendar popup for 受注日 (Space opens it) *@
+@await Html.PartialAsync("~/Views/Controls/calendar_common.cshtml")
+
+<script src="~/js/japanesecalendar.js" asp-append-version="true"></script>

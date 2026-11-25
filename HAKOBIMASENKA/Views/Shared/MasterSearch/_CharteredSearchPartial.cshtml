@@ -1,0 +1,152 @@
+﻿@* Charter Carrier Search Popup *@
+<div id="charteredSearchPopup"
+     class="chartered-search-overlay"
+     aria-hidden="true">
+
+  @*   @section Styles {
+        <link rel="stylesheet"
+              href="~/css/chartered_search.css"
+              asp-append-version="true" />
+    } *@
+
+
+    <section id="charteredSearchWindow"
+             class="chartered-search-window"
+             data-search-url="/SearchScreen/CharteredSearch">
+
+        @* Title bar *@
+        <header class="chartered-search-titlebar">
+            <span>傭車検索</span>
+
+            <div class="chartered-search-window-controls">
+                <button type="button" id="btnCharteredSearchMinimize"
+                        aria-label="最小化">
+                    −
+                </button>
+                <button type="button" id="btnCharteredSearchMaximize"
+                        aria-label="最大化">
+                    □
+                </button>
+                <button type="button" id="btnCharteredSearchClose"
+                        aria-label="閉じる">
+                    ×
+                </button>
+            </div>
+        </header>
+
+        @* Heading and result count *@
+        <div class="chartered-search-heading">
+            <label>傭車検索</label>
+            <strong id="charteredSearchCount">件数:0</strong>
+        </div>
+
+        @* Search conditions *@
+        <div class="chartered-search-conditions">
+            <div class="chartered-search-row">
+                <label for="searchCharteredFurigana">フリガナ</label>
+                <input type="text" id="searchCharteredFurigana"
+                       autocomplete="off" />
+            </div>
+
+            <div class="chartered-search-row">
+                <label for="searchCharteredAbbreviation">名　称</label>
+                <input type="text" id="searchCharteredAbbreviation"
+                       autocomplete="off" />
+            </div>
+
+            <div class="chartered-search-row">
+                <label for="searchCharteredPhone">電話番号</label>
+                <input type="text" id="searchCharteredPhone"
+                       autocomplete="off" />
+            </div>
+        </div>
+
+        @* Search results *@
+        <div class="chartered-search-results">
+            <div class="chartered-search-table-scroll">
+                <table class="chartered-search-table" data-grid-columns>
+                    <thead>
+                        <tr>
+                            <th data-sort="charteredCode">コード</th>
+                            <th data-sort="abbreviation">略　称</th>
+                            <th id="charteredSearchTradeHeader">取引</th>
+                            <th data-sort="phoneNumber">電話番号</th>
+                            <th data-sort="charteredName">名　　称</th>
+                            <th data-sort="address">住　　所</th>
+                        </tr>
+                    </thead>
+                    <tbody id="charteredSearchResults"></tbody>
+                </table>
+            </div>
+        </div>
+
+        @* Message area *@
+      @*   <div id="charteredSearchMessage"
+             class="chartered-search-message"></div> *@
+
+        <div class="chartered-search-message">
+            <span>メッセージ：</span>
+            <span id="charteredSearchMessage"
+                  role="status"
+                  aria-live="polite"></span>
+        </div>
+
+        @* Function-key footer *@
+        <footer class="chartered-search-footer">
+
+            <button type="button" id="btnCharteredSearchSelect">
+                F1:選 択
+            </button>
+
+            <button type="button" disabled>F2:　　</button>
+            <button type="button" disabled>F3:　　</button>
+            <button type="button" disabled>F4:　　</button>
+
+            <button type="button" id="btnCharteredSearchExecute">
+                F5:検 索
+            </button>
+
+            <button type="button" disabled>F6:　　</button>
+            <button type="button" disabled>F7:　　</button>
+            <button type="button" disabled>F8:　　</button>
+
+            <button type="button" id="btnCharteredSearchF9" disabled>
+                F9:　　
+            </button>
+
+            <button type="button" id="btnCharteredSearchRegister">
+                F10:ﾏｽﾀ登録
+            </button>
+
+            <button type="button" id="btnCharteredSearchCancel">
+                F11:中 止
+            </button>
+
+            <button type="button" id="btnCharteredSearchExit">
+                F12:終 了
+            </button>
+
+        </footer>
+
+    </section>
+
+    @* <script src="~/js/grid_columns.js" asp-append-version="true"></script> *@
+    @* <script src="~/js/chartered_search.js" asp-append-version="true"></script> *@
+
+    @* F10 ﾏｽﾀ登録: 傭車マスタ opened from the search (legacy SYORID2 = "検索"); its F12 closes it *@
+    <div id="charteredMasterModal" class="chartered-master-modal" style="display: none;">
+        <div id="charteredMasterWindow" class="chartered-master-modal-content">
+
+            <header class="chartered-search-titlebar">
+                <span>傭車マスタ登録</span>
+                <div class="chartered-search-window-controls">
+                    <button type="button" id="btnCharteredMasterMinimize" aria-label="最小化">−</button>
+                    <button type="button" id="btnCharteredMasterMaximize" aria-label="最大化">□</button>
+                    <button type="button" id="btnCharteredMasterClose" aria-label="閉じる">×</button>
+                </div>
+            </header>
+
+            <iframe id="charteredMasterFrame" title="傭車マスタ登録" src="about:blank"></iframe>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,1558 @@
+﻿/* =========================================
+   VEHICLE MASTER
+   Shared input appearance is controlled by
+   common.css.
+   This file controls Vehicle Master layout,
+   dimensions and screen-specific styling.
+   ========================================= */
+
+/* =========================================
+   GLOBAL PAGE STYLES
+   ========================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "MS Gothic", "ＭＳ ゴシック", sans-serif;
+    font-size: 14px;
+    background-color: silver;
+    color: #222;
+    overflow: hidden;
+}
+
+input,
+label,
+select {
+    font-family: "MS Gothic", "ＭＳ ゴシック", sans-serif;
+}
+
+/* =========================================
+   MAIN CONTAINER
+   ========================================= */
+
+.main-container {
+    width: 100%;
+    height: 100vh;
+    padding: 0 2px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+/* =========================================
+   MASTER SECTION
+   ========================================= */
+
+.master-section {
+    background-color: gainsboro;
+    margin-top: 0;
+    padding: 12px;
+}
+
+.master-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+    .master-row label {
+        width: 105px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 15px;
+        box-sizing: border-box;
+    }
+
+    /* Input layout only.
+   Border, shadow, padding and focus appearance
+   are inherited from common.css. */
+
+    .master-row input {
+        margin-left: 8px;
+        height: 24px;
+    }
+
+/* Individual input widths */
+
+#carCode {
+    width: 100px;
+}
+
+#carNumber,
+#makerName,
+#chassisNumber,
+#model,
+#engine {
+    width: 170px;
+}
+
+/* =========================================
+   MAIN CONTENT
+   ========================================= */
+
+.mainContent-layout {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    gap: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* =========================================
+   EDIT PANEL
+   ========================================= */
+
+.edit-panel {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    box-sizing: border-box;
+}
+
+/* =========================================
+   TAB NAVIGATION
+   ========================================= */
+
+.tab-navigation {
+    display: flex;
+    width: 60px;
+    margin-top: 6px;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 4px 10px;
+    background-color: #ececec;
+    border: 1px solid #bcbcbc;
+    border-radius: 2px 2px 0 0;
+    cursor: pointer;
+    text-align: center;
+    font-size: 14px;
+    text-wrap: nowrap;
+}
+
+    .tab-button.active {
+        background-color: #fff;
+        border: none;
+        font-weight: normal;
+    }
+
+/* =========================================
+   TAB CONTAINER
+   ========================================= */
+
+.tab-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    padding: 12px;
+    border: 2px solid #fff;
+    background-color: gainsboro;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* =========================================
+   TAB CONTENT
+   ========================================= */
+
+.tab-content {
+    display: none;
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+    .tab-content.active {
+        display: block;
+    }
+
+/* =========================================
+   TAB DETAILS
+   ========================================= */
+
+.tab-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.tab-row {
+    display: flex;
+    align-items: start;
+}
+
+    .tab-row label {
+        width: 105px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 15px;
+        box-sizing: border-box;
+    }
+
+    /* Input layout only */
+
+    .tab-row input {
+        margin-left: 8px;
+        height: 24px;
+    }
+
+/* Individual input widths */
+
+#firstYearMonth {
+    width: 100px;
+}
+
+#totaldistancetraveled {
+    width: 80px;
+    text-align: right;
+}
+
+#maximumloadcapacity {
+    width: 60px;
+    text-align: right;
+}
+
+/* =========================================
+   DISPATCH TABLE
+   ========================================= */
+
+.dispatch-table-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 25px;
+}
+
+    .dispatch-table-row > label {
+        width: 105px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 15px;
+        box-sizing: border-box;
+    }
+
+    .dispatch-table-row .area-row-chk {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        height: 24px;
+        white-space: nowrap;
+    }
+
+        /* Checkbox is excluded from common text-input appearance */
+
+        .dispatch-table-row .area-row-chk input[type="checkbox"] {
+            width: 14px;
+            height: 14px;
+            margin: 0;
+            padding: 0;
+            box-shadow: none;
+            border: none;
+            border-radius: 0;
+        }
+
+        .dispatch-table-row .area-row-chk span {
+            font-size: 15px;
+            white-space: nowrap;
+        }
+
+/* =========================================
+   LABELS WITHOUT BACKGROUND
+   ========================================= */
+
+.area-row-chk label,
+.area-row label,
+.maintenance-row label {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 4px;
+    margin: 0;
+    color: #000;
+    display: inline;
+    font-weight: bold;
+}
+
+/* =========================================
+   ZIP CODE ROW
+   ========================================= */
+
+.zipCode-row label {
+    height: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #c8c8c8;
+    border: 1px solid #bdbdbd;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.zipCode-row input {
+    width: 120px;
+}
+
+.zipCode-row button {
+    width: 90px;
+    height: 34px;
+    cursor: pointer;
+}
+
+.zipcode-row,
+.map-row,
+.expenseCategory-row,
+.productCategory-row,
+.transPerformCategory-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+/* =========================================
+   AREA ROW
+   ========================================= */
+
+.area-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+/* =========================================
+   TAB ROW 1
+   ========================================= */
+
+.tab-row1 {
+    display: grid;
+    grid-template-columns: 160px 120px;
+    align-items: center;
+    gap: 8px;
+}
+
+    .tab-row1 label {
+        width: 130px;
+        height: 25px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 15px;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+
+    .tab-row1 input {
+        width: 20px;
+        height: 25px;
+    }
+
+/* =========================================
+   COMMON SCREEN-SPECIFIC WIDTHS
+   ========================================= */
+
+.zip {
+    width: 120px;
+}
+
+.master-code {
+    width: 60px;
+}
+
+.tab-row .master-name {
+    width: 90px;
+    height: 24px;
+}
+
+.unit-price-input span,
+.unit-weight-input span,
+.capacity-input span {
+    font-weight: bold;
+}
+
+/*#salary {
+    width: 120px;
+}*/
+
+/* =========================================
+   ADDRESS BLOCK
+   ========================================= */
+
+.address-block {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+    .address-block input {
+        width: 400px;
+    }
+
+/* =========================================
+   BUTTONS
+   ========================================= */
+
+button {
+    padding: 0 12px;
+    background-color: #efefef;
+    height: 34px;
+    border: 1px solid #bcbcbc;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+    button:hover {
+        background-color: #e6e6e6;
+    }
+
+/* =========================================
+   RIGHT GRID
+   ========================================= */
+
+.list-panel {
+    width: 430px;
+    background-color: #A0A0A0;
+    border: 1px solid #5e5e5e;
+    margin-top: 10px;
+}
+
+.table-list {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .table-list th,
+    .table-list td {
+        border: 1px solid #d0d0d0;
+        padding: 6px 8px;
+        text-align: left;
+        font-size: 14px;
+    }
+
+    .table-list th {
+        background-color: #fff;
+        font-weight: bold;
+    }
+
+    .table-list body tr:nth-child(2n+1) td {
+        cursor: pointer;
+        background-color: #fff;
+    }
+
+    .table-list body tr:nth-child(2n) td {
+        cursor: pointer;
+        background-color: silver;
+    }
+
+.table-body {
+    background-color: #fff;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+    .table-body tr.selected {
+        background-color: #A0A0A0;
+        color: #fff;
+    }
+
+/* =========================================
+   VEHICLE MASTER TAB 1
+   ========================================= */
+
+.vehicle-type-container {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+#vehicleTypeCode {
+    width: 32px;
+    text-align: center;
+    background: white;
+}
+
+.vehicle-type-container input {
+    width: 0;
+    text-align: center;
+    background: white;
+}
+
+.vehicle-type {
+    min-width: 96px;
+    height: 24px;
+    white-space: nowrap;
+    border: 1px solid #bdbdbd;
+    background-color: silver;
+    width: 1px;
+}
+
+    .vehicle-type.active {
+        background: #ffff66;
+        font-weight: bold;
+    }
+
+.transport-type-container {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.small-code {
+    width: 32px !important;
+    text-align: center;
+}
+
+.transport-type-container select {
+    min-width: 96px;
+    height: 24px;
+    background-color: silver;
+    border: none;
+}
+
+/* =========================================
+   VEHICLE MANAGEMENT TAB 2
+   ========================================= */
+
+.vehicle-management-layout {
+    display: grid;
+    grid-template-columns: 980px 230px;
+    column-gap: 8px;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+/* LEFT AREA */
+
+.maintenance-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 980px;
+    min-width: 980px;
+    box-sizing: border-box;
+}
+
+/* =========================================
+   OIL MANAGEMENT
+   ========================================= */
+
+.oil-panel {
+    position: relative;
+    width: 100%;
+    height: 80px;
+    margin-top: 10px;
+    padding: 9px 4px 4px;
+    border: 1px solid #fff;
+    box-sizing: border-box;
+}
+
+/* =========================================
+   TIRE MANAGEMENT
+   ========================================= */
+
+.tire-panel {
+    position: relative;
+    width: 980px;
+    height: 350px;
+    margin: 0;
+    padding: 10px 4px 4px;
+    border: 1px solid #fff;
+    box-sizing: border-box;
+}
+
+    /* SECTION TITLE */
+
+    .oil-panel h3,
+    .tire-panel h3 {
+        position: absolute;
+        top: -11px;
+        left: 12px;
+        margin: 0;
+        padding: 0 10px;
+        background: #dcdcdc;
+        font-size: 15px;
+        color: #222;
+        line-height: 20px;
+    }
+
+/* =========================================
+   MAINTENANCE GRID
+   ========================================= */
+
+.maintenance-grid {
+    width: fit-content;
+    margin: 0;
+    padding: 0;
+}
+
+.oil-grid {
+    width: 460px;
+}
+
+.tire-grid {
+    width: 920px;
+}
+
+/* HEADER ROW */
+
+.maintenance-header {
+    display: grid;
+    align-items: stretch;
+    gap: 0;
+}
+
+/* OIL COLUMNS */
+
+.oil-grid .maintenance-header,
+.oil-grid .maintenance-row {
+    grid-template-columns: 40px 125px 170px 125px;
+}
+
+/* TIRE COLUMNS */
+
+.tire-grid .maintenance-header,
+.tire-grid .maintenance-row {
+    grid-template-columns: 40px 125px 170px 125px 40px 125px 170px 125px;
+}
+
+/* HEADER LABEL BOX */
+
+.maintenance-header-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 27px;
+    background: #c0c0c0;
+    border-top: 1px solid #bdbdbd;
+    border-bottom: 1px solid #bdbdbd;
+    border-left: 1px solid #bdbdbd;
+    box-sizing: border-box;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+    .maintenance-header-label:last-child {
+        border-right: 1px solid #bdbdbd;
+    }
+
+/* DATA ROW */
+
+.maintenance-row {
+    display: grid;
+    align-items: center;
+    height: 25px;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+}
+
+/* NO CELL */
+
+.maintenance-no {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 25px;
+    margin: 0;
+    padding: 0;
+    background: #eeeeee;
+    border-left: 1px solid #d0d0d0;
+    border-bottom: 1px solid #d0d0d0;
+    box-sizing: border-box;
+    font-size: 12px;
+    font-weight: normal;
+    text-align: center;
+}
+
+.maintenance-row > div:last-child {
+    border-right: 1px solid #d0d0d0;
+}
+
+/* KM CELL */
+
+.km-cell {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 25px;
+    margin: 0;
+    padding: 0;
+    border-left: 1px solid #d0d0d0;
+    border-bottom: 1px solid #d0d0d0;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+
+    /* KM INPUT */
+
+    .km-cell input {
+        width: 78px;
+        height: 23px;
+        margin: 0;
+        text-align: right;
+    }
+
+    /* KM LABEL */
+
+    .km-cell span {
+        display: inline-block;
+        width: 20px;
+        margin: 0 0 0 2px;
+        padding: 0;
+        font-size: 12px;
+        text-align: left;
+        white-space: nowrap;
+    }
+
+/* DATE CELL */
+
+.date-cell {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 25px;
+    margin: 0;
+    padding: 0;
+    border-left: 1px solid #d0d0d0;
+    border-bottom: 1px solid #d0d0d0;
+    box-sizing: border-box;
+}
+
+    /* DATE INPUT */
+
+    .date-cell input {
+        width: 150px;
+        height: 23px;
+        margin: 0;
+    }
+
+/* ROW SEPARATION */
+
+.maintenance-row + .maintenance-row {
+    margin-top: 0;
+}
+
+/* =========================================
+   RIGHT VEHICLE PANEL
+   ========================================= */
+
+.vehicle-diagram-panel {
+    position: relative;
+    width: 230px;
+    min-width: 230px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+/* CAB */
+
+.truck-cab {
+    position: relative;
+    width: 210px;
+    height: 85px;
+    border: 3px solid #222;
+    border-radius: 12px;
+    background: #d2d2d2;
+    box-sizing: border-box;
+}
+
+/* LIGHTS */
+
+.light {
+    position: absolute;
+    width: 28px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1px solid #444;
+    background: #ffff80;
+}
+
+    .light:nth-child(1) {
+        top: 6px;
+        left: 8px;
+    }
+
+    .light:nth-child(2) {
+        top: 6px;
+        left: 40px;
+    }
+
+    .light:nth-child(3) {
+        top: 6px;
+        right: 40px;
+    }
+
+    .light:nth-child(4) {
+        top: 6px;
+        right: 8px;
+    }
+
+/* STEERING */
+
+.steering {
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    top: 25px;
+    right: 40px;
+    border: 3px solid #222;
+    border-radius: 50%;
+    box-sizing: border-box;
+}
+
+/* FRONT TIRES */
+
+.front-tire {
+    position: absolute;
+    width: 30px;
+    height: 50px;
+    border: 2px solid #444;
+    border-radius: 8px;
+    background: repeating-linear-gradient( 90deg, #bdbdbd, #bdbdbd 4px, #efefef 4px, #efefef 8px );
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 3px;
+    font-size: 12px;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+.truck-cab .front-tire:nth-last-child(2) {
+    left: 8px;
+    bottom: 8px;
+}
+
+.truck-cab .front-tire:last-child {
+    right: 8px;
+    bottom: 8px;
+}
+
+/* TRUCK BODY */
+
+.truck-diagram {
+    width: 210px;
+    border: 2px solid #222;
+    background: gainsboro;
+    padding: 4px;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* TRUCK GRID */
+
+.truck-grid {
+    position: relative;
+    width: 100%;
+    height: 320px;
+    box-sizing: border-box;
+}
+
+/* TIRE GROUPS */
+
+.tire-group {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* TIRES */
+
+.tire {
+    position: relative;
+    width: 30px;
+    height: 50px;
+    border: 2px solid #333;
+    border-radius: 8px;
+    background: repeating-linear-gradient( 90deg, #bdbdbd, #bdbdbd 4px, #efefef 4px, #efefef 8px );
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 3px;
+    font-size: 12px;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+/* FOOTER */
+
+.truck-footer {
+    width: 210px;
+    margin-top: 6px;
+    text-align: center;
+    font-family: "Times New Roman", serif;
+    font-style: italic;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+/* SELECTED TIRE */
+
+.vehicle-diagram-panel .tire.tire-selected,
+.vehicle-diagram-panel .front-tire.tire-selected {
+    background: #00ff00 !important;
+    background-color: #00ff00 !important;
+}
+
+/* MAINTENANCE KM INPUT ALIGNMENT */
+
+.km-input {
+    text-align: right;
+}
+/* =========================================
+   FIXED COST TAB 3
+   ========================================= */
+
+.fixed-cost-layout {
+    display: grid;
+    grid-template-columns: 540px minmax(500px, 1fr);
+    gap: 12px;
+}
+
+.expense-entry-area {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* =========================================
+   EXPENSE FORM
+   ========================================= */
+
+.expense-form {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.expense-row {
+    display: flex;
+    align-items: flex-start;
+}
+
+.expense-form label {
+    width: 105px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: silver;
+    border: 1px solid;
+    border-color: #9e9e9e #fff #fff #9e9e9e;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+/* Input layout only */
+
+.expense-form input {
+    margin-left: 8px;
+    height: 24px;
+}
+
+/* Individual input widths */
+
+#expenseitems {
+    width: 40px;
+}
+
+.master-name-expenseitems {
+    width: 260px;
+    height: 24px;
+}
+
+#drivercode {
+    width: 90px;
+}
+
+.master-name-drivercode {
+    width: 150px;
+    height: 24px;
+}
+
+#accountingmethod {
+    width: 20px;
+}
+
+.master-name-accountingmethod {
+    width: 60px;
+    margin-left: 4px !important;
+}
+
+#monthly {
+    width: 90px;
+}
+
+/* =========================================
+   MONTH GRID
+   ========================================= */
+
+.month-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px 18px;
+    margin-top: 10px;
+}
+
+.month-row {
+    display: flex;
+    align-items: center;
+    gap: 1px;
+    justify-content: flex-end;
+}
+
+    .month-row input {
+        width: 120px;
+        height: 25px;
+    }
+
+.group-box-vehicle {
+    min-height: 200px;
+    padding: 0 15px;
+}
+
+/* =========================================
+   EXPENSE TOTAL
+   ========================================= */
+
+.expense-total {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 15px;
+    gap: 8px;
+}
+
+    .expense-total input {
+        width: 120px;
+        height: 28px;
+    }
+
+.expense-actions {
+    display: flex;
+    gap: 20px;
+    margin-top: 1px;
+}
+
+    .expense-actions button {
+        width: 120px;
+        height: 25px;
+    }
+
+/* =========================================
+   MONTHLY VALUE INPUTS
+   ========================================= */
+
+.month-value-input {
+    text-align: right;
+}
+
+    /* Display negative values in red */
+
+    .month-value-input.negative-value {
+        color: red;
+    }
+
+/* =========================================
+   EXPENSE LIST
+   ========================================= */
+
+.expense-list {
+    border: 1px solid #707070;
+    justify-content: center;
+    background: #a0a0a0;
+}
+
+.expense-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    background: #a0a0a0;
+}
+
+    /* Table borders and cell layout */
+
+    .expense-table th,
+    .expense-table td {
+        border: 1px solid #888;
+        padding: 3px 5px;
+        text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Header styling */
+
+    .expense-table thead th {
+        background-color: #fff;
+        color: #000;
+        text-align: center;
+        font-weight: bold;
+        height: 25px;
+    }
+
+    /* Odd rows */
+
+    .expense-table tbody tr:nth-child(odd) td {
+        background-color: #fff;
+        color: #000;
+    }
+
+    /* Even rows */
+
+    .expense-table tbody tr:nth-child(even) td {
+        background-color: #d0d0d0;
+        color: #000;
+    }
+
+    /* Selected row */
+
+    .expense-table tbody tr.selected-expense-row td {
+        background-color: #0879d1 !important;
+        color: #fff !important;
+    }
+
+    /* Pointer on selectable rows */
+
+    .expense-table tbody tr {
+        cursor: pointer;
+    }
+
+/* =========================================
+   REPAIR / TIRE HISTORY TAB 4
+   ========================================= */
+
+.repair-layout {
+    display: grid;
+    flex-direction: column;
+    grid-template-columns: 540px;
+    gap: 12px;
+}
+
+/* =========================================
+   REPAIR SEARCH
+   ========================================= */
+
+.repair-search {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+}
+
+/* ROW */
+
+.repair-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+    /* LABEL */
+
+    .repair-row > label {
+        width: 105px;
+        height: 24px;
+        flex: 0 0 105px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 15px;
+        box-sizing: border-box;
+    }
+
+/* CODE + SELECT / CODE + NAME */
+
+.lookup-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+/* INPUT LAYOUT ONLY */
+
+.repair-row input {
+    height: 24px;
+    flex-shrink: 0;
+}
+
+.repair-row select {
+    min-width: 96px;
+    height: 24px;
+    background-color: silver;
+    border: none;
+}
+
+/* EXPENSE CATEGORY CODE */
+
+#expenseCategoryCode {
+    width: 25px;
+}
+
+/* EXPENSE CATEGORY SELECT */
+
+#expenseCategory {
+    width: 140px;
+}
+
+/* EXPENSE ITEM CODE */
+
+#expenseItemCode {
+    width: 40px;
+}
+
+/* EXPENSE ITEM NAME */
+
+#expenseItemName {
+    width: 150px;
+}
+
+/* =========================================
+   REPAIR DATE ROW
+   ========================================= */
+
+.date-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+/* DATE INPUT */
+
+#startDate,
+#endDate {
+    width: 115px;
+    height: 24px;
+    text-align: center;
+}
+
+/* DATE SEPARATOR */
+
+.date-row span {
+    font-size: 15px;
+    width: 12px;
+    text-align: center;
+}
+
+/* =========================================
+   REPAIR BUTTONS
+   ========================================= */
+
+.repair-buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 65px;
+}
+
+    .repair-buttons button {
+        width: 105px;
+        height: 24px;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+
+/* =========================================
+   REPAIR GRID PANEL
+   ========================================= */
+
+.repair-grid-panel {
+    border: 1px solid #707070;
+    justify-content: center;
+    background: #a0a0a0;
+    height: 200px;
+    width: 200%;
+    overflow: auto;
+}
+
+.repair-grid {
+    width: 100%;
+    border-collapse: collapse;
+    background: #a0a0a0;
+}
+
+    .repair-grid th {
+        background: #fff;
+        border: 1px solid #707070;
+        border-top-color: lightgrey;
+        border-right-color: lightgray;
+        text-align: center;
+        height: 25px;
+    }
+
+    /* Data rows */
+    .repair-grid tbody td {
+        height: 20px;
+        padding: 1px 3px;
+        background: #c6c6c6;
+        color: #000;
+        border: 1px solid #999;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: clip;
+    }
+        /* Numeric columns */
+        .repair-grid tbody td:nth-child(4),
+        .repair-grid tbody td:nth-child(5),
+        .repair-grid tbody td:nth-child(6),
+        .repair-grid tbody td:nth-child(7) {
+            text-align: right;
+            padding-right: 5px;
+        }
+
+    /* Selected row - Legacy blue highlight */
+    .repair-grid tbody tr.selected td {
+        background: #0782d8;
+        color: #fff;
+    }
+
+/* =========================================
+   TAB 4 FOOTER - EXPENSE TOTALS
+   ========================================= */
+
+.expense-totals {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-left: 100%;
+    flex-shrink: 0;
+}
+
+.total-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+    .total-item label {
+        width: 100px;
+        height: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: silver;
+        border: 1px solid #bdbdbd;
+        font-weight: bold;
+        flex-shrink: 0;
+    }
+
+    .total-item input {
+        width: 120px;
+        height: 25px;
+        text-align: right;
+        flex-shrink: 0;
+    }
+/* =========================================
+   DIGITAL TACHOGRAPH TAB 5
+   ========================================= */
+
+.digitaco-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.digitaco-row {
+    display: flex;
+    align-items: start;
+}
+
+    .digitaco-row label {
+        width: 105px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 12px;
+        box-sizing: border-box;
+    }
+
+    /* Input layout only */
+
+    .digitaco-row input {
+        margin-left: 8px;
+        height: 24px;
+    }
+
+/* Individual input widths */
+
+#digitaltachographcode {
+    width: 250px;
+}
+
+#cardnumber {
+    width: 140px;
+}
+
+/* =========================================
+   FUNCTION FOOTER
+   ========================================= */
+
+#btnF3,
+#btnF10 {
+    text-align: left;
+    text-indent: 30px;
+}
+
+/* =========================================
+   MASTER SEARCH BUTTON
+   ========================================= */
+
+#btnMasterSearch {
+    white-space: nowrap;
+}
+
+/* =========================================
+   MESSAGE AREA
+   ========================================= */
+
+.message-area {
+    border-top: 1px solid #A0A0A0;
+    border-bottom: 1px solid #fff;
+    padding: 6px 0 6px 6px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    margin-top: 6px;
+    margin-bottom: 2px;
+    font-weight: bold;
+    background: silver;
+}
+
+#messageText {
+    color: blue;
+}
+
+/* =========================================
+   SELECTED VEHICLE CODE
+   ========================================= */
+
+.vehicle-code-selected {
+    background-color: #ffc0cb !important;
+}
+
+/* =========================================
+   VEHICLE TYPE BUTTONS
+   ========================================= */
+
+.vehicle-type {
+    font-weight: bold;
+    font-size: 13px;
+}
+
+/* =========================================
+   TRANSPORT TYPE OPTIONS
+   ========================================= */
+
+#transportType option {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* =========================================
+   MONTHLY VALUE INPUTS
+   ========================================= */
+
+.month-value-input {
+    text-align: right;
+}
+
+    .month-value-input.negative-value {
+        color: red;
+    }
+
+/* =========================================
+   SELECTED EXPENSE ROW
+   ========================================= */
+
+.expense-table tbody tr.selected-expense-row td {
+    background-color: #0879d1 !important;
+    color: #fff !important;
+}
+
+/* =========================================
+   SELECTED TIRE
+   ========================================= */
+
+.vehicle-diagram-panel .tire.tire-selected,
+.vehicle-diagram-panel .front-tire.tire-selected {
+    background: #00ff00 !important;
+    background-color: #00ff00 !important;
+}
+
+/* =========================================
+   Salary Option Setting
+   ========================================= */
+
+#salary {
+    width: 88px;
+    text-align: right;
+}
+
+.salary-input input {
+    text-align: right;
+}
+
+.salary-input span {
+    font-weight: bold;
+}

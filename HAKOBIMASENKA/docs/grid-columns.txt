@@ -1,0 +1,164 @@
+=====================================================================
+GRIDS: sorting (header click) + grid_columns.js (resize / move columns)
+=====================================================================
+
+What each part does
+-------------------
+Sorting               A click on a column header sorts the grid by that column.
+                      Simple lists: sortGrid() in common_master.js.
+                      Grids drawn by the screen's JS: the screen sorts its own data.
+grid_columns.js       Drag a header's right edge to change the column's width;
+                      drag a header onto another header to move the column there.
+                      Text that does not fit is cut at the cell's edge, on one line.
+
+They are separate: a grid can have one, the other, or both. grid_columns.js is not
+a parameter of the sort; a grid gets it only with data-grid-columns (below).
+
+Legacy grids (HAKOBI.DataGridViewEx) have both: AllowUserToOrderColumns = True,
+columns resizable, row and header height fixed, headers sortable (1st click
+ascending, 2nd descending, numbers compared as numbers: DataGridViewEx.OnSortCompare).
+
+
+How to add column resize / move to a grid (grid_columns.js)
+-----------------------------------------------------------
+1. View (.cshtml): data-grid-columns on the <table>; the table needs a <thead>.
+
+       <table class="table-list" data-grid-columns>
+           <thead>
+               <tr>
+                   <th data-sort="numeric">ｺｰﾄﾞ</th>
+                   <th data-sort="text" class="name-header">名　　称</th>
+               </tr>
+           </thead>
+           <tbody class="table-body"> … </tbody>
+       </table>
+
+   Load the script once on the page, after the screen's JS:
+
+       <script src="~/js/grid_columns.js" asp-append-version="true"></script>
+
+   That is all. Every table with data-grid-columns on the page is set up when it loads.
+
+2. Style a cell or header by a class, not by its position.
+
+   A moved column changes position, so nth-child rules would go to the wrong column:
+
+       .table-list th:nth-child(2) { … }          wrong: another column gets it after a move
+       .table-list th.name-header { … }           right: stays with the header
+       .history-table tbody td.amount { … }       right: set the class when the row is drawn
+
+3. Rows drawn later by the screen's JS (after 修正 / 削除, a new search, …) need nothing:
+   grid_columns.js puts each new row's cells in the moved order by itself.
+   Draw the cells in the ORIGINAL column order, as if nothing was moved.
+
+   The new rows are arranged a moment after they are added (MutationObserver), before the
+   browser paints. Code that reads a row's cells in the same moment it draws them should
+   find a cell by its column, not by its position (see "Finding a cell" below).
+
+
+What grid_columns.js does for you
+---------------------------------
+- Header markers: each <th> gets data-col = its original position (0, 1, 2 …).
+  Each body cell gets the same data-col as its column.
+- Resize: the pointer becomes ↔ within 5px of a header's right edge. Only that column
+  changes; the grid scrolls sideways instead of squeezing the other columns. Minimum 24px.
+- Move: a dragged header shows a blue mark where it will go; on release the column moves
+  in the header and in every row.
+- Before the first resize or move, every column keeps the width it has on screen (in px),
+  so a moved column keeps its width.
+- The click that ends a drag or a resize is not passed on: it does not sort the column.
+  A plain click (no drag) goes to the screen's sort as usual.
+- Cells and headers: one line, cut at the edge (overflow hidden, no wrapping, no "…").
+- Nothing is remembered: the screen opens with its normal layout again (as legacy).
+
+
+Finding a cell when columns can move
+------------------------------------
+After a move, row.children[0] is not always the 1st column any more. Use its data-col:
+
+    const cellOf = (row, column) =>
+        row.querySelector(`:scope > [data-col="${column}"]`) ?? row.children[column];
+
+    cellOf(row, 0).textContent      // the ｺｰﾄﾞ cell, wherever it is now
+
+The "?? row.children[column]" keeps it working on grids without grid_columns.js.
+For a header, the original column is th.dataset.col (or th.cellIndex without grid_columns.js).
+
+
+Sorting, way 1: sortGrid() (simple two-column lists rendered by the server)
+---------------------------------------------------------------------------
+Used by 管理マスタ and 品名区分マスタ. Columns: 0 = code (numeric), 1 = name (text).
+
+1. View: data-sort on the headers, class table-body on the <tbody>.
+
+       <th data-sort="numeric">ｺｰﾄﾞ</th>
+       <th data-sort="text">名　　称</th>
+       …
+       <tbody class="table-body">
+
+2. Screen JS: the header click.
+
+       document.querySelectorAll(".table-list th[data-sort]").forEach(header => {
+           header.addEventListener("click", function () {
+               sortGrid(this.dataset.sort);
+           });
+       });
+
+   sortGrid keeps the sorted column and direction itself; the screen needs nothing else.
+
+Notes on sortGrid:
+- "numeric" sorts by column 0 as numbers, "text" by column 1 (Japanese order). It finds the
+  cells by data-col, so it still sorts the right column after a move.
+- It sorts the rows of the FIRST .table-body on the page.
+- As legacy GridSearch: a new column sorts ascending; the same column again turns the direction
+  round. Only the last clicked column is remembered.
+- It moves the <tr> elements, so a row's data-code (or other data-*) goes with it.
+
+
+Sorting, way 2: the screen sorts its own data (grids drawn by JS)
+-----------------------------------------------------------------
+Used by 傭車マスタ 支払履歴 / 買掛履歴 (chartered_vehicle_master.js, "Grid sorting by a
+header click"). Sort the rows' data and draw the grid again, instead of moving <tr>s:
+the row index, the selected row, ↑ ↓ and 呼出 then all stay right.
+
+    // sorted column per grid: { column, ascending }, null = the default order
+    const historySort = { payment: null, payable: null };
+
+    thead.addEventListener("click", event => {
+        const th = event.target.closest("th");
+
+        if (th) {
+            // the original column, also after a move by grid_columns.js
+            sortHistoryByColumn(kind, th.dataset.col !== undefined ? Number(th.dataset.col) : th.cellIndex);
+        }
+    });
+
+In sortHistoryByColumn:
+- same column again: turn the direction round; another column: start ascending (legacy),
+- compare by value: dates as dates (also right for 和暦 text), amounts as numbers,
+  text with localeCompare(…, "ja"); blanks first,
+- keep the selected row: remember the selected object, find its new index after the sort,
+- draw the grid again, then mark the header with ▲ / ▼ (classes sorted-asc / sorted-desc).
+
+When the screen lists the rows again (legacy Dsp_List after 修正 / 削除), go back to the
+default order and clear the mark (historySort[kind] = null).
+
+
+Testing in jsdom (the test harnesses)
+-------------------------------------
+- jsdom has no layout: getBoundingClientRect / elementFromPoint return nothing useful.
+  The harnesses give each <th> a 100px slot and set the element under the pointer.
+- A top-level const / let in one script is not shared with another under window.eval;
+  a browser shares it. Expose what a test reads on window (e.g. ";window.DateSlots = DateSlots;").
+- After a click that redraws rows, wait a tick before reading cells: grid_columns.js
+  arranges new rows in a MutationObserver callback.
+
+
+Working examples
+----------------
+wwwroot/js/grid_columns.js                    the resize / move code
+wwwroot/js/common_master.js  sortGrid         sorting simple lists (finds cells by data-col)
+wwwroot/js/management_master.js               sortGrid + grid_columns (管理マスタ list)
+wwwroot/js/product_category_master.js         sortGrid + grid_columns (品名区分マスタ list)
+wwwroot/js/chartered_vehicle_master.js        own sort + grid_columns (支払履歴 / 買掛履歴),
+                                              amounts aligned by class (td.amount)

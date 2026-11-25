@@ -1,0 +1,282 @@
+﻿/* LIST SCREEN - COMMON POPUP */
+
+.print-window {
+    width: 100%;
+    height: 100%;
+    background-color: #d4d4d4;
+    display: flex;
+    flex-direction: column;
+    font-family: "MS Gothic", "Yu Gothic UI", "Meiryo", sans-serif;
+    color: #222;
+    box-sizing: border-box;
+}
+
+.popup-header {
+    height: 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #bdbdbd;
+    padding: 0 8px 0 12px;
+    box-sizing: border-box;
+}
+
+.popup-title {
+    font-family: "MS Gothic", "Yu Gothic UI", "Meiryo", sans-serif;
+    font-size: 16px;
+    color: #777;
+    white-space: nowrap;
+}
+
+.popup-controls {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.window-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    font-family: "MS Gothic", "Yu Gothic UI", "Meiryo", sans-serif;
+    font-size: 19px;
+    color: #666;
+    cursor: pointer;
+}
+
+    .window-btn:hover {
+        background-color: #e5e5e5;
+    }
+
+.close-btn:hover {
+    background-color: #e81123;
+    color: #fff;
+}
+
+.screen-title-container {
+    height: 43px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    background-color: #c8c8c8;
+    padding: 3px 5px;
+    box-sizing: border-box;
+}
+
+#screen-heading {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    /*width: 200px;*/
+    height: 35px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #4a4a4a;
+    color: #fff;
+    font-family: "MS Gothic", "Yu Gothic UI", "Meiryo", sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    border: 1px solid #808080;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+
+.popup-content {
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background-color: #d4d4d4;
+    box-sizing: border-box;
+}
+
+.group-box {
+    margin: 10px 12px;
+    padding: 14px 14px 12px;
+    border: 2px solid #eee;
+    flex-shrink: 0;
+    box-sizing: border-box;
+}
+
+    .group-box legend {
+        padding: 0 7px;
+        font-family: "MS Gothic", "Yu Gothic UI", "Meiryo", sans-serif;
+        font-size: 18px;
+        font-weight: bold;
+        color: #222;
+    }
+
+/* PRINT RANGE */
+.range-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+}
+
+.range-content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-width: 0;
+}
+
+.range-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+.field-label {
+    width: 155px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: "MS Gothic", "Yu Gothic UI", "Meiryo", sans-serif;
+    font-size: 19px;
+    font-weight: bold;
+    background-color: #c8c8c8;
+    border: 1px solid #bdbdbd;
+    box-sizing: border-box;
+    color: #111;
+}
+
+.code-input {
+    width: 130px;
+    height: 33px;
+    border: 1px solid #bdbdbd;
+    background-color: #fff;
+    padding: 0 4px;
+    font-family: "MS Gothic", "Yu Gothic UI", "Meiryo", sans-serif;
+    font-size: 17px;
+    box-sizing: border-box;
+}
+
+.name-input {
+    flex: 1;
+    min-width: 0;
+    height: 33px;
+    border: 1px solid #bdbdbd;
+    background-color: #c8c8c8;
+    padding: 0 5px;
+    font-family: "MS Gothic", "Yu Gothic UI", "Meiryo", sans-serif;
+    font-size: 17px;
+    box-sizing: border-box;
+}
+
+.range-text {
+    width: 40px;
+    flex-shrink: 0;
+    font-family: "MS Gothic", "Yu Gothic UI", "Meiryo", sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.radio-group {
+    display: flex;
+    gap: 120px;
+    padding: 7px 30px 2px;
+}
+
+    .radio-group label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-family: "MS Gothic", "Yu Gothic UI", "Meiryo", sans-serif;
+        font-size: 18px;
+        white-space: nowrap;
+    }
+
+    .radio-group input[type="radio"] {
+        width: 19px;
+        height: 19px;
+        margin: 0;
+    }
+
+.list-message-area {
+    height: 42px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    border-top: 1px solid #999;
+    border-bottom: 1px solid #fff;
+    background-color: #d4d4d4;
+    font-family: "MS Gothic", "Yu Gothic UI", "Meiryo", sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+.popup-footer {
+    display: flex;
+    gap: 2px;
+    width: 100%;
+    padding: 4px 4px 5px;
+    flex-shrink: 0;
+    background-color: #d4d4d4;
+    box-sizing: border-box;
+}
+
+    .popup-footer button {
+        flex: 1;
+        height: 42px;
+        background-color: #efefef;
+        border: 1px solid #bdbdbd;
+        border-radius: 2px;
+        font-family: "MS Gothic", "Yu Gothic UI", "Meiryo", sans-serif;
+        font-size: 15px;
+        color: #222;
+        cursor: pointer;
+        white-space: nowrap;
+        box-sizing: border-box;
+    }
+
+        .popup-footer button:hover {
+            background-color: #e5e5e5;
+        }
+
+/* POPUP WINDOW */
+.popup-window {
+    position: relative;
+    width: 650px;
+    height: 510px;
+    background-color: #d4d4d4;
+    border: 1px solid #808080;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    display: flex;
+}
+
+/* POPUP OVERLAY */
+.popup-overlay {
+    position: fixed !important;
+    inset: 0 !important;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 999999 !important;
+}
+
+.popup-window.maximized {
+    width: 100vw !important;
+    height: 100vh !important;
+}
+
+.popup-window.minimized {
+    height: 100px !important;
+}

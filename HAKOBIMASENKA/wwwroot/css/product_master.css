@@ -1,0 +1,360 @@
+
+/* =========================================
+   PRODUCT MASTER
+   Page-specific layout and field styling
+
+   Shared input appearance is controlled by common.css.
+   Do not duplicate common input focus/readonly styles here.
+   ========================================= */
+
+/* =========================================
+   Global Page Layout
+   ========================================= */
+
+html {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+}
+
+body {
+	font-family: "MS Gothic", "ＭＳ ゴシック", sans-serif;
+	font-size: 14px;
+	background-color: silver;
+	color: #222;
+}
+
+.main-container {
+	width: 100%;
+	height: 100vh;
+	padding: 0 2px;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+/* =========================================
+   Main Content Layout
+   ========================================= */
+
+.mainContent-layout {
+	display: flex;
+	gap: 16px;
+	flex: 1;
+	min-height: 0;
+	overflow: hidden;
+}
+
+.edit-panel {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	min-width: 0;
+	overflow: hidden;
+}
+
+/* =========================================
+   Master Information Entry Area
+   ========================================= */
+
+.master-section {
+	background-color: gainsboro;
+	padding: 12px;
+	margin-top: 0;
+}
+
+.master-row {
+	display: flex;
+	align-items: center;
+	margin-bottom: 2px;
+	gap: 4px;
+	padding: 1px;
+}
+
+	.master-row.branch {
+		gap: 0;
+	}
+
+		.master-row.branch label {
+			width: 85px;
+		}
+
+	.master-row label {
+		width: 105px;
+		height: 24px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: #c8c8c8;
+		border: 1px solid;
+		border-color: #9e9e9e #fff #fff #9e9e9e;
+		font-size: 12px;
+		font-weight: bold;
+	}
+
+	.master-row input {
+		width: 100%;
+		max-width: 350px;
+		height: 24px;
+	}
+
+	.master-row .input-sl {
+		width: 30px;
+	}
+
+/* =========================================
+   Tab Navigation
+   ========================================= */
+
+.tab-navigation {
+	display: flex;
+	width: fit-content;
+	margin-top: 10px;
+}
+
+.tab-button {
+	flex: none;
+	width: auto;
+	min-width: 80px;
+	padding: 6px 10px;
+	border: none;
+	cursor: pointer;
+	text-align: center;
+	font-size: 14px;
+	white-space: nowrap;
+	border-bottom: 0.5px solid #bcbcbc;
+	border-right: 0.5px solid #bcbcbc;
+	background-color: #ececec;
+}
+
+	.tab-button.active {
+		margin-top: -3px;
+		background-color: #fff;
+		border: none;
+	}
+
+/* =========================================
+   Tab Container & Content Area
+   ========================================= */
+
+.tab-container {
+	border: 2px solid #fff;
+	display: flex;
+	flex-direction: column;
+	padding: 12px;
+	background-color: gainsboro;
+	flex: 1;
+	min-height: 0;
+	overflow: auto;
+}
+
+.tab-content {
+	display: none;
+	overflow: auto;
+}
+
+	.tab-content.active {
+		display: flex;
+		flex-direction: column;
+		flex: 1;
+		min-height: 0;
+	}
+
+/* =========================================
+   Tab Form Layout
+   ========================================= */
+
+.tab-details {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	flex: 1;
+	min-height: 0;
+	min-width: 0;
+}
+
+.tab-row {
+	display: grid;
+	grid-template-columns: 105px 1fr;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	padding: 1px;
+}
+
+	.tab-row label {
+		width: 105px;
+		height: 24px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: silver;
+		border: 1px solid;
+		border-color: #9e9e9e #fff #fff #9e9e9e;
+		font-size: 12px;
+		font-weight: bold;
+		white-space: nowrap;
+	}
+
+	.tab-row input {
+		width: 100%;
+		max-width: 350px;
+		height: 24px;
+	}
+
+	/* =========================================
+   Master Lookup Display Controls
+   ========================================= */
+
+	.tab-row .master-code {
+		width: 35px;
+	}
+
+	.tab-row .master-name {
+		width: 100%;
+		max-width: 150px;
+		height: 24px;
+		font-size: 13px;
+	}
+
+/* =========================================
+   Input Suffix Labels
+   ========================================= */
+
+.input-span {
+	font-weight: bold;
+	font-size: 14px;
+}
+
+/* =========================================
+   Product Master Lookup Rows
+   ========================================= */
+
+.productCategory-row,
+.transPerformCategory-row {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 8px;
+}
+
+/* =========================================
+   Product Master Input Widths
+   ========================================= */
+
+/* Header - 品名コード */
+#originCode {
+	width: 88px;
+}
+
+/* Header - 品名 */
+#originName {
+	width: 248px;
+}
+
+/* =========================================
+   Basic Setting Tab
+   ========================================= */
+
+/* フリガナ */
+#furigana {
+	width: 248px;
+}
+
+/* 略称 */
+#abbreviation {
+	width: 136px;
+}
+
+/* 品名区分コード */
+#productCategory-code {
+	width: 40px;
+}
+
+/* 品名区分名 */
+#productCategory-name {
+	width: 135px;
+}
+
+/* 輸送実績区分コード */
+#transPerformCategory-code {
+	width: 40px;
+}
+
+/* 輸送実績区分名 */
+#transPerformCategory-name {
+	width: 135px;
+}
+
+/* 単位重量 */
+#unitweight {
+	width: 88px;
+}
+
+/* 容量 */
+#capacity {
+	width: 88px;
+}
+
+/* =========================================
+   Digitaco Option Setting Tab
+   ========================================= */
+
+/* デジタココード */
+#didgitaco {
+	width: 128px;
+}
+
+/* =========================================
+   Salary Option Setting Tab
+   ========================================= */
+
+/* 手当掛率 */
+#salary {
+	width: 88px;
+	text-align: right;
+}
+
+/* =========================================
+   Product Master Input Alignment
+   ========================================= */
+
+.unit-weight-input input,
+.capacity-input input,
+.salary-input input {
+	text-align: right;
+}
+
+.unit-weight-input span,
+.capacity-input span,
+.salary-input span {
+	font-weight: bold;
+}
+
+/* =========================================
+   Footer Button Specific Adjustment
+   ========================================= */
+
+#btnMasterSearch {
+	white-space: nowrap;
+}
+
+/* =========================================
+   Product Code Mode Styling
+   ========================================= */
+
+/* New record: normal background */
+#originCode:not(.existing-record):not(.unit-code-selected) {
+	background-color: #fff;
+}
+
+/* New record: focused background */
+#originCode:focus:not(.existing-record):not(.unit-code-selected) {
+	background-color: rgb(128, 255, 255);
+}
+
+/* Existing record: pink background */
+#originCode.existing-record,
+#originCode.unit-code-selected {
+	background-color: #FFB6C1;
+}

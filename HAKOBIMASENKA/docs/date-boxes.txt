@@ -1,0 +1,145 @@
+=====================================================================
+DATE BOXES: date_slots.js(manual/kepress) + Japanese calendar(popup)
+=====================================================================
+
+What each part does
+-------------------
+date_slots.js          The box itself. You type the date slot by slot, like the legacy
+                       GrapeCity date box (GcDate). Letters and symbols are ignored.
+japanesecalendar.js    The popup calendar. Space in the box opens it, you click a day.
+
+They work together, but neither needs the other.
+
+
+The formats
+-----------
+Use the same format string as the legacy screen:
+
+    "gee/MM/dd"           R08/11/16           (e.g. Order Entry 積日 / 卸日, 和暦)
+    "yy/MM/dd"            26/11/16            (Order Entry 積日 / 卸日, 西暦; 00-49 → 20xx)
+    "yyyy年MM月dd日"       2026年11月16日       (西暦)
+    "ggg ee年MM月dd日"     令和 08年11月16日    (和暦)
+    "yyyy年MM月度"         2026年11月度         (month only, the day is the 1st)
+    "ggg ee年MM月度"       令和 08年11月度
+
+Era key in the era slot: R H S T M, or the digit from the legacy hint
+明治=[0､M] 大正=[1､T] 昭和=[2､S] 平成=[3､H] 令和=[4､R].
+
+
+How to add a date box to a screen
+---------------------------------
+1. View (.cshtml)
+
+   The box. The class jp-calendar-input makes Space open the calendar:
+
+       <input type="text" id="startDate" class="jp-calendar-input"
+              data-no-era="false" data-show-day="true" />
+
+   Use data-show-day="false" for a month-only box.
+
+   The calendar markup, CSS and scripts, in this order
+   (date_slots.js must come before the screen's JS):
+
+       <link rel="stylesheet" href="~/css/japanesecalendar.css" asp-append-version="true" />
+       ...
+       @await Html.PartialAsync("~/Views/Controls/calendar_common.cshtml")
+       <script src="~/js/common_master.js" asp-append-version="true"></script>
+       <script src="~/js/date_slots.js" asp-append-version="true"></script>
+       <script src="~/js/your_screen.js" asp-append-version="true"></script>
+       <script src="~/js/japanesecalendar.js" asp-append-version="true"></script>
+
+   Put calendar_common.cshtml on the page only once.
+
+2. Screen JS: turn the box on (once, e.g. in DOMContentLoaded)
+
+       const box = document.getElementById("startDate");
+       DateSlots.attach(box, "yyyy年MM月dd日");
+
+3. Show a date from the server
+
+       DateSlots.show(box, model.startDate);      // "2026-11-16" or "2026-11-16T00:00:00"
+       box.dataset.actualValue = "2026-11-16";    // the calendar opens on this date
+
+   DateSlots.show(box, "") empties the box. Keep data-actual-value in step with the
+   date you show; delete it when the box is empty.
+
+4. Read the date (on Enter, on leaving the box, on F1)
+
+       const { empty, date } = DateSlots.read(box);
+
+       empty === true   the box is empty
+       date             "yyyy-MM-dd", or null when the box is part-filled, not a real
+                        date, or in the wrong era (R01/01/01 is really 平成31)
+
+   Then apply your screen's rule, for example:
+
+       if (!empty && (date === null || date < "2010-01-01" || date > "2050-12-31")) {
+           DateSlots.show(box, keptDate);         // legacy: a bad date is not taken
+       }
+
+5. A date picked in the calendar
+
+   The calendar writes data-actual-value and its own era text into the box.
+   Watch data-actual-value and show the date again in your format:
+
+       new MutationObserver(() => {
+           const picked = box.dataset.actualValue;
+           if (picked && box.value !== DateSlots.format(picked, "yyyy年MM月dd日")) {
+               DateSlots.show(box, picked);       // check your range here too
+               hasChanges = true;
+           }
+       }).observe(box, { attributes: true, attributeFilter: ["data-actual-value"] });
+
+6. 和暦 / 西暦 (when the legacy screen follows the 和西暦 setting)
+
+   Legacy DINPUT_Chk = 管理マスタ 01 和西暦 (0: 西暦, 1: 和暦). Every page has it:
+   _Layout.cshtml writes <body data-date-era="0|1"> (MainMenuRepository.IsEraInputAsync),
+   and DateSlots.isEra() reads it. A saved change shows on the next page opened, as in legacy.
+   Do not keep it in localStorage: it is one setting for every user and PC.
+
+       const isEra = DateSlots.isEra();
+       DateSlots.attach(box, isEra ? "ggg ee年MM月dd日" : "yyyy年MM月dd日");
+       box.dataset.noEra = isEra ? "false" : "true";    // the calendar's own text
+
+   On focus show the hint only in 和暦 (legacy DINPUT_Mess is empty in 西暦):
+
+       setMessage(DateSlots.isEra() ? DateSlots.ERA_HINT : "");
+
+   Follow the legacy Date_InputSet of the screen: some legacy boxes have a fixed 和暦
+   format and do not follow the setting.
+
+   DateSlots.setFormat(box, fmt) changes the format later; the date in the box stays.
+
+
+What date_slots.js does for you
+-------------------------------
+- The empty box shows the slots (____年__月__日) as a placeholder, and in the box
+  while it has focus. The whole box is selected on focus.
+- A digit fills the next slot and the cursor jumps over 年 月 日 / "/".
+- Backspace clears the slot before the cursor, Delete the one at the cursor.
+  (The calendar's own Delete would empty the whole box; date_slots.js stops it.)
+- Space is not typed; it opens the calendar.
+- Paste, or full-width text from Japanese input: a whole date is read when it is a
+  date (20261116, 2026/11/16, ２０２６年１１月１６日, R081116, 4081116, 令和 08年11月16日).
+
+What your screen still does
+---------------------------
+- The allowed range (MinDate / MaxDate of the legacy box).
+- What happens when the box is left: take the date, or put the kept one back.
+- The unsaved-changes flag.
+- Showing the hint 明治=[0､M] … in the message bar on focus, when the legacy screen does.
+
+
+Other helpers
+-------------
+DateSlots.format(date, fmt)        "2026-11-16" → text in that format ("" when no date)
+DateSlots.parseLoose(text, month)  any typed / pasted date → "yyyy-MM-dd" or null
+DateSlots.mask(fmt)                the empty slots, e.g. "___/__/__"
+DateSlots.inShape(text, fmt)       true when the text has the box's shape
+
+
+Working examples
+----------------
+wwwroot/js/order_entry.js          initializeRowDates      (積日 / 卸日, "gee/MM/dd" / "yy/MM/dd")
+wwwroot/js/management_master.js    Date boxes section      (施行日 / 処理月度, 和暦 / 西暦)
+wwwroot/js/chartered_vehicle_master.js  Date boxes section (取引開始日 / 終了日 / 履歴, ranges)

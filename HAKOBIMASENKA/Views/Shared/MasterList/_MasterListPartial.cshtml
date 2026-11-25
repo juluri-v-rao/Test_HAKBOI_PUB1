@@ -1,0 +1,236 @@
+﻿@{
+    var screenName = ViewData["ScreenName"]?.ToString() ?? "";
+}
+
+<div class="print-window" data-screen-name="@screenName">
+
+    <!-- Screen Header -->
+    <header class="popup-header">
+
+        <div class="popup-title" id="popupTitle">
+            @* 発着地マスタ印刷 *@
+            <!-- Add popupTitle name in listscreen.js file-->
+            マスタ印刷
+        </div>
+
+        <div class="popup-controls">
+
+            <button type="button"
+                    class="window-btn"
+                    id="btnMinimize">
+                ー
+            </button>
+
+            <button type="button"
+                    class="window-btn"
+                    id="btnMaximize">
+                ◻
+            </button>
+
+            <button type="button"
+                    class="window-btn close-btn"
+                    id="btnClose">
+                ✕
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- Screen Title -->
+
+    <div class="screen-title-container">
+
+        <label id="screen-heading">
+            @* 経費マスタ印刷 *@ 
+    <!-- Add screen-heading in listscreen.js file-->
+            マスタ印刷
+        </label>
+
+    </div>
+
+
+    <!-- Popup Content -->
+
+    <div class="popup-content">
+
+        <!-- Print Range -->
+
+        <fieldset class="group-box">
+
+            <legend>
+                印刷範囲指定
+            </legend>
+
+            <div class="range-container">
+
+                <label class="field-label"
+                       id="rangeFieldLabel">
+                    <!-- Add rangeFieldLabel in listscreen.js file-->
+                    @* 荷　主 *@ 
+
+                </label>
+
+
+                <div class="range-content">
+
+                    <div class="range-row">
+
+                        <input type="text"
+                               class="code-input">
+
+                        <input type="text"
+                               class="name-input">
+
+                        <span class="range-text">
+                            から
+                        </span>
+
+                    </div>
+
+
+                    <div class="range-row">
+
+                        <input type="text"
+                               class="code-input">
+
+                        <input type="text"
+                               class="name-input">
+
+                        <span class="range-text">
+                            まで
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </fieldset>
+
+
+        <!-- Print Type -->
+
+        <fieldset class="group-box"
+                  id="printTypeSection">
+
+            <legend>
+                印刷形式選択
+            </legend>
+
+            <div class="radio-group">
+
+                <label>
+
+                    <input type="radio"
+                           name="printType"
+                           checked>
+
+                    マスタ一覧
+
+                </label>
+
+
+                <label>
+
+                    <input type="radio"
+                           name="printType">
+
+                    コード一覧
+
+                </label>
+
+            </div>
+
+        </fieldset>
+
+
+        <!-- Print Order -->
+
+        <fieldset class="group-box"
+                  id="printOrderSection">
+
+            <legend>
+                印刷順選択
+            </legend>
+
+            <div class="radio-group">
+
+                <label>
+
+                    <input type="radio"
+                           name="printOrder"
+                           checked>
+
+                    コード順
+
+                </label>
+
+
+                <label>
+
+                    <input type="radio"
+                           name="printOrder">
+
+                    ふりがな順
+
+                </label>
+
+            </div>
+
+        </fieldset>
+
+    </div>
+
+
+    <!-- Message -->
+
+    <section class="list-message-area">
+
+        <label>
+            メッセージ：
+        </label>
+
+    </section>
+
+
+    <!-- Footer -->
+
+    <footer class="popup-footer">
+
+        <button type="button">
+            F1:
+        </button>
+
+        <button type="button">
+            F6:ﾏｽﾀ検索
+        </button>
+
+        <button type="button">
+            F8:CSV出力
+        </button>
+
+        <button type="button">
+            F9:印刷
+        </button>
+
+        <button type="button">
+            F10:画面
+        </button>
+
+        <button type="button">
+            F11:中止
+        </button>
+
+        <button type="button"
+                id="btnPopupCloseFooter">
+
+            F12:終了
+
+        </button>
+
+    </footer>
+
+</div>

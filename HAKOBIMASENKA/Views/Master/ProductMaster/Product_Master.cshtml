@@ -1,0 +1,256 @@
+﻿@{
+	ViewData["Title"] = "品名マスタ";
+}
+
+<link rel="stylesheet" href="~/css/common.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/product_master.css" asp-append-version="true">
+<link rel="stylesheet" href="~/css/listscreen.css" asp-append-version="true">
+<link rel="stylesheet" href="~/css/japanesecalendar.css" asp-append-version="true">
+
+<link rel="stylesheet" href="~/css/master_search_css/product_classification_search.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/master_search_css/transportation_record_search.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/master_search_css/product_name_search.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/master_search_css/dummy_master_registration.css" asp-append-version="true" />
+
+<!-- Main window-->
+<div class="main-container">
+	<!-- Screen header-->
+	<header class="page-header">
+		<div class="screen-name">
+			品名マスタ
+		</div>
+		<label type="button"
+			   id="mode-lbl"
+			   class="lbl-new">
+			新　規
+		</label>
+		@* <div class="new-screen">
+			<label class="lbl-new">新　規</label>
+		</div> *@
+	</header>
+	<section class="master-section">
+		<div class="master-row">
+			<label for="originCode">
+				品名ｺｰﾄﾞ
+			</label>
+			<input id="originCode" type="text" value="" maxlength="10" 
+				   inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+		</div>
+		<div class="master-row">
+			<label for="originName">
+				品　　名
+			</label>
+			<input id="originName" type="text" value="">
+		</div>
+	</section>
+	<main class="mainContent-layout">
+		<!-- Editable Area(Left)-->
+		<section class="edit-panel">
+			<!--Tab1-->
+			<nav class="tab-navigation"
+						 id="productTabNavigation"
+				 data-digi-chk="@ViewBag.DIGI_Chk"
+				 data-kyuyo-chk="@ViewBag.KYUYO_Chk">
+
+				<button type="button" class="tab-button active" data-tab="basicSetting">
+					基本設定
+				</button>
+
+				<button type="button" class="tab-button" data-tab="digitacoSetting">
+					ﾃﾞｼﾞﾀｺｵﾌﾟｼｮﾝ設定
+				</button>
+
+				<button type="button" class="tab-button" data-tab="salarySetting">
+					給与ｵﾌﾟｼｮﾝ設定
+				</button>
+			</nav>
+			<!--Tab details-->
+			<section class="tab-container">
+				<!--Basic settings-->
+				<section id="basicSetting" class="tab-content active">
+					<div class="tab-details">
+						<div class="tab-row">
+							<label for="furigana">
+								フリガナ
+							</label>
+							<input type="text" id="furigana">
+						</div>
+						<div class="tab-row">
+							<label for="abbreviation">
+								略　　称
+							</label>
+							<input type="text" id="abbreviation" class="short">
+						</div>
+						<div class="tab-row">
+							<label>品名区分</label>
+							<div class="productCategory-row">
+								<input type="text"
+									   id="productCategory-code"
+									   class="master-code"
+									   inputmode="numeric"
+									   maxlength="4"
+									   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+
+								<input type="text" id="productCategory-name" class="master-name" readonly="">
+							</div>
+						</div>
+						<div class="tab-row">
+							<label>輸送実績区分</label>
+							<div class="transPerformCategory-row">
+								<input type="text"
+									   id="transPerformCategory-code"
+									   class="master-code"
+									   inputmode="numeric"
+									   maxlength="4"
+									   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+
+								<input type="text" id="transPerformCategory-name" class="master-name" readonly="">
+							</div>
+						</div>
+						<div class="tab-row">
+							<label for="unitWeight">単位重量</label>
+							<div class="unit-weight-input">
+								<input type="text"
+									   id="unitweight"
+									   inputmode="decimal">
+								<span id="kiloGram" class="input-span">Kg</span>
+							</div>
+						</div>
+						<div class="tab-row">
+							<label for="capacity">容　　量</label>
+							<div class="capacity-input">
+								<input type="text"
+									   id="capacity"
+									   inputmode="numeric"
+									   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+								<span id="meter" class="input-span">10m　=　100<sup>3</sup></span>
+							</div>
+						</div>
+					</div>
+
+				</section>
+				<section id="digitacoSetting" class="tab-content">
+					<div class="tab-row">
+						<label>ﾃﾞｼﾞﾀｺｺｰﾄﾞ</label>
+						<input type="text" id="didgitaco" maxlength="15"
+							   inputmode="numeric"
+							   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+					</div>
+				</section>
+				<section id="salarySetting" class="tab-content" hidden>
+					<div class="tab-row">
+						<label>手当掛率</label>
+						<div class="salary-input">
+							<input type="text"
+								   id="salary"
+								   name="AllowanceRate"
+								   inputmode="decimal"
+								   maxlength="6"
+								   value="100.00" />
+							<span id="percent" class="input-span">％</span>
+						</div>
+					</div>
+				</section>
+			</section>
+		</section>
+
+	</main>
+	<!-- Message Area -->
+	<section class="message-area">
+		<label>ﾒｯｾｰｼﾞ：</label>
+		<span id="message-label"></span>
+	</section>
+
+	<!-- Footer Function Keys -->
+	<footer class="function-footer">
+
+		<button type="button" id="btnRegister">
+			F1:登　録
+		</button>
+
+		<button type="button" id="btnCopy" disabled>
+			F2:コピー
+		</button>
+
+		<button type="button" disabled>
+			F3:
+		</button>
+
+		<button type="button" id="btnDelete" disabled>
+			F4:削　除
+		</button>
+
+		<button type="button" id="btnSearch">
+			F5:検　索
+		</button>
+
+		<button type="button" id="btnMasterSearch" disabled>
+			F6:マスタ検索
+		</button>
+
+		<button type="button" id="btnPrevious">
+			F7:≪　前
+		</button>
+
+		<button type="button" id="btnNext">
+			F8:次　≫
+		</button>
+
+		<button type="button" id="btnList" disabled>
+			F9:リスト
+		</button>
+
+		<button type="button" disabled>
+			F10:
+		</button>
+
+		<button type="button" id="btnCancel">
+			F11:中　止
+		</button>
+
+		<button type="button" id="btnExit" data-exit-url="@Url.Action("Main_menu", "MainMenu")">
+			F12:終　了
+		</button>
+
+	</footer>
+
+</div>
+<!--POPUP Display-->
+<div id="printPopup" class="popup-overlay">
+	<div id="printPopupWindow" class="popup-window">
+		<partial name="~/Views/Shared/MasterList/_MasterListPartial.cshtml" />
+	</div>
+</div>
+@* Product Classification Search Popup F6*@
+<partial name="~/Views/Shared/MasterSearch/_ProductClassificationSearchPartial.cshtml"
+		 view-data='new ViewDataDictionary(ViewData)
+   {
+	   ["ScreenName"] = "品名区分検索"
+   }' />
+
+@* Transportation Record Search Popup F6*@
+<partial name="~/Views/Shared/MasterSearch/_TransportationRecordSearchPartial.cshtml"  
+ view-data='new ViewDataDictionary(ViewData)
+   {
+	   ["ScreenName"] = "輸送実績区分検索"
+   }' />
+
+@* Product Name Search Popup F5*@
+<partial name="~/Views/Shared/MasterSearch/_ProductNameSearchPartial.cshtml" />
+
+@* Dummy Master Registration Popup *@
+<partial name="~/Views/Shared/MasterSearch/_DummyMasterRegistrationPartial.cshtml" />
+
+<script src="~/js/common_master.js" asp-append-version="true"></script>
+<script src="~/js/master_screen.js" asp-append-version="true"></script>
+<script src="~/js/listscreen.js" asp-append-version="true"></script>
+<script src="~/js/japanesecalendar.js" asp-append-version="true"></script>
+<script src="~/js/product_master.js" asp-append-version="true"></script>
+
+<script src="~/js/master_search_js/product_classification_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/transportation_record_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/product_name_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/dummy_master_registration.js"asp-append-version="true"></script>
+
+
+

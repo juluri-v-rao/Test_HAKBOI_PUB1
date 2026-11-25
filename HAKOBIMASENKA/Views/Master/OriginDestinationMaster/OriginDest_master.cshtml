@@ -1,0 +1,264 @@
+@{
+	ViewData["Title"] = "発着地マスタ";
+}
+<link rel="stylesheet" href="~/css/originDest_master.css" asp-append-version="true">
+<link rel="stylesheet" href="~/css/listscreen.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/common.css" asp-append-version="true" />
+
+<!-- Main window-->
+<div class="main-container">
+
+	<!-- Hidden values for JavaScript -->
+	<input type="hidden"
+		   id="isNewRecord"
+		   value="@(Model.IsNewRecord ? "true" : "false")" />
+
+	<input type="hidden"
+		   id="isCommonMode"
+		   value="@(Model.IsCommonMode ? "true" : "false")" />
+
+	@* Added by Madhu, for search screen  function work *@
+	<input type="hidden"
+		   id="isFromSearchMode"
+		   value="@(ViewBag.FromSearch == true ? "true" : "false")" />
+
+	<!-- Screen header-->
+	<header class="page-header">
+		<div class="screen-name">
+			発着地マスタ
+		</div>
+
+		<label id="mode-lbl" class="lbl-new">新　規</label>
+	</header>
+	<section class="master-section">
+		<div id="customerInfoSection" class="tab-row">
+			<label>
+				荷　　主
+			</label>
+			<div>
+				<input type="text" id="shipper-code" value="@Model.CustomerCode" class="master-input">
+
+				<input type="text" id="shipper-name" value="@Model.CustomerName" readonly="" class="master-input">
+			</div>
+		</div>
+		<div class="master-row">
+			<label for="originCode">
+				発着地ｺｰﾄﾞ
+			</label>
+			<input id="originCode" type="text" value="@Model.DestinationCode" class="master-input">
+		</div>
+		<div class="master-row">
+			<label for="originName">
+				発着地名
+			</label>
+			<input id="originName" type="text" value="" class="master-input">
+		</div>
+	</section>
+	<main class="mainContent-layout">
+		<!-- Editable Area(Left)-->
+		<section class="edit-panel">
+			<!--Tab1-->
+			<nav class="tab-navigation">
+				<button type="button" class="tab-button active" data-tab="basicSetting">
+					基本設定
+				</button>
+
+				@if (ViewBag.ShowDigitalTab == true)
+				{
+					<button type="button" class="tab-button" data-tab="digitacoSetting">
+						ﾃﾞｼﾞﾀｺｵﾌﾟｼｮﾝ設定
+					</button>
+				}
+			</nav>
+			<!--Tab details-->
+			<section class="tab-container">
+				<!--Basic settings-->
+				<section id="basicSetting" class="tab-content active">
+					<div class="tab-details">
+						<div class="tab-row">
+							<label for="furigana">
+								フリガナ
+							</label>
+							<input type="text" id="furigana">
+						</div>
+						<div class="tab-row">
+							<label for="abbreviation">
+								略　　称
+							</label>
+							<input type="text" id="abbreviation" class="short">
+						</div>
+						<div class="tab-row">
+							<label for="zipCode">郵便番号</label>
+							<div class="zipCode-row">
+								<input type="text" id="zipCode" class="zip">
+								<button type="button" id="btnZipToAddress">
+									〒→住所
+								</button>
+								<button type="button" id="btnAddressToZip">
+									住所→〒
+								</button>
+							</div>
+						</div>
+						<div class="tab-row">
+							<label id="address-label">住　　所</label>
+							<div class="address-block">
+								<input type="text" id="address1">
+								<input type="text" id="address2">
+							</div>
+						</div>
+						<div class="tab-row">
+							<label for="phoneNumber">電話番号</label>
+							<input type="text" id="phoneNumber" class="short">
+						</div>
+						<div class="tab-row">
+							<label for="fax">
+								Ｆ Ａ Ｘ
+							</label>
+							<input type="text" id="faxNumber" class="short">
+						</div>
+						<div class="tab-row">
+							<label>エ リ ア</label>
+							<div class="area-row">
+								<input type="text" id="area-code" class="master-code">
+
+								<input type="text" id="area-name" class="master-name" readonly="">
+							</div>
+						</div>
+						<div class="tab-row">
+							<label for="remarks">摘要・備考</label>
+							<input type="text" id="remarks">
+						</div>
+						<div class="tab-row">
+							<label for="mapUrl">地図 URL</label>
+							<div class="map-row">
+								<button type="button" id="mapBtn">地図表示</button>
+								<input type="text" id="mapUrl">
+							</div>
+						</div>
+					</div>
+
+				</section>
+				@if (ViewBag.ShowDigitalTab == true)
+				{
+					<section id="digitacoSetting" class="tab-content">
+						<div class="tab-row">
+							<label> ﾃﾞｼﾞﾀｺｺｰﾄﾞ</label>
+							<input type="text" id="digitaco">
+						</div>
+					</section>
+				}
+			</section>
+		</section>
+
+		<!-- Right Side Grid table-->
+		<aside class="list-panel">
+			<table class="table-list" data-grid-columns>
+				<thead>
+					<tr>
+						<th data-sort="numeric">ｺｰﾄﾞ</th>
+						<th data-sort="text">発 着 地 名</th>
+					</tr>
+				</thead>
+				<tbody class="table-body">
+					@if (Model.List != null)
+					{
+						foreach (var item in Model.List)
+						{
+							<tr class="list-grid-row" data-code="@item.DestinationCode" tabindex="0">
+								<td>@item.DestinationCode</td>
+								<td>@item.Abbreviation</td>
+							</tr>
+						}
+					}
+				</tbody>
+			</table>
+		</aside>
+
+	</main>
+	<!-- Message Area -->
+	<section class="message-area">
+		<label>メッセージ：</label>
+	</section>
+
+	<!-- Footer Function Keys -->
+	<footer class="function-footer">
+
+		<button type="button" id="btnRegister">
+			F1:登 録
+		</button>
+
+		<button type="button" id="btnCopy">
+			F2:コピー
+		</button>
+
+		<button type="button" disabled>
+			F3:　　
+		</button>
+
+		<button type="button" id="btnDelete">
+			F4:削 除
+		</button>
+
+		<button type="button" disabled>
+			F5:　　
+		</button>
+
+		<button type="button" id="btnMasterSearch" disabled>
+			F6:ﾏｽﾀ検索
+		</button>
+
+		<button type="button" disabled>
+			F7:　　
+		</button>
+
+		<button type="button" disabled>
+			F8:　　
+		</button>
+		@* Added by Madhu, for search screen  function work *@
+		<button type="button" id="btnList" disabled>
+			@(ViewBag.FromSearch == true ? "F9:　　" : "F9:リスト")
+		</button>
+
+		<button type="button" disabled>
+			F10:　　
+		</button>
+
+		<button type="button" id="btnCancel">
+			F11:中 止
+		</button>
+
+		<button type="button" id="btnExit" data-exit-url="@Url.Action("Main_menu", "MainMenu")">
+			F12:終 了
+		</button>
+
+	</footer>
+</div>
+
+<!-- F9 List Popup -->
+<div id="printPopup" class="popup-overlay">
+	<div id="printPopupWindow" class="popup-window">
+		<partial name="~/Views/Shared/MasterList/_MasterListPartial.cshtml" />
+	</div>
+</div>
+
+@* Shipper Search Search Popup *@
+<partial name="~/Views/Shared/MasterSearch/_ShipperSearchPartial.cshtml"
+		 view-data='new ViewDataDictionary(ViewData)
+		 {
+			 ["ScreenName"] = "荷主検索"
+		 }' />
+
+@* Area Search Search Popup *@
+<partial name="~/Views/Shared/MasterSearch/_AreaSearchPartial.cshtml"
+		 view-data='new ViewDataDictionary(ViewData)
+		 {
+			 ["ScreenName"] = "エリア検索"
+		 }' />
+<script src="~/js/master_screen.js" asp-append-version="true"></script>
+<script src="~/js/listscreen.js" asp-append-version="true"></script>
+@* date boxes typed slot by slot (取引開始日 / 取引終了日 / 履歴) *@
+<script src="~/js/date_slots.js" asp-append-version="true"></script>
+<script src="~/js/originDest_master.js" asp-append-version="true"></script>
+<script src="~/js/common_master.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/shipper_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/area_search.js" asp-append-version="true"></script>

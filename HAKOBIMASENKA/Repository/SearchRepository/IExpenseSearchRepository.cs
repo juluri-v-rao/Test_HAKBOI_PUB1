@@ -1,0 +1,11 @@
+﻿using HAKOBIMASENKA.Models.ViewModels.SearchResultDto;
+
+namespace HAKOBIMASENKA.Repository.SearchRepository
+{
+    public interface IExpenseSearchRepository
+    {
+        Task<IEnumerable<ExpenseSearchResultDto>> SearchAsync(
+            string? expenseName,
+            string? expenseCategory);
+    }
+}

@@ -1,0 +1,352 @@
+﻿@{
+    ViewData["Title"] = "検索";
+}
+
+
+@section Styles
+{
+    @* Extra *@
+    <link rel="stylesheet" href="~/css/master_search_css/shipper_search.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/css/master_search_css/chartered_search.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/master_search_css/vehicle_search.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/master_search_css/driver_search.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/master_search_css/product_classification_search.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/css/master_search_css/product_name_search.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/master_search_css/area_search.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/master_search_css/unit_search.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/master_search_css/transportation_record_search.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/master_search_css/company_branch_search.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/master_search_css/origin_destination_search.css" 　asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/master_search_css/product_name_search.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/master_search_css/company_branch_search.css" asp-append-version="true" />
+
+
+    @* Extra no jira*@
+    <link rel="stylesheet" href="~/css/master_search_css/department_search.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/master_search_css/expense_search.css" asp-append-version="true" />
+
+    @* order search *@
+    <link rel="stylesheet" href="~/css/master_search_css/order_search.css" asp-append-version="true" />
+
+
+    @* In order enter date formate need japnese css *@
+    <link rel="stylesheet" href="~/css/japanesecalendar.css" asp-append-version="true" />
+}
+
+<div class="search-test-screen">
+    <header class="search-test-header">
+        <span>検索画面 Search Screens</span>
+    </header>
+
+    <div class="search-test-buttons">
+        <button type="button" data-search="shipper">荷主検索</button>
+        <button type="button" data-search="chartered">傭車検索</button> 
+        <button type="button" data-search="productClassification">品名区分検索</button>
+        <button type="button" data-search="transportationRecord">輸送実績区分検索</button>
+        <button type="button" data-search="area">エリア検索</button>
+        <button type="button" data-search="unit">単位検索</button>
+        <button type="button" data-search="originDestination">発着地検索</button>
+        <button type="button" data-search="productName">品名検索</button>
+        <button type="button" data-search="companyBranch">自社支店検索</button>
+        <button type="button" data-search="orderSearch">受注検索</button>
+        <button type="button" data-search="DriverSearch">運転手検索</button>
+        <button type="button" data-search="VehicleSearch">車輌検索</button>
+
+        <br />
+
+        <div>
+            <button type="button"
+                    id="btnExit_F12"
+                    data-exit-url="@Url.Action("Main_menu", "MainMenu")">
+                Close　:　終了
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Dummy Master Registration Screen -->
+<div id="dummyMasterModal" class="dummy-master-overlay" style="display: none;">
+    <div class="dummy-master-window">
+
+        <!-- Title bar -->
+        <header class="dummy-master-titlebar">
+            <span>マスタ登録 / Master Registration</span>
+
+            <button type="button"
+                    id="btnCloseDummyMaster"
+                    class="dummy-master-close"
+                    aria-label="Close">
+                ×
+            </button>
+        </header>
+
+        <!-- Message -->
+        <div class="dummy-master-message">
+            <p>Master Registration/Search still not implemented.</p>
+            <p>マスタ登録／検索 機能はまだ実装されていません。</p>
+        </div>
+
+    </div>
+</div>
+
+
+@* Extra         *@
+<partial name="~/Views/Shared/MasterSearch/_ShipperSearchPartial.cshtml" />
+@* Charter Carrier Search Popup *@
+<partial name="~/Views/Shared/MasterSearch/_CharteredSearchPartial.cshtml" />
+
+@* Product Classification Search Popup *@
+<partial name="~/Views/Shared/MasterSearch/_ProductClassificationSearchPartial.cshtml" />
+
+@* Product Name Search Popup *@
+<partial name="~/Views/Shared/MasterSearch/_ProductNameSearchPartial.cshtml" />
+@* Area Search Popup *@
+<partial name="~/Views/Shared/MasterSearch/_AreaSearchPartial.cshtml" />
+
+@* Unit Search Popup *@
+<partial name="~/Views/Shared/MasterSearch/_UnitSearchPartial.cshtml" />
+@* Transport Performance Type Search Popup *@
+<partial name="~/Views/Shared/MasterSearch/_TransportationRecordSearchPartial.cshtml" />
+@* Company Branch Search Popup *@
+<partial name="~/Views/Shared/MasterSearch/_CompanyBranchSearchPartial.cshtml" />
+@* Origin/Destination Search Popup *@
+<partial name="~/Views/Shared/MasterSearch/_OriginDestinationSearchPartial.cshtml" />
+
+@* --------------------------------------------------------------------------------------------------------------------- *@
+
+@* Extra no jira*@
+@* Department Search Popup *@
+<partial name="~/Views/Shared/MasterSearch/_DepartmentSearchPartial.cshtml" />
+@* Expense Search Popup *@
+<partial name="~/Views/Shared/MasterSearch/_ExpenseSearchPartial.cshtml" />
+@* Driver Search Popup *@
+<partial name="~/Views/Shared/MasterSearch/_DriverSearchPartial.cshtml" />
+@* Driver Search Popup *@
+<partial name="~/Views/Shared/MasterSearch/_VehicleSearchPartial.cshtml" />
+@* Order Search Popup *@
+<partial name="~/Views/Shared/MasterSearch/_OrderSearch.cshtml" />
+
+@* JS *@
+@* Extra  *@
+<script src="~/js/master_search_js/shipper_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/chartered_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/vehicle_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/driver_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/product_classification_search.js" asp-append-version="true"></script>
+
+<script src="~/js/master_search_js/product_name_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/area_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/unit_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/transportation_record_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/company_branch_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/origin_destination_search.js" 　asp-append-version="true"></script>
+<script src="~/js/master_search_js/product_name_search.js" asp-append-version="true"></script>
+
+@* Extra no jira *@
+<script src="~/js/master_search_js/department_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/expense_search.js" asp-append-version="true"></script>
+
+
+@* order search js*@
+<script src="~/js/master_search_js/order_search.js" asp-append-version="true"></script>
+
+@* In order enter date formate need japnese js *@
+<script src="~/js/japanesecalendar.js" asp-append-version="true"></script>
+
+@* For Zero '0' padding calling from common master *@
+<script src="~/js/common_master.js" asp-append-version="true"></script>
+
+
+<style>
+    .search-test-screen {
+        padding: 10px;
+        min-height: 90vh;
+        background: #dcdcdc;
+    }
+
+    .search-test-header {
+        padding: 8px 12px;
+        margin-bottom: 12px;
+        background: #444;
+        color: white;
+        font-weight: bold;
+    }
+
+    .search-test-buttons {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(150px, 240px));
+        gap: 8px;
+    }
+
+        .search-test-buttons button {
+            min-height: 42px;
+            border: 1px solid #999;
+            background: #eee;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+            .search-test-buttons button:hover {
+                background: #ccc;
+            }
+
+
+    /* Dummy Master Registration Overlay */
+    .dummy-master-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 2147483647;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.4);
+    }
+
+    /* Dummy window */
+    .dummy-master-window {
+        width: min(1100px, 95vw);
+        height: min(750px, 90vh);
+        min-height: 600px;
+        background: #dcdcdc;
+        border: 1px solid #888;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+        overflow: auto;
+    }
+
+    /* Title bar */
+    .dummy-master-titlebar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 32px;
+        padding-left: 10px;
+        background: #c5c5c5;
+        color: #222;
+        font-weight: bold;
+    }
+
+    /* Close button at top-right */
+    .dummy-master-close {
+        width: 38px;
+        height: 32px;
+        border: none;
+        background: transparent;
+        color: #333;
+        font-size: 22px;
+        cursor: pointer;
+    }
+
+        .dummy-master-close:hover {
+            background: #e81123;
+            color: white;
+        }
+
+    /* Message area */
+    .dummy-master-message {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 185px;
+        padding: 20px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+</style>
+
+
+
+
+<script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // Map each test button to its existing search popup event.
+            const searchPopupEvents = {
+                shipper: "openShipperSearchPopup",
+                chartered: "openCharteredSearchPopup",
+                   orderSearch: "openOrderSearchPopup",
+                   DriverSearch: "driverSearchPopup",
+                   VehicleSearch: "vehicleSearchPopup",
+                productName: "openProductNameSearchPopup",
+                area: "openAreaSearchPopup",
+                productClassification: "openProductClassificationSearchPopup",
+                unit: "openUnitSearchPopup",
+                transportationRecord: "openTransportationRecordSearchPopup",
+                department: "openDepartmentSearchPopup",
+                expense: "openExpenseSearchPopup",
+                companyBranch: "openCompanyBranchSearchPopup",
+                originDestination: "openOriginDestinationSearchPopup"
+            };
+
+            // Open the corresponding popup when a test button is clicked.
+            document.querySelectorAll("[data-search]").forEach(function (button) {
+                button.addEventListener("click", function () {
+                    const searchType = this.dataset.search;
+                    const eventName = searchPopupEvents[searchType];
+
+                    if (!eventName) {
+                        console.warn("No popup event configured for:", searchType);
+                        return;
+                    }
+
+                    document.dispatchEvent(new CustomEvent(eventName));
+                });
+            });
+
+            // F12:終了 - Return to Main Menu.
+            const btnExit = document.getElementById("btnExit_F12");
+
+            if (btnExit) {
+                btnExit.addEventListener("click", function () {
+                    const exitUrl = this.dataset.exitUrl;
+
+                    if (exitUrl) {
+                        window.location.href = exitUrl;
+                    }
+                });
+            }
+
+
+            // Dummy Master Registration screen.
+            const dummyMasterModal =
+                document.getElementById("dummyMasterModal");
+
+            const btnCloseDummyMaster =
+                document.getElementById("btnCloseDummyMaster");
+
+            // Close the dummy screen using the top-right button.
+            btnCloseDummyMaster?.addEventListener("click", function () {
+                if (dummyMasterModal) {
+                    dummyMasterModal.style.display = "none";
+                }
+            });
+
+               // Receive the request to open the dummy registration screen.
+        window.addEventListener("message", function (event) {
+            if (event.origin !== window.location.origin) {
+                return;
+            }
+
+            if (event.data?.action === "openDummyMasterRegistration") {
+                if (!dummyMasterModal) {
+                    return;
+                }
+
+                // Move the modal directly under body to avoid parent stacking contexts.
+                document.body.appendChild(dummyMasterModal);
+
+                // Display it above the search popup.
+                dummyMasterModal.style.position = "fixed";
+                dummyMasterModal.style.inset = "0";
+                dummyMasterModal.style.zIndex = "2147483647";
+                dummyMasterModal.style.display = "flex";
+            }
+        });
+    });
+
+
+</script>

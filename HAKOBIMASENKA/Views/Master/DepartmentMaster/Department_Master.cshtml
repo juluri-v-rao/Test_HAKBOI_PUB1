@@ -1,0 +1,97 @@
+﻿@model List<HAKOBIMASENKA.Models.ViewModels.DepartmentMasterResultDto>
+@{
+    ViewData["Title"] = "部門マスタ";
+}
+
+@section Styles
+{
+    <link rel="stylesheet" href="~/css/departmentmaster.css" />
+    <link rel="stylesheet" href="~/css/listscreen.css" asp-append-version="true" />
+}
+
+<div class="main-container">
+    <!-- Screen Header -->
+    <header class="page-header">
+        <div class="screen-name">部門マスタ</div>
+        <button type="button" id="btnNew" class="new-button" disabled>新　規</button>
+    </header>
+
+    <!-- Master Section -->
+    <section class="master-section">
+        <div class="master-row">
+            <label>コード</label>
+            <input type="text" id="departmentCode" class="master-input master-input-code" maxlength="2">
+        </div>
+        <div class="master-row">
+            <label>名称</label>
+            <input type="text" id="departmentName" class="master-input master-input-name" maxlength="12">
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="mainContent-layout">
+        <!-- Editable Area -->
+        <section class="edit-panel"></section>
+
+        <!-- List Table -->
+        <aside class="list-panel">
+            <table class="table-list">
+                <thead>
+                    <tr>
+                        <th>コード</th>
+                        <th>名称</th>
+                    </tr>
+                </thead>
+                <tbody class="table-body">
+                    @foreach (var department in Model)
+                    {
+                        <tr class="list-grid-row"
+                            data-code="@department.DepartmentCode"
+                            data-name="@department.DepartmentName">
+                            <td>@department.DepartmentCode</td>
+                            <td>@department.DepartmentName</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </aside>
+    </main>
+
+    <!-- Message -->
+    <section class="message-area">
+        <label>メッセージ：</label>
+    </section>
+
+    <!-- Function Keys -->
+    <footer class="function-footer">
+        <button id="btnRegister">F1:登録</button>
+        <button id="btnCopy" disabled>F2:コピー</button>
+        <button id="btnF3" disabled>F3:</button>
+        <button id="btnDelete" disabled>F4:削除</button>
+        <button id="btnF5" disabled>F5:</button>
+        <button type="button" id="btnMasterSearch" disabled>F6:</button>
+        <button id="btnF7" disabled>F7:</button>
+        <button id="btnF8" disabled>F8:</button>
+        <button type="button" id="btnList">F9:リスト</button>
+        <button id="btnF10" disabled>F10:</button>
+        <button type="button" id="btnClear">F11:中止</button>
+        <button type="button"
+                id="btnExit"
+                data-exit-url="@Url.Action("Main_menu", "MainMenu")">
+            F12:終了
+        </button>
+    </footer>
+</div>
+
+<!-- F9 List Popup -->
+<div id="printPopup" class="popup-overlay">
+    <div id="printPopupWindow" class="popup-window">
+        <partial name="~/Views/Shared/MasterList/_MasterListPartial.cshtml" />
+    </div>
+</div>
+
+<script src="~/js/common_master.js"></script>
+<script src="~/js/departmentmaster.js"></script>
+<script src="~/js/master_screen.js"></script>
+<script src="~/js/listscreen.js" asp-append-version="true"></script>
+

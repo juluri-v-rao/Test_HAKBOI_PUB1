@@ -1,0 +1,418 @@
+﻿/* =========================================
+   Screen: All screen that use common layout
+
+   contents → header 
+            → message area
+            → function footer
+            → height, width, margins
+            → input fields(readonly, editable)
+
+   Purpose: cascade styling.
+
+  ========================================= */
+
+/*	=========================================
+	Global Reset & Base Page Styles
+	========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "MS Gothic", "ＭＳ ゴシック", sans-serif;
+}
+
+/* =========================================
+                    HEADER
+   ========================================= */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    height: 35px;
+    background-color: silver;
+    padding: 6px 0px 0px 0px;
+}
+
+.screen-name {
+    width: fit-content;
+    background-color: #4b4b4b;
+    color: #fff;
+    border-bottom: 1px solid #fff;
+    border-right: 1px solid #fff;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 0px 20px;
+    align-content: center;
+}
+
+.lbl-new {
+    align-content: center;
+    border-bottom: 1px solid #fff;
+    border-right: 1px solid #fff;
+    background-color: darkblue;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 0px 20px;
+}
+
+/* =========================================
+	Master Controls_RadioButton
+   ========================================= */
+.option-button-group {
+    display: flex;
+    gap: 4px;
+}
+
+.select-option-btn {
+    width: 121px;
+    height: 24px;
+    text-align: center;
+    box-sizing: border-box;
+    background-color: #D9D9D9;
+    border-top: 1px solid #fff;
+    border-left: 1px solid #fff;
+    border-right: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    box-shadow: 0 1px 0 #888;
+    text-wrap: nowrap;
+}
+
+    .select-option-btn.active {
+        width: 121px;
+        height: 24px;
+        text-align: center;
+        box-sizing: border-box;
+        background-color: #FFFF80;
+        border-top: 1px solid #fff;
+        border-left: 1px solid #fff;
+        border-right: 1px solid #fff;
+        border-bottom: 1px solid #fff;
+        box-shadow: 0 1px 0 #888;
+    }
+
+/* =========================================
+            InputFieds focus styling
+   ========================================= */
+
+input {
+    align-items: center;
+    padding: 0 2px;
+    box-sizing: border-box;
+    border-top: 1px solid #fff;
+    border-left: 1px solid #fff;
+    border-right: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 0 #888;
+}
+
+input:focus {
+    align-items: center;
+    background: rgb(128,255,255);
+    outline: none;
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    border-right: 2px solid #fff;
+    border-bottom: none;
+    border-radius: 2px 2px 0px 0px;
+    box-shadow: 0 2px 0 highlight;
+}
+
+input[readonly] {
+    outline: none;
+    box-sizing: border-box;
+    background-color: silver;
+    border-top: 1px solid #fff;
+    border-left: 1px solid #fff;
+    border-right: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+
+    box-shadow: 0 1px 0 #888;
+}
+
+    input[readonly]:focus {
+        outline: none;
+        box-sizing: border-box;
+        background-color: silver;
+        border-top: 1px solid #fff;
+        border-left: 1px solid #fff;
+        border-right: 1px solid #fff;
+        border-bottom: none;
+
+        border-radius: 2px 2px 0px 0px;
+        box-shadow: 0 2px 0 highlight;
+    }
+
+/*========================================
+           custom style section
+ =========================================*/
+
+/*---height---*/
+.h-21 {
+    height: 21px;
+}
+
+.h-22 {
+    height: 22px;
+}
+
+.h-23 {
+    height: 23px;
+}
+
+/*---Width---*/
+.w-22 {
+    width: 22px;
+    min-width: 22px;
+    max-width: 22px;
+}
+
+.w-40 {
+    width: 40px;
+    min-width: 40px;
+    max-width: 40px;
+}
+
+.w-45 {
+    width: 45px;
+    min-width: 45px;
+    max-width: 45px;
+}
+
+.w-50 {
+    width: 50px;
+    min-width: 50px;
+    max-width: 50px;
+}
+
+.w-55 {
+    width: 55px;
+    min-width: 55px;
+    max-width: 55px;
+}
+
+.w-60 {
+    width: 60px;
+    min-width: 60px;
+    max-width: 60px;
+}
+
+.w-70 {
+    width: 70px;
+    min-width: 70px;
+    max-width: 70px;
+}
+
+.w-73 {
+    width: 73px;
+    min-width: 73px;
+    max-width: 73px;
+}
+
+.w-80 {
+    width: 80px;
+    min-width: 80px;
+    max-width: 80px;
+}
+
+.w-83 {
+    width: 83px;
+    min-width: 83px;
+    max-width: 83px;
+}
+
+.w-89 {
+    width: 89px;
+    min-width: 89px;
+    max-width: 89px;
+}
+
+.w-90 {
+    width: 90px;
+    min-width: 90px;
+    max-width: 90px;
+}
+
+.w-96 {
+    width: 96px;
+    min-width: 96px;
+    max-width: 96px;
+}
+
+.w-100 {
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+}
+
+.w-102 {
+    width: 102px;
+    min-width: 102px;
+    max-width: 102px;
+}
+
+.w-104 {
+    width: 104px;
+    min-width: 104px;
+    max-width: 104px;
+}
+
+.w-113 {
+    width: 113px;
+    min-width: 113px;
+    max-width: 113px;
+}
+
+.w-125 {
+    width: 125px;
+    min-width: 125px;
+    max-width: 125px;
+}
+
+.w-127 {
+    width: 127px;
+    min-width: 127px;
+    max-width: 127px;
+}
+
+.w-126 {
+    width: 126px;
+    min-width: 126px;
+    max-width: 126px;
+}
+
+.w-163 {
+    width: 163px;
+    min-width: 163px;
+    max-width: 163px;
+}
+
+.w-165 {
+    width: 165px;
+    min-width: 165px;
+    max-width: 165px;
+}
+
+.w-167 {
+    width: 167px;
+    min-width: 167px;
+    max-width: 167px;
+}
+
+.w-168 {
+    width: 168px;
+    min-width: 168px;
+    max-width: 168px;
+}
+
+.w-175 {
+    width: 175px;
+    min-width: 175px;
+    max-width: 175px;
+}
+
+.w-196 {
+    width: 196px;
+    min-width: 196px;
+    max-width: 196px;
+}
+
+.w-198 {
+    width: 198px;
+    min-width: 198px;
+    max-width: 198px;
+}
+
+.w-205 {
+    width: 205px;
+    min-width: 205px;
+    max-width: 205px;
+}
+
+.w-256 {
+    width: 256px;
+    min-width: 256px;
+    max-width: 256px;
+}
+
+/*----margin-------*/
+.mt-1 {
+    margin-top: 1px;
+}
+
+/* =========================================
+                    MESSAGE
+   ========================================= */
+
+.message-area {
+    border-top: 1px solid #A0A0A0;
+    border-bottom: 1px solid #fff;
+    padding: 6px 0px 6px 6px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    margin-top: 6px;
+    margin-bottom: 2px;
+    font-weight: bold;
+    background: silver;
+}
+
+#message-label {
+    color: darkblue;
+    font-weight: bold;
+}
+
+/* =========================================
+                FUNCTION FOOTER
+   ========================================= */
+
+.function-footer {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+    margin-top: auto;
+    margin-bottom:1px;
+}
+
+    .function-footer button {
+        flex: 1;
+        height: 35px;
+        font-size: 12px;
+        border: 1px solid transparent; /* room for the hover border: the text does not shift */
+        border-radius: 4px;
+        background-color: #fff;
+    }
+
+        /* Windows button hover: light blue fill, blue border.
+           Not the system color "highlight": Chrome / Edge draw it dark grey, not the Windows blue. */
+        .function-footer button:enabled:hover {
+            background-color: #D9EEFF;
+            border-color: #0078D7;
+        }
+
+.function-footer > :nth-child(4),
+.function-footer > :nth-child(8) {
+    margin-right: 12px;
+}
+
+/*========================================
+         format input sections(L/R)
+ =========================================*/
+
+.decimal-input {
+    text-align: right;
+}
+
+/*========================================
+      colors when new and editable mode
+ =========================================*/
+/*light blue/cyan */
+.code-editable:focus {
+    background: #80FFFF;
+}
+
+/*pink*/
+.code-readonly {
+    background: #FFB6C1;
+}

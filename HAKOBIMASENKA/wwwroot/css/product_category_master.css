@@ -1,0 +1,357 @@
+﻿/* =========================================
+   Screen: Product Category Master
+
+   Navigation:
+       Main Menu
+           -> Basic Master
+           -> Product Category Master
+
+   Migrated From: FrmM_Mast1.designer.vb
+
+   Purpose: Product Category Master styling.
+
+  ========================================= */
+
+
+/* =========================================
+                    RESET
+   ========================================= */
+
+* {
+    font-size: 14px;
+}
+
+
+/* =========================================
+                HTML / BODY
+   ========================================= */
+
+html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    font-family: "MS Gothic", "ＭＳ ゴシック", sans-serif;
+    font-size: 14px;
+    background-color: silver;
+    color: #222;
+    overflow: hidden;
+}
+
+/* =========================================
+                MAIN PAGE
+   ========================================= */
+
+.main-container {
+    width: 100%;
+    height: 100vh;
+    padding: 0 2px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================================
+                    HEADER
+   ========================================= */
+
+    /*from common.js*/
+
+/* =========================================
+            BASIC INFORMATION
+   ========================================= */
+
+.master-section {
+    background-color: gainsboro;
+    margin-top: 0;
+    padding: 12px;
+}
+
+.master-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+    .master-row label {
+        width: 105px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 12px;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+
+    .master-row input {
+        margin-left: 8px;
+        width: 125px;
+        height: 23px;
+        padding: 0 2px;
+    }
+
+
+/* =========================================
+                MAIN CONTENT
+   ========================================= */
+
+.mainContent-layout {
+    display: flex;
+    gap: 9px;
+    flex: 1;
+    min-height: 0;
+}
+
+/* =========================================
+                LEFT / EDIT AREA
+   ========================================= */
+
+.edit-panel {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+}
+
+/* =========================================
+                    TABS
+   ========================================= */
+
+.tab-navigation {
+    display: flex;
+    width: 60px;
+    margin-top: 6px;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 4px 10px;
+    background-color: #ececec;
+    border: 1px solid #bcbcbc;
+    border-radius: 2px 2px 0px 0px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 14px;
+    text-wrap: nowrap;
+}
+
+    .tab-button.active {
+        background-color: #fff;
+        border: none;
+        font-weight: normal;
+    }
+
+#tab-btn.active {
+    outline: none;
+}
+
+
+/* =========================================
+                TAB CONTAINER
+   ========================================= */
+
+.tab-container {
+    border: 2px solid #fff;
+    min-height: 550px;
+    padding: 12px;
+    background-color: gainsboro;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.tab-content {
+    display: none;
+}
+
+    .tab-content.active {
+        display: block;
+    }
+
+.tab-details {
+    display: flex;
+    gap: 4px;
+    overflow: hidden;
+    /* room for the input's bottom box-shadow from common.css (1px, 2px on focus),
+       otherwise overflow:hidden cuts it off */
+    padding-bottom: 2px;
+}
+
+.tab-row {
+    display: flex;
+    align-items: start;
+}
+
+    .tab-row label {
+        width: 105px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 12px;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+
+    .tab-row input {
+        margin-left: 8px;
+        width: 125px;
+        height: 24px;
+        padding: 0 2px;
+    }
+
+.digital-code-input {
+    margin-left: 8px;
+    width: 125px;
+    /*height: 23px;
+    padding: 0 2px;*/
+}
+
+
+/* =========================================
+                RIGHT SIDE LIST
+   ========================================= */
+
+.list-panel {
+    width: 233px;
+    background-color: #A0A0A0;
+    border: 1px solid #5e5e5e;
+    margin-top: 10px;
+    flex-shrink: 0;
+    overflow: auto;
+}
+
+/* legacy column widths (FrmM_Mast1: Columns(0).Width = 41, Columns(1).Width = 137): a longer name is cut */
+.table-list {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 178px;
+}
+
+    .table-list th,
+    .table-list td {
+        border: 1px solid #d0d0d0;
+        padding: 2px 4px;
+        height: 21px;
+        text-align: left;
+        font-size: 14px;
+    }
+
+    .table-list th {
+        position: sticky;
+        top: 0;
+        background-color: #fff;
+        z-index: 100;
+        font-weight: normal;
+        /* legacy ColumnHeadersDefaultCellStyle: MiddleCenter (the cells stay left) */
+        text-align: center;
+    }
+
+    /* by class, so the width stays with its column after a move (grid_columns.js) */
+    .table-list th.code-header {
+        box-sizing: border-box;
+        width: 41px;
+    }
+
+    .table-list th.name-header {
+        box-sizing: border-box;
+        width: 137px;
+    }
+
+    .table-list tbody tr:nth-child(odd) td {
+        cursor: pointer;
+    }
+
+    .table-list tbody tr:nth-child(even) td {
+        cursor: pointer;
+        background: silver;
+    }
+
+.table-body tr.selected td {
+    background-color: #0078d7 !important;
+    color: #fff;
+}
+
+.table-body {
+    background-color: #fff;
+    max-height: 600px;
+}
+
+
+/* =========================================
+                    MESSAGE
+   ========================================= */
+
+    /*from common.js*/
+
+/* =========================================
+            LIST WINDOW OVERLAY
+   ========================================= */
+
+.list-window-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+}
+
+
+/* =========================================
+                FUNCTION FOOTER
+   ========================================= */
+
+        #btnF3, #btnF5,
+        #btnF6, #btnF7,
+        #btnF8, #btnF10 {
+            text-align: left;
+            text-indent: 30px;
+        }
+
+/* =========================================
+                    Custom
+   ========================================= */
+.master-row1 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+    .master-row1 label {
+        width: 105px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 12px;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+
+    .master-row1 input {
+        margin-left: 8px;
+        width: 38px;
+        height: 24px;
+        padding: 0 2px;
+    }
+
+/* =========================================
+            InputFieds focus styling
+   ========================================= */
+
+#pcCode[readonly] {
+    background: #FFB6C1;
+}

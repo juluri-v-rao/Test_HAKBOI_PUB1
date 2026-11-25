@@ -1,0 +1,131 @@
+﻿<link rel="stylesheet" href="~/css/master_search_css/area_search.css" asp-append-version="true" />
+
+@* Area Search Popup *@
+<div id="areaSearchPopup"
+     class="area-search-overlay"
+     aria-hidden="true">
+
+    <section id="areaSearchWindow"
+             class="area-search-window"
+             data-search-url="/SearchScreen/AreaSearch">
+
+        @* Title bar *@
+        <header class="area-search-titlebar">
+            <span>エリア検索</span>
+
+            <div class="area-search-window-controls">
+                <button type="button" id="btnAreaSearchMinimize"
+                        aria-label="最小化">
+                    −
+                </button>
+                <button type="button" id="btnAreaSearchMaximize"
+                        aria-label="最大化">
+                    □
+                </button>
+                <button type="button" id="btnAreaSearchClose"
+                        aria-label="閉じる">
+                    ×
+                </button>
+            </div>
+        </header>
+
+        @* Heading and result count *@
+        <div class="area-search-heading">
+            <label>エリア検索</label>
+            <strong id="areaSearchCount">件数:0</strong>
+        </div>
+
+        @* Search condition *@
+        <div class="area-search-conditions">
+            <div class="area-search-row">
+                <label for="searchAreaName">エリア</label>
+                <input type="text"
+                       id="searchAreaName"
+                       autocomplete="off"/>
+            </div>
+        </div>
+
+        @* Search results *@
+        <div class="area-search-results">
+            <div class="area-search-table-scroll">
+                <table class="area-search-table" data-grid-columns>
+                    <thead>
+                        <tr>
+                            <th data-sort="code">コード</th>
+                            <th data-sort="areaName">名称</th>
+                        </tr>
+                    </thead>
+                    <tbody id="areaSearchResults"></tbody>
+                </table>
+            </div>
+        </div>
+
+        @* Message area *@
+@*         <div id="areaSearchMessage"
+             class="area-search-message"></div>
+               *@
+
+        <div class="area-search-message">
+            <span>メッセージ：</span>
+            <span id="areaSearchMessage"
+                  role="status"
+                  aria-live="polite"></span>
+        </div>
+
+        @* Function-key footer *@
+        <footer class="area-search-footer">
+
+            <button type="button" id="btnAreaSearchSelect">
+                F1:選 択
+            </button>
+
+            <button type="button" disabled>
+                F2:　　
+            </button>
+
+            <button type="button" disabled>
+                F3:　　
+            </button>
+
+            <button type="button" disabled>
+                F4:　　
+            </button>
+
+            <button type="button" id="btnAreaSearchExecute">
+                F5:検 索
+            </button>
+
+            <button type="button" disabled>
+                F6:　　
+            </button>
+
+            <button type="button" disabled>
+                F7:　　
+            </button>
+
+            <button type="button" disabled>
+                F8:　　
+            </button>
+
+            <button type="button" disabled>
+                F9:　　
+            </button>
+
+            <button type="button" id="btnAreaSearchRegister">
+                F10:ﾏｽﾀ登録
+            </button>
+
+            <button type="button" id="btnAreaSearchCancel">
+                F11:中 止
+            </button>
+
+            <button type="button" id="btnAreaSearchExit">
+                F12:終 了
+            </button>
+
+        </footer>
+
+    </section>
+</div>
+
+<script src="~/js/grid_columns.js" asp-append-version="true"></script>

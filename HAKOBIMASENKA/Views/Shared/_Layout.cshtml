@@ -1,0 +1,35 @@
+﻿@inject HAKOBIMASENKA.Repository.MainMenuRepository.IMainMenuRepository MainMenu
+@{
+    // 和暦 / 西暦 date input for the whole application (legacy DINPUT_Chk); read by DateSlots.isEra()
+    var dateEra = await MainMenu.IsEraInputAsync() ? "1" : "0";
+}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - 運びま専科</title>
+    @* <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" /> *@
+    @* <link rel="stylesheet" href="~/Shared/_Layout.cshtml.css" /> *@
+    @* <link rel="stylesheet" href="~/Shared/_Layout.cshtml.css" asp-append-version="true" /> *@
+
+    @RenderSection("Styles", required: false)
+</head>
+<body data-screen-name="@ViewData["Title"]" data-date-era="@dateEra">
+
+    @*container-fluid p-0 --> fits the contents in to the full area of the screen*@
+    <div class="container-fluid p-0">
+        <main role="main" class="pb-3">
+            @RenderBody()
+            @* the below code is for the calendar control, either it remains here or in the cshtml file that this control is being used *@
+            @* @await Html.PartialAsync("~/Views/Controls/calendar_common.cshtml") *@
+        </main>
+    </div>
+     
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @* <script src="~/js/site.js" asp-append-version="true"></script> *@
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

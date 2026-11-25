@@ -1,0 +1,711 @@
+﻿html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    font-family: "MS Gothic", "ＭＳ ゴシック", sans-serif;
+    font-size: 14px;
+    background-color: silver;
+    color: #222;
+}
+
+/*=========================================
+   Main Page Layout & Container Structure
+  ========================================= */
+.main-container {
+    width: 100%;
+    height: 100vh;
+    padding: 0px 2px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Main Layout */
+.mainContent-layout {
+    display: flex;
+    gap: 16px;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.edit-panel {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+}
+
+/* =========================================
+	Master Information Entry Area
+   ========================================= */
+.master-section {
+    background-color: gainsboro;
+    padding: 12px;
+    margin-top: 0px;
+}
+
+.master-row {
+    display: flex;
+    margin-bottom: 2px;
+}
+
+    .master-row.branch {
+        gap: 0px;
+    }
+
+        .master-row.branch label {
+            width: 85px
+        }
+
+    .master-row label {
+        width: 105px;
+        height: 24PX;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #c8c8c8;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .master-row input {
+        margin-left: 6px;
+        width: 225px;
+        height: 23px;
+        padding: 0 2px;
+    }
+
+    .master-row .input-sl {
+        width: 30px;
+    }
+
+#unit-code {
+    width: 25px;
+    text-align: right;
+}
+
+#unit-name {
+    width: 121px;
+    height: 24px;
+    background-color: #c8c8c8;
+    border-top: 2px solid #ffffff;
+    border-left: 2px solid #ffffff;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #a0a0a0;
+    font-size: 16px;
+}
+
+    #unit-name:focus {
+        border: 1px solid #0078d7;
+        outline: none;
+    }
+
+/* =========================================
+	Common Input Controls & Focus Styles
+   ========================================= */
+
+#unitPrice {
+    text-align: right;
+    width: 180px;
+}
+/* =========================================
+	Master Code & Name Lookup Fields
+   ========================================= */
+#shipper-code, #settlementReceipt {
+    width: 83px;
+    text-align: left;
+    padding: 2px 4px;
+}
+
+#department-code {
+    width: 30px;
+    text-align: left;
+    padding: 2px 6px;
+}
+
+#shipper-name {
+    width: 100%;
+    max-width: 137px;
+    background-color: #c8c8c8;
+    border: 1px solid #fff;
+}
+
+#department-name {
+    width: 100%;
+    max-width: 105px;
+    background-color: #c8c8c8;
+    border: 1px solid #fff;
+}
+
+#shipperName1, #shipperName2 {
+    width: 100%;
+    max-width: 255px;
+    text-align: left;
+}
+/* =========================================
+	Tab Navigation
+   ========================================= */
+.tab-navigation {
+    display: flex;
+    width: fit-content;
+    margin-top: 10px;
+}
+
+.tab-button {
+    flex: none;
+    width: auto;
+    min-width: 80px;
+    padding: 6px 10px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    font-size: 14px;
+    text-wrap: nowrap;
+    border-bottom: 0.5px solid #bcbcbc;
+    border-right: 0.5px solid #bcbcbc;
+    background-color: #ececec;
+}
+
+    .tab-button.active {
+        margin-top: -3px;
+        background-color: #fff;
+        border: none;
+    }
+/* =========================================
+	Tab Container & Content Area
+   ========================================= */
+.tab-container {
+    border: 2px solid #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    background-color: gainsboro;
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+}
+
+.tab-content {
+    display: none;
+    overflow: auto;
+}
+
+    .tab-content.active {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        min-height: 0;
+    }
+/* =========================================
+	Tab Form Layout & Input Controls
+   ========================================= */
+.tab-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-height: 0;
+    min-width: 0;
+}
+
+.tab-row {
+    display: grid;
+    grid-template-columns: 105px 1fr;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    margin-bottom: 1px;
+}
+
+    .tab-row label {
+        width: 105px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 12px;
+        font-weight: bold;
+        text-wrap: nowrap;
+    }
+
+    .tab-row input {
+        width: 100%;
+        max-width: 255px;
+        height: 24px;
+        padding: 0 4px;
+        font-size: 14px;
+    }
+
+#furigana, .address-block input {
+    width: 100%;
+    max-width: 265px;
+}
+
+#abbreviation, #phoneNumber, #fax, #startDate, #endDate {
+    width: 137px;
+}
+
+.zipCode-row label {
+    height: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #c8c8c8;
+    border: 1px solid #bdbdbd;
+    font-size: 16px;
+    font-weight: bold;
+}
+/* =========================================
+	Address, Zip Code & Category Sections
+   ========================================= */
+.zipCode-row input {
+    width: 76px;
+}
+
+.zipCode-row button {
+    width: 70px;
+    height: 24px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+    .zipCode-row button:hover {
+        background-color: #D9EEFF;
+        border: 1px solid #2F8DE4;
+    }
+
+.zipCode-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.zip {
+    width: 120px;
+}
+
+.address-block {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+#address-label {
+    height: 50px;
+}
+/* =========================================
+	Common Input Width Definitions
+   ========================================= */
+#salary, #discount-rate {
+    width: 72px;
+    text-align: right;
+}
+
+#remarks, #email {
+    width: 100%;
+    max-width: 420px;
+}
+/* =========================================
+	Master Lookup Display Controls
+   ========================================= */
+.tab-row .master-code {
+    width: 35px;
+}
+
+.tab-row .master-name {
+    width: 100%;
+    max-width: 121px;
+    height: 24px;
+    background-color: #c8c8c8;
+    border-top: 1px solid #ffffff;
+    border-left: 1px solid #ffffff;
+    border-right: 1px solid #ffffff;
+    font-size: 13px;
+}
+
+/*    .tab-row .master-name:focus {
+        border: 1px solid #0078d7;
+        outline: none;
+    }*/
+
+.input-span {
+    font-weight: bold;
+    font-size: 14px;
+}
+/* =========================================
+	Common Button Styles
+   ========================================= */
+button {
+    padding: 1px 1px;
+    background-color: #fff;
+    border: 1px solid #bcbcbc;
+    font-size: 14px;
+}
+
+#btnMasterSearch {
+    white-space: nowrap;
+}
+
+/* =========================================
+	Checkbox Controls
+   ========================================= */
+.tab-row .input-sl {
+    width: 25px;
+    padding: 0px 3px;
+}
+
+    .tab-row .input-sl.radBtnInpt {
+        width: 25px;
+        text-align: right;
+    }
+
+.tab-row label.checkbox-lbl {
+    width: 105px;
+}
+
+.tab-row .checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.tab-row input.input-checkbox {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+.tab-row .checkbox-container label {
+    width: 90px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+}
+/* =========================================
+	Billing History Filter Area
+   ========================================= */
+#billing-branch-name, #ar-branch-name {
+    width: 311px;
+    text-align: left;
+    margin-left: 4px;
+    padding-left: 2px;
+}
+
+.period-row {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.period-label {
+    width: 85px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #bcbcbc;
+    background: #c8c8c8;
+    font-weight: bold;
+    border: 1px solid;
+    border-color: #9e9e9e #fff #fff #9e9e9e;
+}
+
+.date-input {
+    width: 137px;
+    height: 24px;
+    border: 1px solid #bcbcbc;
+    background: #fff;
+    padding: 0 4px;
+    border-top: 1px solid #ffffff;
+    border-left: 1px solid #ffffff;
+    border-right: 1px solid #ffffff;
+    border-bottom: 2px solid #a0a0a0;
+}
+
+    .date-input::placeholder {
+        color: #000000;
+        opacity: 1.5;
+    }
+
+.between-date {
+    font-weight: bold;
+}
+/* =========================================
+	Summary Information Section
+   ========================================= */
+.branchTarget-header-row {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.billing-summary-layout {
+    display: flex;
+    align-items: stretch;
+    gap: 2px;
+}
+
+.summary-column {
+    width: 85px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+    .summary-column label {
+        width: 85px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #c8c8c8;
+        font-size: 12px;
+        font-weight: bold;
+        border: 1px solid;
+        border-color: #9e9e9e #ffffff #ffffff #9e9e9e;
+    }
+
+    .summary-column input {
+        width: 85px;
+        height: 50px;
+        border-top: 2px solid #ffffff;
+        border-left: 2px solid #ffffff;
+        border-right: 2px solid #ffffff;
+        background-color: #ffffff;
+        text-align: right;
+    }
+
+.summary-double-column {
+    width: 85px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+    .summary-double-column label {
+        width: 85px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #c8c8c8;
+        border: 1px solid;
+        border-color: #9e9e9e #ffffff #ffffff #9e9e9e;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .summary-double-column input {
+        width: 85px;
+        height: 24px;
+        border-top: 2px solid #ffffff;
+        border-left: 2px solid #ffffff;
+        border-right: 2px solid #ffffff;
+        background-color: #ffffff;
+        text-align: right;
+    }
+
+/* =========================================
+	Payment Information Section
+   ========================================= */
+
+.payment-area {
+    width: 200px;
+    display: grid;
+    grid-template-rows: 26px 27px 25px 24px;
+}
+
+    .payment-area label {
+        width: 120px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #c8c8c8;
+        border: 1px solid;
+        border-color: #9e9e9e #ffffff #ffffff #9e9e9e;
+        font-weight: bold;
+    }
+
+    .payment-area input[type="date"] {
+        border-top: 2px solid #ffffff;
+        border-left: 2px solid #ffffff;
+        border-right: 2px solid #ffffff;
+        border-bottom: 2px solid #a0a0a0;
+        background-color: #fff;
+        width: 120px;
+        height: 24px;
+    }
+
+        .payment-area input[type="date"]:focus {
+            background-color: #76E4E8 !important;
+            outline: none;
+            border-bottom: 2px solid #00008B;
+        }
+
+.paymentMethod-input {
+    display: flex;
+}
+
+    .paymentMethod-input input {
+        width: 28px;
+        height: 24px;
+        border-top: 2px solid #ffffff;
+        border-left: 2px solid #ffffff;
+        border-right: 2px solid #ffffff;
+        background-color: #ffffff;
+        text-align: center;
+    }
+
+    .paymentMethod-input select {
+        width: 90px;
+        height: 24px;
+        background-color: #c8c8c8;
+        border-top: 2px solid #ffffff;
+        border-left: 1px solid #a0a0a0;
+        border-right: 2px solid #ffffff;
+        border-bottom: 2px solid #a0a0a0;
+        font-size: 16px;
+        box-sizing: border-box;
+        margin-left: 2px;
+    }
+/* =========================================
+	Action Buttons Area
+   ========================================= */
+.action-button-row {
+    display: flex;
+    justify-content: flex-end;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+    .action-button-row button {
+        width: 125px;
+        height: 24px;
+        border: 1px solid #bdbdbd;
+        background: #fff;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+        .action-button-row button:enabled:hover {
+            border: 1px solid highlight;
+        }
+/* =========================================
+	 History Grid
+   ========================================= */
+.history-grid-wrapper {
+    flex: 1;
+    min-width: 280px;
+    width: 100%;
+    background-color: #A0A0A0;
+    border: 1px solid #5e5e5e;
+    margin-top: 10px;
+    flex-shrink: 1;
+    overflow-y: auto;
+    overflow-x: auto;
+    min-height: 0;
+}
+
+.history-grid {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .history-grid th, .history-grid td {
+        border: 1px solid #d0d0d0;
+        padding: 6px 8px;
+        text-align: left;
+        font-size: 14px;
+        text-wrap: nowrap;
+    }
+
+    .history-grid th {
+        background-color: #fff;
+        text-wrap: nowrap;
+    }
+
+    .history-grid tbody tr:nth-child(odd) td {
+        cursor: pointer;
+        background-color: #fff;
+    }
+
+    .history-grid tbody tr:nth-child(even) td {
+        cursor: pointer;
+        background-color: silver;
+    }
+
+    .history-grid tbody {
+        background-color: #fff;
+    }
+
+        .history-grid tbody tr.selected td {
+            background-color: #0078d7 !important;
+            color: #fff;
+        }
+
+    .history-grid th:hover {
+        background-color: #c8d8e8;
+    }
+
+/* Existing Expense Code */
+.existing-code {
+    background-color: #F8C6CC !important;
+    color: #000000 !important;
+    border: 2px solid #fff !important;
+}
+
+    .existing-code:focus {
+        background-color: #F8C6CC !important;
+    }
+
+#payrollOptInp {
+    width: 70px;
+    text-align: right;
+    padding: 0 4px;
+}
+
+/*Digitaco Code Label*/
+#digitaco {
+    width: 152px;
+}
+
+#collectionCondition {
+    width: 105px;
+    text-align: right;
+}
+
+#bankCode {
+    width: 25px;
+}
+
+.negative-decimal {
+    color: #FFB6C1;
+}
+
+#branch-code1, #branch-code2 {
+    margin-left: 3px;
+}
+
+#fromDate_Ar, #toDate_Ar, #fromDate_bill, #toDate_bill, #bh-collection-date {
+    height: 23px;
+    margin-bottom: 2px;
+}
+
+#collectionTerms{
+    text-align:right;
+}

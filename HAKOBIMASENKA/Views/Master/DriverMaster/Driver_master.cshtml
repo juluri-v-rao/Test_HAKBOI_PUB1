@@ -1,0 +1,1399 @@
+﻿@{
+	ViewData["Title"] = "運転手マスタ";
+}
+
+@section Styles
+{
+	<link rel="stylesheet" href="~/css/driver_master.css" asp-append-version="true">
+	@* <link rel="stylesheet" href="~/css/listscreen.css" asp-append-version="true" /> *@
+	<link rel="stylesheet" href="~/css/japanesecalendar.css" asp-append-version="true" />
+	@* search popups opened by F5 / F6 *@
+	<link rel="stylesheet" href="~/css/master_search_css/driver_search.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/master_search_css/vehicle_search.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/master_search_css/chartered_search.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/master_search_css/department_search.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/master_search_css/expense_search.css" asp-append-version="true" />
+	<link rel="stylesheet" href="~/css/common.css" asp-append-version="true" />
+}
+
+<!-- Main window-->
+<div class="main-container">
+	@Html.AntiForgeryToken()
+	@await Html.PartialAsync("~/Views/Controls/calendar_common.cshtml")
+	<!-- Screen header-->
+	<header class="page-header">
+		<div class="screen-name">
+			運転手マスタ
+		</div>
+		<label id="mode-lbl" class="lbl-new">新　規</label>
+	</header>
+	<section class="master-section">
+		<div class="master-row">
+			<label>
+				運転手コード
+			</label>
+			<input type="text" id="driver-code" value="" class="master-input">
+		</div>
+		<div class="master-row">
+			<label for="originCode">
+				運転手名
+			</label>
+			<input id="driverName" type="text" value="" class="master-input">
+		</div>
+	</section>
+	<main class="mainContent-layout">
+		<!-- Editable Area(Left)-->
+		<section class="edit-panel">
+			<!--Tab1-->
+			<nav class="tab-navigation">
+				<button type="button" class="tab-button active" data-tab="basicSetting">
+					基本設定
+				</button>
+
+				<button type="button" class="tab-button" data-tab="fixedCostSetting">
+					固定経費設定
+				</button>
+
+				<button type="button" class="tab-button" data-tab="payrollOptionSettings">
+					給与ｵﾌﾟｼｮﾝ設定
+				</button>
+
+				<button type="button" class="tab-button" data-tab="digitacoSetting">
+					ﾃﾞｼﾞﾀｺｵﾌﾟｼｮﾝ設定
+				</button>
+
+				<button type="button" class="tab-button" data-tab="etcOptionSetting">
+					ETCｵﾌﾟｼｮﾝ設定
+				</button>
+
+				<button type="button" class="tab-button" data-tab="driverLedger1">
+					運転者台帳１
+				</button>
+
+				<button type="button" class="tab-button" data-tab="driverLedger2">
+					運転者台帳２
+				</button>
+
+				<button type="button" class="tab-button" data-tab="driverLedger3">
+					運転者台帳３
+				</button>
+
+				<button type="button" class="tab-button" data-tab="driverLedger4">
+					運転者台帳４
+				</button>
+			</nav>
+			<!--Tab details-->
+			<section class="tab-container">
+				<!--Basic settings-->
+				<section id="basicSetting" class="tab-content active">
+					<div class="tab-details">
+						<div class="tab-row">
+							<label for="furigana">
+								フリガナ
+							</label>
+							<input type="text" id="furigana">
+						</div>
+						@* <div class="tab-row">
+							<label for="abbreviation">
+								略　称
+							</label>
+							<input type="text" id="abbreviation" class="short">
+						</div> *@
+						<div class="tab-row">
+							<label for="zipCode">郵便番号</label>
+							<div class="zipCode-row">
+								<input type="text" id="zipCode" class="zip">
+								<button type="button" id="zipCodeBtn1">
+									〒→住所
+								</button>
+								<button type="button" id="zipCodeBtn2">
+									住所→〒
+								</button>
+							</div>
+						</div>
+						<div class="tab-row">
+							<label id="address-label">住　所</label>
+							<div class="address-block">
+								<input type="text" id="addressField1">
+								<input type="text" id="addressField2">
+							</div>
+						</div>
+						<div class="tab-row">
+							<label for="phoneNumber">電話番号</label>
+							<input type="text" id="phoneNumber" class="short">
+						</div>
+						<div class="tab-row">
+							<label for="mobilePhone">
+								携帯電話
+							</label>
+							<input type="text" id="mobilePhone" class="short">
+						</div>
+						<div class="tab-row">
+							<label for="dateOfBirth">生年月日</label>
+
+							<input type="text" id="dateOfBirth" class="date-input jp-calendar-input" data-show-day="true" data-no-era="false" placeholder="__ __年__月__日" />
+						</div>
+						<div class="tab-row">
+							<label for="dateOfJoining">入　社　日</label>
+
+							<input type="text" id="dateOfJoining" class="date-input jp-calendar-input" data-show-day="true" data-no-era="false" placeholder="__ __年__月__日" />
+						</div>
+						<div class="tab-row">
+							<label for="dateOfLeaving">退 社 日</label>
+
+							<input type="text" id="dateOfLeaving" class="date-input jp-calendar-input" data-show-day="true" data-no-era="false" placeholder="__ __年__月__日" />
+						</div>
+						<div class="tab-row">
+							<label for="driverCategory">
+								運転手区分
+							</label>
+							<div class="option-button-group">
+								<input type="text" id="driverCategory" class="input-sl radBtnInpt">
+								<button type="button" class="select-option-btn active" onclick="optionButton(this)">
+									０：自　社
+								</button>
+								<button type="button" class="select-option-btn" onclick="optionButton(this)">
+									１：傭　車
+								</button>
+								<button type="button" class="select-option-btn" onclick="optionButton(this)">
+									２：契　約
+								</button>
+							</div>
+						</div>
+						<div class="tab-row">
+							<label>
+								車　輌
+							</label>
+							<div>
+								<input type="text" id="vehicle-code" @* class="input-sl" *@ value="">
+
+								<select id="vehicle-name" class="master-name">
+									<option value=""></option>
+									@*@foreach (var unit in ViewBag.Units)
+								{
+									<option value="@unit.請求コード">
+										@unit.請求名称
+									</option>
+								} *@
+								</select>
+							</div>
+						</div>
+						<div class="tab-row">
+							<label>
+								傭　車
+							</label>
+							<div>
+								<input type="text" id="charteredVehicle-code" @* class="input-sl" *@ value="" disabled>
+
+								<select id="charteredVehicle-name" class="master-name" disabled>
+									<option value=""></option>
+									@*@foreach (var unit in ViewBag.Units)
+								{
+									<option value="@unit.請求コード">
+										@unit.請求名称
+									</option>
+								} *@
+								</select>
+							</div>
+						</div>
+						@*<div class="tab-row">
+							<label for="email">EーMAIL</label>
+							<input type="text" id="email">
+						</div>*@
+						<div class="master-row">
+							<label>
+								部　門
+							</label>
+							<input type="text" id="department-code" class="input-sl" value="">
+
+							<input type="text" id="department-name" readonly="">
+						</div>
+						<div class="tab-row">
+							<label for="remarks">摘要・備考</label>
+							<input type="text" id="remarks">
+						</div>
+						<div class="tab-row">
+							<label for="unitPrice-display" class="checkbox-lbl">配　車　表</label>
+							<div class="checkbox-container">
+								<input type="checkbox" id="unitPrice-display" class="input-checkbox">
+								<label for="unitPrice-display">
+									表示しない
+								</label>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!-- 固定経費設定 Tab2 -->
+				<section id="fixedCostSetting" class="tab-content">
+					<div class="fixed-cost-layout">
+						<!-- LEFT PANEL -->
+						<section class="expense-entry-area">
+							<div class="expense-form">
+
+								<div class="expense-row">
+									<label>経費項目</label>
+									<input type="text" id="expenseitems" maxlength="4"
+										   inputmode="numeric"
+										   autocomplete="off"
+										   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+									<input type="text" class="master-name-expenseitems" readonly>
+								</div>
+
+								<div class="expense-row">
+									<label>号　　車</label>
+									<input type="text" id="exp-vehicle-code" maxlength="10" autocomplete="off">
+									<input type="text" class="master-name-vehiclecode" readonly>
+								</div>
+
+								<div class="expense-row">
+									<label>計上方法</label>
+									<input type="text" class="small-code" id="accountingmethod" value="0" maxlength="1">
+									<input type="text" class="master-name-accountingmethod" value="毎　月" readonly>
+								</div>
+
+								<div class="expense-row">
+									<label>毎　　月</label>
+									<input type="text" id="monthly" class="month-value-input">
+								</div>
+
+							</div>
+
+							<!-- 月指定 -->
+							<fieldset class="group-box-vehicle">
+								<legend>月指定</legend>
+								<div class="month-grid">
+									<div class="month-row"><label>1月</label><input type="text" class="month-value-input" id="month1"></div>
+									<div class="month-row"><label>5月</label><input type="text" class="month-value-input" id="month5"></div>
+									<div class="month-row"><label>9月</label><input type="text" class="month-value-input" id="month9"></div>
+									<div class="month-row"><label>2月</label><input type="text" class="month-value-input" id="month2"></div>
+									<div class="month-row"><label>6月</label><input type="text" class="month-value-input" id="month6"></div>
+									<div class="month-row"><label>10月</label><input type="text" class="month-value-input" id="month10"></div>
+									<div class="month-row"><label>3月</label><input type="text" class="month-value-input" id="month3"></div>
+									<div class="month-row"><label>7月</label><input type="text" class="month-value-input" id="month7"></div>
+									<div class="month-row"><label>11月</label><input type="text" class="month-value-input" id="month11"></div>
+									<div class="month-row"><label>4月</label><input type="text" class="month-value-input" id="month4"></div>
+									<div class="month-row"><label>8月</label><input type="text" class="month-value-input" id="month8"></div>
+									<div class="month-row"><label>12月</label><input type="text" class="month-value-input" id="month12"></div>
+								</div>
+								<div class="expense-total">
+									<label>合計</label>
+									<input type="text" id="monthlyTotal" style="text-align: right;" readonly>
+								</div>
+							</fieldset>
+
+							<div class="expense-actions">
+								<button type="button" id="btnExpenseDelete">削　除</button>
+								<button type="button" id="btnExpenseCancel">中　止</button>
+								<button type="button" id="btnExpenseRecall">←呼　出</button>
+								<button type="button" id="btnExpenseModify">→修　正</button>
+							</div>
+						</section>
+
+						<!-- RIGHT GRID -->
+						<aside class="expense-list">
+							<table class="expense-table" data-grid-columns>
+								<thead>
+									<tr>
+										<th>経費ｺｰﾄﾞ</th>
+										<th>経費項目</th>
+										<th>号車ｺｰﾄﾞ</th>
+										<th>号車</th>
+										<th>計上方法</th>
+										<th>経費</th>
+									</tr>
+								</thead>
+								<tbody id="expenseTableBody">
+									<!-- Rows will be added by JavaScript. -->
+								</tbody>
+							</table>
+						</aside>
+					</div>
+				</section>
+				<!-- 給与オプション設定 Tab3 -->
+				<section id="payrollOptionSettings" class="tab-content">
+					<div class="tab-row">
+						<label>手当掛率</label>
+						<div>
+							<input type="text" value="100.00" id="payrollOptInp" class="decimal-input" data-int-digits="3" data-dec-digits="2" data-max-value="100.00">
+							<span id="percentage" class="input-span">％</span>
+						</div>
+					</div>
+					<div class="tab-row">
+						<label>所属コード</label>
+						<div class="affilation-row">
+							<input type="text" id="affilation-code" class="master-code">
+
+							<input type="text" id="affilation-name" class="master-name" readonly="">
+						</div>
+					</div>
+					<div class="tab-row">
+						<label for="employeementCategory">
+							雇用区分
+						</label>
+						<div class="option-button-group">
+							<input type="text" id="employeementCategory" class="input-sl radBtnInpt">
+							<button type="button" class="select-option-btn active" onclick="optionButton(this)">
+								0：正社員
+							</button>
+							<button type="button" class="select-option-btn" onclick="optionButton(this)">
+								1：契約社員
+							</button>
+							<button type="button" class="select-option-btn" onclick="optionButton(this)">
+								2：パート
+							</button>
+							<button type="button" class="select-option-btn" onclick="optionButton(this)">
+								3：試用期間
+							</button>
+							<button type="button" class="select-option-btn" onclick="optionButton(this)">
+								4：臨時ﾊﾞｲﾄ
+							</button>
+							<button type="button" class="select-option-btn" onclick="optionButton(this)">
+								5：派　遣
+							</button>
+							<button type="button" class="select-option-btn" onclick="optionButton(this)">
+								6：その他
+							</button>
+						</div>
+					</div>
+					<div class="tab-row">
+						<label>所定労働日数</label>
+						<div>
+							@* legacy TxtShotei: Format "#0.0", 0.0-99.9, default 23 *@
+							<input type="text" value="23.0" id="scheduled-working-days" class="decimal-input" data-int-digits="2" data-dec-digits="1" data-max-value="99.9">
+							<span id="day" class="input-span">日</span>
+						</div>
+					</div>
+
+				</section>
+				<section id="digitacoSetting" class="tab-content">
+					<div class="tab-row">
+						<label>デジタココード</label>
+						<input type="text" id="digitaco">
+					</div>
+				</section>
+				<section id="etcOptionSetting" class="tab-content">
+					<div class="tab-row">
+						<label>カード番号</label>
+						<input type="text" id="etcOptSetting">
+					</div>
+				</section>
+				<!-- 運転者台帳１ (legacy SSActiveTabPanel8) -->
+				<section id="driverLedger1" class="tab-content">
+
+					<div class="driver-ledger-layout">
+
+						<!-- Left Area -->
+						<div class="ledger-left-area">
+
+							<!-- Gender / Dates -->
+							<div class="ledger-top-grid">
+
+								<div class="ledger-row">
+									<label class="ledger-label">性　別</label>
+
+									<div class="gender-group">
+
+										@* legacy TxtNKbn2 (1 digit) and LblNKbn2(1-2) *@
+										<input type="text" id="genderCode" class="ledger-code" value="1">
+
+										<button type="button" class="ledger-option-btn active" data-value="1">
+											1：男
+										</button>
+
+										<button type="button" class="ledger-option-btn" data-value="2">
+											2：女
+										</button>
+
+									</div>
+								</div>
+
+								<div class="ledger-row">
+									<label class="ledger-label">選任年月日</label>
+									<input type="text"
+										   id="appointmentDate"
+										   class="ledger-date jp-calendar-input">
+								</div>
+
+								<div class="ledger-row">
+									<label class="ledger-label">写真撮影日</label>
+									<input type="text"
+										   id="photoDate"
+										   class="ledger-date jp-calendar-input">
+								</div>
+
+								<div class="ledger-row">
+									<label class="ledger-label">ファイル名</label>
+
+									<div class="file-select-row">
+
+										<input type="text"
+											   id="photoFile">
+
+										<button type="button"
+												id="photoBrowseBtn"
+												class="browse-btn"
+												tabindex="-1">
+											...
+										</button>
+
+									</div>
+								</div>
+
+								<div class="ledger-row">
+									<label class="ledger-label">免許証番号</label>
+									<input type="text" id="licenseNumber">
+								</div>
+
+								<div class="ledger-row">
+									<label class="ledger-label">取得年月日</label>
+
+									<input type="text"
+										   id="licenseIssueDate"
+										   class="ledger-date jp-calendar-input">
+								</div>
+
+							</div>
+
+							<!-- License Types (legacy ChkS(0-16), no tab stop) -->
+							<div class="license-type-section">
+
+								<div class="license-type-label">
+									種　類
+								</div>
+
+								<div class="license-type-grid">
+
+									<label><input type="checkbox" class="ledger-check" data-column="大型" tabindex="-1"> 大 型</label>
+									<label><input type="checkbox" class="ledger-check" data-column="中型" tabindex="-1"> 中 型</label>
+									<label><input type="checkbox" class="ledger-check" data-column="中型限定" tabindex="-1"> 中型(8t限定)</label>
+									<label><input type="checkbox" class="ledger-check" data-column="準中型" tabindex="-1"> 準中型</label>
+									<label><input type="checkbox" class="ledger-check" data-column="普通" tabindex="-1"> 普 通</label>
+									<label><input type="checkbox" class="ledger-check" data-column="大特" tabindex="-1"> 大 特</label>
+
+									<label><input type="checkbox" class="ledger-check" data-column="大2" tabindex="-1"> 大 ２</label>
+									<label><input type="checkbox" class="ledger-check" data-column="中2" tabindex="-1"> 中 ２</label>
+									<label><input type="checkbox" class="ledger-check" data-column="中2限定" tabindex="-1"> 中２(8t限定)</label>
+									<label><input type="checkbox" class="ledger-check" data-column="準中型限定" tabindex="-1"> 準中型(5t限定)</label>
+									<label><input type="checkbox" class="ledger-check" data-column="普2" tabindex="-1"> 普 ２</label>
+									<label><input type="checkbox" class="ledger-check" data-column="大特2" tabindex="-1"> 大特２</label>
+
+									<label><input type="checkbox" class="ledger-check" data-column="ユニック" tabindex="-1"> ユニック</label>
+									<label><input type="checkbox" class="ledger-check" data-column="玉掛け" tabindex="-1"> 玉掛け</label>
+									<label><input type="checkbox" class="ledger-check" data-column="フォーク" tabindex="-1"> フォーク</label>
+									<label><input type="checkbox" class="ledger-check" data-column="けん引" tabindex="-1"> けん引</label>
+									<label><input type="checkbox" class="ledger-check" data-column="けん引2" tabindex="-1"> けん引２</label>
+
+								</div>
+
+							</div>
+
+							<!-- Conditions -->
+							<div class="ledger-row" id="l_Condition">
+								<label class="ledger-label">条　件</label>
+								<input type="text" id="licenseCondition">
+							</div>
+
+							<!-- License History (legacy GroupBox5 運転免許履歴 / MSFlxGrd2) -->
+							<div class="license-history-section">
+
+								<div class="history-title">
+									運転免許履歴
+								</div>
+
+								<div class="history-entry">
+
+									<label>有効期限</label>
+
+									<input type="text"
+										   id="licenseExpiry"
+										   class="ledger-date jp-calendar-input">
+
+									<span>まで</span>
+
+									<label>番　号</label>
+
+									<input type="text"
+										   id="licenseHistoryNo">
+
+								</div>
+
+								<div class="history-buttons">
+
+									<button type="button" id="btnLicensePrint">印　刷</button>
+									<button type="button" id="btnLicenseDelete">削　除</button>
+									<button type="button" id="btnLicenseCancel">中　止</button>
+									<button type="button" id="btnLicenseRecall">↑ 呼 出</button>
+									<button type="button" id="btnLicenseModify">↓ 修 正</button>
+
+								</div>
+
+								<table class="license-history-grid" data-grid-columns>
+
+									<thead>
+										<tr>
+											<th>有効期限</th>
+											<th>番号</th>
+										</tr>
+									</thead>
+
+									<tbody id="licenseHistoryBody">
+									</tbody>
+
+								</table>
+
+								<div class="driver-experience-section">
+
+									<!-- Left Area (legacy TxtNDate(1-5) / TxtNEtc(1-5)) -->
+									<div class="experience-left">
+
+										<div class="experience-side-title">
+											履歴・運転経験
+										</div>
+
+										<div class="experience-history-grid">
+
+											<div class="experience-row">
+												<input type="text" class="ledger-date jp-calendar-input" id="experienceDate1">
+												<input type="text" id="experienceText1">
+											</div>
+
+											<div class="experience-row">
+												<input type="text" class="ledger-date jp-calendar-input" id="experienceDate2">
+												<input type="text" id="experienceText2">
+											</div>
+
+											<div class="experience-row">
+												<input type="text" class="ledger-date jp-calendar-input" id="experienceDate3">
+												<input type="text" id="experienceText3">
+											</div>
+
+											<div class="experience-row">
+												<input type="text" class="ledger-date jp-calendar-input" id="experienceDate4">
+												<input type="text" id="experienceText4">
+											</div>
+
+											<div class="experience-row">
+												<input type="text" class="ledger-date jp-calendar-input" id="experienceDate5">
+												<input type="text" id="experienceText5">
+											</div>
+
+										</div>
+
+									</div>
+
+									<!-- Right Area -->
+									<div class="experience-right">
+
+										<div class="experience-info-row">
+
+											<div class="experience-label">
+												自動車の種類
+											</div>
+
+											<div class="experience-input-group">
+												<input type="text" id="vehicleType1">
+												<input type="text" id="vehicleType2">
+											</div>
+
+										</div>
+
+										<div class="experience-info-row">
+
+											<div class="experience-label">
+												定員又は積載量
+											</div>
+
+											<div class="experience-unit-area">
+
+												@* legacy TxtTeiin(1) TxtCapa(1) TxtTeiin(2) TxtCapa(2) *@
+												<div class="capacity">
+													<input type="text" id="seatCount1">
+													<div class="unit-box">人</div>
+													<input type="text" id="loadCapacity1">
+													<div class="unit-box-right">t</div>
+													<input type="text" id="seatCount2">
+													<div class="unit-box">人</div>
+													<input type="text" id="loadCapacity2">
+													<div class="unit-box-right">t</div>
+												</div>
+											</div>
+
+										</div>
+
+										<div class="experience-info-row">
+
+											<div class="experience-label">
+												経験年数
+											</div>
+
+											<div class="experience-unit-area">
+
+												<div class="experience">
+													<input type="text" id="experienceYear1">
+													<div class="unit-box">年</div>
+
+													<input type="text" id="experienceMonth1">
+													<div class="unit-box-right">ヵ月</div>
+
+													<input type="text" id="experienceYear2">
+													<div class="unit-box">年</div>
+
+													<input type="text" id="experienceMonth2">
+													<div class="unit-box-right">ヵ月</div>
+												</div>
+											</div>
+
+										</div>
+
+										@* legacy TxtKJigyosho(1-2) 経験した事業所 *@
+										<div class="experience-info-row">
+
+											<div class="experience-label">
+												経験した事業所
+											</div>
+
+											<div class="experience-input-group">
+												<input type="text" id="experienceOffice1">
+												<input type="text" id="experienceOffice2">
+											</div>
+
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+
+						</div>
+
+						<!-- Right Photo (legacy ImgPict) -->
+						<div class="driver-photo-panel">
+
+							<div class="driver-photo-box">
+								<img id="driverPhoto" alt="" hidden>
+							</div>
+
+						</div>
+
+					</div>
+
+				</section>
+				<!-- 運転者台帳２ (legacy SSActiveTabPanel9) -->
+				<section id="driverLedger2" class="tab-content">
+
+					<!-- Accident History (legacy GroupBox1 / MSFlxGrd3(0)) -->
+					<fieldset class="ledger2-group">
+						<legend>自動車事故履歴</legend>
+
+						<div class="ledger2-top-area">
+
+							<div class="ledger2-left-inputs">
+
+								<div class="ledger2-row">
+									<label class="ledger-label">発生年月日</label>
+									<input type="text"
+										   id="accidentDate"
+										   class="ledger-date jp-calendar-input">
+								</div>
+
+								<div class="ledger2-row">
+									<label class="ledger-label">登録番号</label>
+									<input type="text" id="accidentRegisterNo">
+								</div>
+
+								<div class="ledger2-row">
+									<label class="ledger-label">事故の種類</label>
+									<input type="text" id="accidentType">
+								</div>
+
+							</div>
+
+							<div class="ledger2-right-inputs">
+
+								<div class="ledger2-row">
+									<label class="ledger-label">責　任</label>
+
+									@* legacy OptSeki(0-2): 1 有責 / 2 双 / 3 無責 (no tab stop) *@
+									<div class="responsibility-group">
+										<label><input type="radio" name="responsibility" value="1" tabindex="-1" checked> 有責</label>
+										<label><input type="radio" name="responsibility" value="2" tabindex="-1">  双</label>
+										<label><input type="radio" name="responsibility" value="3" tabindex="-1"> 無責</label>
+									</div>
+
+									<label class="ledger-label small-label">
+										事故記録No.
+									</label>
+
+									<input type="text"
+										   id="accidentRecordNo"
+										   class="record-no-input">
+								</div>
+
+								<div class="ledger2-row">
+									<label class="ledger-label">概要・処置等</label>
+
+									<input type="text"
+										   id="accidentSummary"
+										   class="ledger2-wide-input">
+								</div>
+
+							</div>
+
+						</div>
+
+						<div class="history-buttons ledger2-buttons">
+							<button type="button" id="btnAccidentPrint">印　刷</button>
+							<button type="button" id="btnAccidentDelete">削　除</button>
+							<button type="button" id="btnAccidentCancel">中　止</button>
+							<button type="button" id="btnAccidentRecall">↑ 呼 出</button>
+							<button type="button" id="btnAccidentModify">↓ 修 正</button>
+						</div>
+
+						<table class="ledger2-grid" data-grid-columns>
+							<thead>
+								<tr>
+									<th>発生年月日</th>
+									<th>登録番号</th>
+									<th>事故の種類</th>
+									<th>責任</th>
+									<th>事故記録簿No.</th>
+									<th>概要・処置等</th>
+								</tr>
+							</thead>
+							<tbody id="accidentHistoryBody">
+							</tbody>
+						</table>
+
+					</fieldset>
+
+					<div class="ledger2-bottom-area">
+
+						<!-- Violation History (legacy GroupBox2 / MSFlxGrd3(1)) -->
+						<fieldset class="ledger2-group violation-section">
+							<legend>違反履歴</legend>
+
+							<div class="ledger2-row">
+								<label class="ledger-label">違反日</label>
+								<input type="text"
+									   class="ledger-date jp-calendar-input"
+									   id="violationDate">
+							</div>
+
+							<div class="ledger2-row">
+								<label class="ledger-label">内　容</label>
+								<input type="text" id="violationContent">
+							</div>
+
+							<div class="history-buttons">
+								<button type="button" id="btnViolationPrint">印　刷</button>
+								<button type="button" id="btnViolationDelete">削　除</button>
+								<button type="button" id="btnViolationCancel">中　止</button>
+								<button type="button" id="btnViolationRecall">↑ 呼 出</button>
+								<button type="button" id="btnViolationModify">↓ 修 正</button>
+							</div>
+
+							<table class="ledger2-grid" data-grid-columns>
+								<thead>
+									<tr>
+										<th style="width:180px;">違反日</th>
+										<th>内容</th>
+									</tr>
+								</thead>
+								<tbody id="violationHistoryBody">
+								</tbody>
+							</table>
+
+						</fieldset>
+
+						<!-- Certificates (legacy GroupBox4 / MSFlxGrd4) -->
+						<fieldset class="ledger2-group certificate-section">
+							<legend>運転経歴証明書等</legend>
+
+							<div class="ledger2-row">
+								<label class="ledger-label">取得年月日</label>
+								<input type="text"
+									   class="ledger-date jp-calendar-input"
+									   id="certificateDate">
+							</div>
+
+							<div class="ledger2-row">
+								<label class="ledger-label">種　類</label>
+								<input type="text" id="certificateType">
+							</div>
+
+							<div class="ledger2-row">
+								<label class="ledger-label">内容等</label>
+								<input type="text" id="certificateContent">
+							</div>
+
+							<div class="history-buttons">
+								<button type="button" id="btnCertificatePrint">印　刷</button>
+								<button type="button" id="btnCertificateDelete">削　除</button>
+								<button type="button" id="btnCertificateCancel">中　止</button>
+								<button type="button" id="btnCertificateRecall">↑ 呼 出</button>
+								<button type="button" id="btnCertificateModify">↓ 修 正</button>
+							</div>
+
+							<table class="ledger2-grid" data-grid-columns>
+								<thead>
+									<tr>
+										<th>取得年月日</th>
+										<th>種　類</th>
+										<th>内容等</th>
+									</tr>
+								</thead>
+								<tbody id="certificateHistoryBody">
+								</tbody>
+							</table>
+
+						</fieldset>
+
+					</div>
+
+				</section>
+				<!-- 運転者台帳３ (legacy SSActiveTabPanel10) -->
+				<section id="driverLedger3" class="tab-content">
+
+					<div class="ledger3-layout">
+
+						<!-- Top Left (legacy GroupBoxEx2 適正診断 / MSFlxGrd5) -->
+						<fieldset class="ledger3-group">
+							<legend>適正診断</legend>
+
+							<div class="ledger3-row">
+								<label class="ledger-label">受診年月日</label>
+								<input type="text"
+									   id="aptitudeDate"
+									   class="ledger-date jp-calendar-input">
+							</div>
+
+							<div class="ledger3-row">
+								<label class="ledger-label">種　類</label>
+
+								@* legacy OptTS(1-5) (no tab stop) *@
+								<div class="ledger3-radio-group">
+									<label><input type="radio" name="aptitudeType" value="1" tabindex="-1" checked> 一般</label>
+									<label><input type="radio" name="aptitudeType" value="2" tabindex="-1"> 特別</label>
+									<label><input type="radio" name="aptitudeType" value="3" tabindex="-1"> 初任</label>
+									<label><input type="radio" name="aptitudeType" value="4" tabindex="-1"> 適齢</label>
+									<label><input type="radio" name="aptitudeType" value="5" tabindex="-1"> 特定</label>
+								</div>
+							</div>
+
+							<div class="ledger3-row">
+								<label class="ledger-label">所見概要</label>
+								<input type="text" id="aptitudeSummary">
+							</div>
+
+							<div class="history-buttons">
+								<button type="button" id="btnAptitudePrint">印　刷</button>
+								<button type="button" id="btnAptitudeDelete">削　除</button>
+								<button type="button" id="btnAptitudeCancel">中　止</button>
+								<button type="button" id="btnAptitudeRecall">↑ 呼 出</button>
+								<button type="button" id="btnAptitudeModify">↓ 修 正</button>
+							</div>
+
+							<table class="ledger3-grid" data-grid-columns>
+								<thead>
+									<tr>
+										<th>受診年月日</th>
+										<th>種類</th>
+										<th>所見概要</th>
+									</tr>
+								</thead>
+								<tbody id="aptitudeHistoryBody">
+								</tbody>
+							</table>
+						</fieldset>
+
+						<!-- Top Right (legacy GroupBoxEx1 特別教育 / MSFlxGrd3(2)) -->
+						<fieldset class="ledger3-group">
+							<legend>特別教育</legend>
+
+							<div class="ledger3-row">
+								<label class="ledger-label">実施日</label>
+								<input type="text"
+									   id="specialEducationDate"
+									   class="ledger-date jp-calendar-input">
+							</div>
+
+							<div class="ledger3-row">
+								<label class="ledger-label">内　容</label>
+								<input type="text" id="specialEducationContent">
+							</div>
+
+							<div class="ledger3-row">
+								<label class="ledger-label">区　分</label>
+
+								@* legacy OptK(0-2): 1 初任 / 2 高齢 / 3 事故惹起 (no tab stop) *@
+								<div class="ledger3-radio-group">
+									<label><input type="radio" name="educationType" value="1" tabindex="-1" checked> 初任</label>
+									<label><input type="radio" name="educationType" value="2" tabindex="-1"> 高齢</label>
+									<label><input type="radio" name="educationType" value="3" tabindex="-1"> 事故惹起</label>
+								</div>
+							</div>
+
+							<div class="history-buttons">
+								<button type="button" id="btnEducationPrint">印　刷</button>
+								<button type="button" id="btnEducationDelete">削　除</button>
+								<button type="button" id="btnEducationCancel">中　止</button>
+								<button type="button" id="btnEducationRecall">↑ 呼 出</button>
+								<button type="button" id="btnEducationModify">↓ 修 正</button>
+							</div>
+
+							<table class="ledger3-grid" data-grid-columns>
+								<thead>
+									<tr>
+										<th>実施日</th>
+										<th>内容</th>
+										<th>区分</th>
+									</tr>
+								</thead>
+								<tbody id="educationHistoryBody">
+								</tbody>
+							</table>
+						</fieldset>
+
+						<!-- Bottom Left (legacy GroupBoxEx4 健康診断 / MSFlxGrd6) -->
+						<fieldset class="ledger3-group">
+							<legend>健康診断(定期・その他)</legend>
+
+							<div class="ledger3-row">
+								<label class="ledger-label">受診年月日</label>
+								<input type="text"
+									   id="medicalCheckDate"
+									   class="ledger-date jp-calendar-input">
+							</div>
+
+							<div class="ledger3-row">
+								<label class="ledger-label">種　類</label>
+								<input type="text" id="medicalCheckType">
+							</div>
+
+							<div class="history-buttons">
+								<button type="button" id="btnMedicalPrint">印　刷</button>
+								<button type="button" id="btnMedicalDelete">削　除</button>
+								<button type="button" id="btnMedicalCancel">中　止</button>
+								<button type="button" id="btnMedicalRecall">↑ 呼 出</button>
+								<button type="button" id="btnMedicalModify">↓ 修 正</button>
+							</div>
+
+							<table class="ledger3-grid" data-grid-columns>
+								<thead>
+									<tr>
+										<th>受診年月日</th>
+										<th>種類</th>
+									</tr>
+								</thead>
+								<tbody id="medicalHistoryBody">
+								</tbody>
+							</table>
+
+						</fieldset>
+
+						<!-- Bottom Right (empty, legacy GroupBoxEx3) -->
+						<div class="ledger3-empty-panel"></div>
+
+					</div>
+
+				</section>
+				<!-- 運転者台帳４ (legacy SSActiveTabPanel11) -->
+				<section id="driverLedger4" class="tab-content">
+
+					<div class="ledger4-layout">
+
+						<!-- LEFT SIDE -->
+						<div class="ledger4-left">
+
+							<!-- 保険関連 (legacy TxtNBanDate(1-4) / TxtNBan(1-4)) -->
+							<div class="ledger4-section">
+
+								<div class="ledger4-rowgroup">
+
+									<div class="ledger4-side-title">
+										保険関連
+									</div>
+
+									<div class="ledger4-table-area">
+
+										<div class="ledger4-ins-row">
+											<div class="ledger4-label">種　類</div>
+											<div class="ledger4-date-label">加入年月日</div>
+											<div class="ledger4-no-label">保険の記号・番号</div>
+										</div>
+
+										<div class="ledger4-data-row">
+											<label>健康保険</label>
+											<input type="text"
+												   id="healthInsuranceDate"
+												   class="ledger-date jp-calendar-input">
+											<input type="text"
+												   id="healthInsuranceNo">
+										</div>
+
+										<div class="ledger4-data-row">
+											<label>厚生年金保険</label>
+											<input type="text"
+												   id="pensionInsuranceDate"
+												   class="ledger-date jp-calendar-input">
+											<input type="text"
+												   id="pensionInsuranceNo">
+										</div>
+
+										<div class="ledger4-data-row">
+											<label>雇用保険</label>
+											<input type="text"
+												   id="employmentInsuranceDate"
+												   class="ledger-date jp-calendar-input">
+											<input type="text"
+												   id="employmentInsuranceNo">
+										</div>
+
+										<div class="ledger4-data-row">
+											<label>労災保険</label>
+											<input type="text"
+												   id="workersInsuranceDate"
+												   class="ledger-date jp-calendar-input">
+											<input type="text"
+												   id="workersInsuranceNo">
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+
+							<!-- 通勤方法 (legacy ChkTK_1-6, no tab stop) -->
+							<div class="ledger4-section">
+
+								<div class="ledger4-rowgroup">
+
+									<div class="ledger4-side-title">
+										通勤方法
+									</div>
+
+									<div class="ledger4-commute">
+
+										<div class="ledger4-commute-row">
+
+											<div class="ledger4-label">
+												種　類
+											</div>
+
+											<div class="ledger4-checkbox-group">
+
+												<label class="checkbox-input"><input type="checkbox" class="ledger-check" data-column="徒歩" tabindex="-1"> 徒歩</label>
+												<label class="checkbox-input"><input type="checkbox" class="ledger-check" data-column="自動車" tabindex="-1"> 自動車</label>
+												<label class="checkbox-input"><input type="checkbox" class="ledger-check" data-column="バス" tabindex="-1"> バス</label>
+
+												<label class="checkbox-input"><input type="checkbox" class="ledger-check" data-column="電車" tabindex="-1"> 電車</label>
+												<label class="checkbox-input"><input type="checkbox" class="ledger-check" data-column="自転車" tabindex="-1"> 自転車</label>
+												<label class="checkbox-input"><input type="checkbox" class="ledger-check" data-column="その他" tabindex="-1"> その他</label>
+
+											</div>
+
+										</div>
+
+										<div class="ledger4-other-row">
+											<div class="ledger4-label">
+												その他通勤方法
+											</div>
+
+											<input type="text"
+												   id="commuteOtherMethod">
+										</div>
+
+										<div class="ledger4-other-row">
+											<div class="ledger4-label">
+												合計所要時間
+											</div>
+
+											<div id="timing-input">
+												<input type="text"
+													   id="totalHours"
+													   class="ledger4-time">
+
+												<span>時間</span>
+
+												<input type="text"
+													   id="totalMinutes"
+													   class="ledger4-time">
+
+												<span>分</span>
+											</div>
+
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+
+							<!-- その他 -->
+							<div id="ledger4-section-div" class="ledger4-section">
+
+								<div class="ledger4-rowgroup">
+
+									<div class="ledger4-side-title">
+										その他
+									</div>
+
+									<div class="ledger4-other-info">
+
+										<div class="ledger4-contact-row">
+
+											<div class="ledger4-label">
+												緊急連絡先
+											</div>
+
+											<input type="text"
+												   id="emergencyContact">
+
+										</div>
+
+										<div class="ledger4-contact-row">
+
+											<div class="ledger4-label">
+												連絡先番号
+											</div>
+
+											<input type="text"
+												   id="emergencyPhone">
+
+										</div>
+
+									</div>
+
+								</div>
+
+								<div class="ledger4-rowgroup">
+									<div id="resignation-row">
+										<div class="ledger4-label">
+											退社理由
+										</div>
+										<div class="ledger4-resignation-group">
+											<input type="text"
+												   id="resignationReason1">
+											<input type="text"
+												   id="resignationReason2">
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+
+						<!-- RIGHT SIDE -->
+						<div class="ledger4-right">
+
+							<!-- 異動履歴 (legacy GroupBoxEx7 / MSFlxGrd7) -->
+							<fieldset class="ledger4-transfer-group">
+
+								<legend>異動履歴</legend>
+
+								<div class="ledger4-transfer-row">
+
+									<label class="ledger-label">
+										異動年月日
+									</label>
+
+									<input type="text"
+										   id="transferDate"
+										   class="ledger-date jp-calendar-input">
+
+									<label class="ledger-label">
+										異動事項
+									</label>
+
+									<input type="text"
+										   id="transferItem">
+
+								</div>
+
+								<div class="ledger4-transfer-row">
+
+									<label class="ledger-label">
+										備　考
+									</label>
+
+									<input type="text"
+										   id="transferRemark">
+
+								</div>
+
+								<div class="history-buttons">
+									<button type="button" id="btnTransferPrint">印　刷</button>
+									<button type="button" id="btnTransferDelete">削　除</button>
+									<button type="button" id="btnTransferCancel">中　止</button>
+									<button type="button" id="btnTransferRecall">↑ 呼 出</button>
+									<button type="button" id="btnTransferModify">↓ 修 正</button>
+								</div>
+
+								<table class="ledger4-grid" data-grid-columns>
+
+									<thead>
+										<tr>
+											<th>異動年月日</th>
+											<th>異動事項</th>
+											<th>備考</th>
+										</tr>
+									</thead>
+
+									<tbody id="transferHistoryBody">
+									</tbody>
+
+								</table>
+
+							</fieldset>
+
+						</div>
+
+					</div>
+
+					<!-- 備考 (legacy TxtNEtc2(1-8)) -->
+					<div class="ledger4-remarks-area">
+
+						<div class="ledger4-remarks-label">
+							備　考
+						</div>
+
+						<div class="ledger4-remarks-lines">
+
+							<input type="text" id="ledgerRemarks1">
+							<input type="text" id="ledgerRemarks2">
+							<input type="text" id="ledgerRemarks3">
+							<input type="text" id="ledgerRemarks4">
+							<input type="text" id="ledgerRemarks5">
+							<input type="text" id="ledgerRemarks6">
+							<input type="text" id="ledgerRemarks7">
+							<input type="text" id="ledgerRemarks8">
+
+						</div>
+
+					</div>
+
+				</section>
+
+			</section>
+		</section>
+	</main>
+	<!-- Message Area -->
+	<section class="message-area">
+		<label>メッセージ：</label>
+		<span id="message-label"></span>
+	</section>
+
+	<!-- Footer Function Keys -->
+	<footer class="function-footer">
+
+		@* legacy FrmM_Tanto Fkey captions; F5 / F9 / F10 are off when opened from a search (SYORID2 = "検索") *@
+		<button type="button" id="btnRegister">
+			F1:登 録
+		</button>
+
+		<button type="button" id="btnCopy" disabled>
+			F2:コピー
+		</button>
+
+		<button type="button" disabled>
+			F3:　　
+		</button>
+
+		<button type="button" id="btnDelete" disabled>
+			F4:削 除
+		</button>
+
+		<button type="button" id="btnSearch" @(ViewBag.FromSearch == true ? "disabled" : "")>
+			F5:検 索
+		</button>
+
+		<button type="button" id="btnMasterSearch" disabled>
+			F6:ﾏｽﾀ検索
+		</button>
+
+		<button type="button" id="btnPrevious">
+			F7:≪ 前
+		</button>
+
+		<button type="button" id="btnNext">
+			F8:次 ≫
+		</button>
+
+		@* F9 リスト: not migrated, always off *@
+		<button type="button" id="btnList" disabled>
+			F9:リスト
+		</button>
+
+		@* F10 運転者台帳 print (legacy Prt_List); off when opened from a search *@
+		<button type="button" id="btnF10" @(ViewBag.FromSearch == true ? "disabled" : "")>
+			F10:台 帳
+		</button>
+
+		<button type="button" id="btnCancel">
+			F11:中 止
+		</button>
+
+		<button type="button" id="btnExit" data-exit-url="@Url.Action("Main_menu", "MainMenu")"
+				data-from-search="@(ViewBag.FromSearch == true ? "true" : "false")">
+			F12:終 了
+		</button>
+
+	</footer>
+</div>
+
+<!--POPUP Display-->
+<div id="printPopup" class="popup-overlay">
+	<div id="printPopupWindow" class="popup-window">
+		<partial name="~/Views/Shared/MasterList/_MasterListPartial.cshtml" />
+	</div>
+</div>
+@* F5 運転手検索 *@
+<partial name="~/Views/Shared/MasterSearch/_DriverSearchPartial.cshtml"
+		 view-data='new ViewDataDictionary(ViewData)
+		 {
+			 ["ScreenName"] = "運転手検索"
+		 }' />
+
+@* F6 ﾏｽﾀ検索: 車輌 / 号車 *@
+<partial name="~/Views/Shared/MasterSearch/_VehicleSearchPartial.cshtml"
+		 view-data='new ViewDataDictionary(ViewData)
+		 {
+			 ["ScreenName"] = "車輌検索"
+		 }' />
+
+@* F6 ﾏｽﾀ検索: 傭車 *@
+<partial name="~/Views/Shared/MasterSearch/_CharteredSearchPartial.cshtml"
+		 view-data='new ViewDataDictionary(ViewData)
+		 {
+			 ["ScreenName"] = "傭車検索"
+		 }' />
+
+@* F6 ﾏｽﾀ検索: 部門 *@
+<partial name="~/Views/Shared/MasterSearch/_DepartmentSearchPartial.cshtml"
+		 view-data='new ViewDataDictionary(ViewData)
+		 {
+			 ["ScreenName"] = "部門検索"
+		 }' />
+
+@* F6 ﾏｽﾀ検索: 経費項目 *@
+<partial name="~/Views/Shared/MasterSearch/_ExpenseSearchPartial.cshtml"
+		 view-data='new ViewDataDictionary(ViewData)
+		 {
+			 ["ScreenName"] = "経費検索"
+		 }' />
+
+<script src="~/js/master_screen.js" asp-append-version="true"></script>
+<script src="~/js/japanesecalendar.js" asp-append-version="true"></script>
+<script src="~/js/date_slots.js" asp-append-version="true"></script>
+<script src="~/js/common_master.js" asp-append-version="true"></script>
+<script src="~/js/driver_master.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/vehicle_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/driver_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/chartered_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/department_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/expense_search.js" asp-append-version="true"></script>
+@* grid_columns.js is loaded by the search partials (_DriverSearchPartial / _CharteredSearchPartial) *@

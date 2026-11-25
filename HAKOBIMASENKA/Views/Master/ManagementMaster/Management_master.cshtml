@@ -1,0 +1,999 @@
+﻿@*
+=========================================
+Screen: Management Master
+
+Navigation:
+    Main Menu
+        → Basic Master
+        → Management Master
+
+Migrated From: FrmM_Kanri.designer.vb
+
+Purpose: Maintain Management Master data.
+
+=========================================
+*@
+
+@{
+    ViewData["Title"] = "管理マスタ";
+    }
+
+@section Styles
+{
+    <link rel="stylesheet" href="~/css/common.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/management_master.css" asp-append-version="true" />
+    @* <link rel="stylesheet" href="~/css/listscreen.css" asp-append-version="true" /> *@
+    <link rel="stylesheet" href="~/css/japanesecalendar.css" asp-append-version="true" />
+}
+
+@* Main Window *@
+    <div class="main-container">
+
+    @Html.AntiForgeryToken()
+    @await Html.PartialAsync("~/Views/Controls/calendar_common.cshtml")
+    <!-- Screen Header -->
+        <header class="page-header">
+
+            <div class="screen-name">
+            管理マスタ
+            </div>
+
+            <label type="button"
+               id="mode-lbl"
+               class="lbl-new">
+            新　規
+            </label>
+
+        </header>
+
+    <!-- Master Sections -->
+        <section class="master-sections">
+
+            <div class="master-section">
+
+                <div class="master-code">
+
+                    <label>
+                    コ ー ド
+                    </label>
+
+                    <input type="text" id="mmCode" value="@Model.自社コード" inputmode="numeric" maxlength="2" />
+
+                </div>
+
+                <div class="master-row">
+
+                    <label>
+                    自社名(1)
+                    </label>
+
+                @* data-maxbytes: legacy MaxLength in bytes (full-width 2, half-width 1), applied by management_master.js *@
+                <input type="text" id="cName1" class="jis-validation" data-maxbytes="30" />
+
+                </div>
+
+                <div class="master-row">
+
+                    <label>
+                    自社名(2)
+                    </label>
+
+                <input type="text" id="cName2" class="jis-validation" data-maxbytes="30" />
+
+                </div>
+
+                <div class="master-row">
+
+                    <label>
+                    略　　称
+                    </label>
+
+                <input type="text" id="shortName" class="jis-validation" data-maxbytes="30" />
+
+                </div>
+
+                <div class="master-row">
+
+                    <label>
+                    郵便番号
+                    </label>
+
+                @* legacy MaskedTextBox 000-0000 (management_master.js formatPostalCode) *@
+                <input type="text" id="postalCode" maxlength="8" inputmode="numeric" />
+
+                </div>
+
+                <div class="master-address_row">
+
+                    <label>
+                    住　　所
+                    </label>
+
+                    <div class="address-container">
+
+                    <!-- 住所1入力欄を追加 -->
+                    <input type="text" id="address1" class="jis-validation" data-maxbytes="32" />
+
+                    <!-- 住所入力欄を追加 -->
+                    <input type="text" id="address2" class="jis-validation" data-maxbytes="32" />
+
+                    </div>
+                </div>
+
+                <div class="master-row_contact">
+                    <label>
+                    電話番号
+                    </label>
+                @* data-halfwidth: legacy Format "H" (any half-width text, e.g. 03-1234-5678) *@
+                <input type="text" id="phNumber" class="jis-validation" data-maxbytes="15" data-halfwidth />
+
+                    <label>
+                    Ｆ Ａ Ｘ
+                    </label>
+                <input type="text" id="faxNumber" class="jis-validation" data-maxbytes="15" data-halfwidth />
+                </div>
+
+            </div>
+
+            <div class="master-section1">
+
+            <!-- A grid to display and select data -->
+                <div class="list-panel">
+
+                    @* columns resizable and movable by drag, like the legacy DataGridViewEx (grid_columns.js) *@
+                    <table class="table-list" data-grid-columns>
+
+                        <thead>
+
+                            <tr>
+
+                                <th data-sort="numeric">
+                                ｺｰﾄﾞ
+                                </th>
+
+                                <th data-sort="text" class="name-header">
+                                自　社　名
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody class="table-body">
+
+                            @foreach (var item in ViewBag.List)
+                            {
+                                <tr class="list-grid-row" data-code="@item.自社コード">
+
+                                <td>@item.自社コード</td>
+
+                                <td>@item.略称</td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <div>
+                    <div class="master-row1">
+
+                        <label>
+                        登録番号
+                        </label>
+
+                    <input type="text" id="regNumber" class="jis-validation" data-maxbytes="15" data-halfwidth />
+
+                    </div>
+
+                    <div class="master-row1">
+
+                        <label>
+                        銀　行(1)
+                        </label>
+
+                    <input type="text" id="bank1" class="jis-validation" data-maxbytes="40" />
+
+                    </div>
+
+                    <div class="master-row1">
+
+                        <label>
+                        銀　行(2)
+                        </label>
+
+                    <input type="text" id="bank2" class="jis-validation" data-maxbytes="40" />
+
+                    </div>
+
+                    <div class="master-row1">
+
+                        <label>
+                        運行管理者
+                        </label>
+
+                    <input type="text" id="m_admin" class="jis-validation" data-maxbytes="20" />
+
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+    <!-- Main Content -->
+        <main class="mainContent-layout">
+
+        <!-- Editable Area -->
+            <section class="edit-panel">
+
+            <!-- Tab Navigation -->
+                <nav class="tab-navigation">
+
+                    <button type="button"
+                        class="tab-button active"
+                        data-tab="basicSetting">
+
+                    基本設定
+                    </button>
+
+                    <button type="button"
+                        class="tab-button"
+                        data-tab="envSetting">
+
+                    環境設定
+                    </button>
+
+                    <button type="button"
+                        class="tab-button"
+                        data-tab="serialSetting">
+
+                    シリアル設定
+                    </button>
+
+                    <button type="button"
+                        class="tab-button"
+                        data-tab="optionSetting">
+
+                    ｵﾌﾟｼｮﾝ設定
+                    </button>
+                </nav>
+
+            <!-- Tab Container -->
+                <section class="tab-container">
+
+                <!-- Basic Setting -->
+                    <section id="basicSetting" class="tab-content active">
+
+                        <div class="tab-details">
+
+                            <div>
+                                <section id="taxSetting">
+                                    <div class="tax-setting1">
+                                    <label class="section-label">税率設定</label>
+
+                                        <div class="tax-labels">
+                                        <label class="field_label">新消費税率施行日</label>
+                                        <label class="field_label">旧消費税率</label>
+                                        <label class="field_label">新消費税率</label>
+                                        </div>
+
+                                        <div class="tax-inputs">
+
+                                        @* date *@
+                                        @* <input id="taxDate" type="text" /> *@
+                                        <input type="text"
+                                               id="taxDate1"
+                                               class="jp-calendar-input"
+                                               data-no-era="false"
+                                               data-show-day="true" />
+
+                                        <input id="percent1" type="text" />
+                                        <label class="percent-label">%</label>
+
+                                        <input id="percent2" type="text" />
+                                        <label class="percent-label">%</label>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="tax-setting2">
+                                        <div class="tax-labels">
+                                        <label class="field_label">新軽油税施行日</label>
+                                        <label class="field_label">旧軽油税</label>
+                                        <label class="field_label">新軽油税</label>
+                                        </div>
+
+                                        <div class="tax-inputs">
+                                        @* date *@
+                                        @* <input id="taxDate" type="text" /> *@
+
+                                        <input type="text"
+                                               id="taxDate2"
+                                               class="jp-calendar-input"
+                                               data-no-era="false"
+                                               data-show-day="true" />
+
+                                        <input id="amount1" type="text" class="decimal-input" data-dec-digits="2" data-max-value="100" />
+                                        <label class="amount-label">円</label>
+
+                                        <input id="amount2" type="text" class="decimal-input" data-dec-digits="2" data-max-value="100" />
+                                        <label class="amount-label">円</label>
+
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <section id="targetMonthSetting">
+
+                                <label class="section-label">対象月度設定</label>
+
+                                    <div class="target-month">
+                                    <label class="field_label">処理月度</label>
+
+                                    @* month *@
+                                    <input type="text"
+                                           id="procDate"
+                                           class="jp-calendar-input"
+                                           data-no-era="false"
+                                           data-show-day="false" />
+
+                                    @* <input id="procDate" type="text"> *@
+                                    </div>
+
+                                </section>
+
+                                <section id="voucherNumberSetting">
+                                @* Enter goes across each row, as legacy TxtDNo1-10 (management_master.js tabFieldOrder) *@
+
+                                <label class="section-label">伝票番号設定</label>
+
+                                    <div class="voucher-number">
+                                        <div>
+                                            <div class="voucher">
+                                            <label>受注伝票</label>
+                                            <input id="orderVoucher" type="text" data-pad-length data-pad="8" value="" maxlength="8"/>
+                                            </div>
+
+                                            <div class="voucher">
+                                            <label>仕入伝票</label>
+                                            <input id="purchaseVoucher" type="text" data-pad-length data-pad="8" value="" maxlength="8" />
+                                            </div>
+
+                                            <div class="voucher">
+                                            <label>傭車伝票</label>
+                                            <input id="subcontractVoucher" type="text" data-pad-length data-pad="8" value="" maxlength="8" />
+                                            </div>
+
+                                            <div class="voucher">
+                                            <label>経費伝票</label>
+                                            <input id="expenseVoucher" type="text" data-pad-length data-pad="8" value="" maxlength="8" />
+                                            </div>
+
+                                            <div class="voucher">
+                                            <label>作業伝票</label>
+                                            <input id="workVoucher" type="text" data-pad-length data-pad="8" value="" maxlength="8" />
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <div class="voucher">
+                                            <label>運転日報</label>
+                                            <input id="dailyReport" type="text" data-pad-length data-pad="8" value="" maxlength="8" />
+                                            </div>
+
+                                            <div class="voucher">
+                                            <label>入金伝票</label>
+                                            <input id="receiptVoucher" type="text" data-pad-length data-pad="8" value="" maxlength="8" />
+                                            </div>
+
+                                            <div class="voucher">
+                                            <label>仕入支払</label>
+                                            <input id="supplierPayment" type="text" data-pad-length data-pad="8" value="" maxlength="8" />
+                                            </div>
+
+                                            <div class="voucher">
+                                            <label>有料伝票</label>
+                                            <input id="paymentVoucher" type="text" data-pad-length data-pad="8" value="" maxlength="8" />
+                                            </div>
+
+                                            <div class="voucher">
+                                            <label>予備伝票</label>
+                                            <input id="reservationNo" type="text" data-pad-length data-pad="8" value="" maxlength="8" />
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+
+                            <div>
+                                <section id="roundingSetting">
+
+                                <label class="section-label">端数初期設定</label>
+
+                                    <div class="roundSetting">
+                                    <label class="field_label">売上端数</label>
+                                        <div class="option-button-group">
+                                        <input id="salesRounding" class="salesFractions radBtnInpt" type="text" value="1" maxlength="1">
+                                        <button id="salesFractions0" type="button" class="select-option-btn" onclick="optionButton(this)" >0：切り捨て</button>
+                                        <button id="salesFractions1" type="button" class="select-option-btn active" onclick="optionButton(this)" >1：四捨五入</button>
+                                        <button id="salesFractions2" type="button" class="select-option-btn" onclick="optionButton(this)" >2：切り上げ</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="roundSetting">
+                                    <label class="field_label">消費税区分</label>
+                                    <div class="option-button-group">
+                                        <input id="taxCategory" class="consTaxClass radBtnInpt" type="text" value="1" maxlength="1">
+                                        <button id="consTaxClass0" type="button" class="select-option-btn" onclick="optionButton(this)" >0：請 求 毎</button>
+                                        <button id="consTaxClass1" type="button" class="select-option-btn active" onclick="optionButton(this)" >1：明 細 毎</button>
+                                        <button id="consTaxClass2" type="button" class="select-option-btn" onclick="optionButton(this)" >2：非 課 税</button>
+                                    </div>
+                                    </div>
+
+                                    <div class="roundSetting">
+                                    <label class="field_label">消費税端数</label>
+                                    <div class="option-button-group">
+                                        <input id="taxRounding" class="consTaxFA radBtnInpt" type="text" value="1" maxlength="1">
+                                        <button id="consTaxFA0" type="button" class="select-option-btn" onclick="optionButton(this)" >0：切り捨て</button>
+                                        <button id="consTaxFA1" type="button" class="select-option-btn active" onclick="optionButton(this)" >1：四捨五入</button>
+                                        <button id="consTaxFA2" type="button" class="select-option-btn" onclick="optionButton(this)" >2：切り上げ</button>
+                                    </div>
+                                    </div>
+
+                                </section>
+
+                                <section id="machineSetting">
+
+                                <label class="section-label">マシン設定</label>
+
+                                    <div class="machSetting">
+                                    <label class="field_label">ｸﾗｲｱﾝﾄNo</label>
+                                    @* legacy TxtNo / TxtPath: shown from the settings, editable, never saved *@
+                                    <input id="clientNo" type="text" class="radBtnInpt" value="" maxlength="2" inputmode="numeric"/>
+                                    </div>
+
+                                    <div class="machSetting">
+                                    <label class="field_label">ｻｰﾊﾞｰﾊﾟｽ</label>
+                                    <input id="serverPath" type="text" value="" class="dbFileName" data-maxbytes="200"/>
+                                    <input type="file" class="dbFileSelector" accept=".mdb,.mdf,.accdb" hidden>
+                                    <button class="btnBrowse">...</button>
+                                    </div>
+
+                                </section>
+
+                                <section id="inputSetting">
+
+                                <label class="section-label">入力設定</label>
+
+                                    <div class="inSetting">
+                                    <label class="field_label">発着地登録</label>
+                                    <div class="option-button-group">
+                                        <input id="arrivalDepartureType" class="regDAloc radBtnInpt" type="text" value="1" maxlength="1">
+                                        <button id="regDAloc0" type="button" class="select-option-btn" onclick="optionButton(this)" >0：荷 主 毎</button>
+                                        <button id="regDAloc1" type="button" class="select-option-btn active" onclick="optionButton(this)" >1：一　　括</button>
+                                    </div>
+                                    </div>
+
+                                    <div class="inSetting">
+                                    <label class="field_label">日　　付</label>
+                                    <div class="option-button-group">
+                                        <input id="dateType" class="inSettingDate radBtnInpt" type="text" value="1" maxlength="1">
+                                        <button id="inSettingDate0" type="button" class="select-option-btn" onclick="optionButton(this)" >0：西　　暦</button>
+                                        <button id="inSettingDate1" type="button" class="select-option-btn active" onclick="optionButton(this)" >1：和　　暦</button>
+                                    </div>
+                                    </div>
+
+                                </section>
+
+                                <section id="departmentSetting">
+
+                                <label class="section-label">部門設定</label>
+
+                                    <div class="depSetting">
+                                    <label class="field_label">部門管理</label>
+                                    <div class="option-button-group">
+                                        <input id="departmentManagement" class="depSettings radBtnInpt" type="text" value="1" maxlength="1">
+                                        <button id="depSetting0" type="button" class="select-option-btn" onclick="optionButton(this)" >0：車　　輛</button>
+                                        <button id="depSetting1" type="button" class="select-option-btn active" onclick="optionButton(this)" >1：運 転 手</button>
+                                        <button id="depSetting2" type="button" class="select-option-btn" onclick="optionButton(this)" >2：荷　　主</button>
+                                    </div>
+                                    </div>
+
+                                </section>
+
+                                <section id="billingSetting">
+
+                                <label class="section-label">請求書設定</label>
+
+                                    <div class="billSetting">
+                                    <label class="field_label">宛先敬称</label>
+                                    <input id="titleSuffix" list="invoices" class="invoice radBtnInpt">
+                                        <datalist id="invoices">
+                                        <option>御中</option>
+                                        <option>様</option>
+                                        <option>殿</option>
+                                        </datalist>
+                                    </div>
+
+                                </section>
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                <!-- Environment Setting -->
+                    <section id="envSetting" class="tab-content">
+
+                        <div class="tab-details">
+                            <div class="tab-detailSections">
+                                <div class="tab-detailSection1">
+                                    <section id="vehicleMaster">
+
+                                    <label class="section-label">車輌マスタ</label>
+
+                                        <div class="fare-Structure">
+
+                                        <label class="head-label">運賃形態</label>
+
+                                            <div class="fareLabel">
+                                            <label class="field_label">名称(1)</label>
+                                            <label class="field_label">名称(2)</label>
+                                            <label class="field_label">名称(3)</label>
+                                            <label class="field_label">名称(4)</label>
+                                            <label class="field_label">名称(5)</label>
+                                            <label class="field_label">名称(6)</label>
+                                            <label class="field_label">名称(7)</label>
+                                            <label class="field_label">名称(8)</label>
+                                            <label class="field_label">名称(9)</label>
+                                            </div>
+
+                                            <div class="fareText">
+                                            <input id="fareType1" type="text" data-maxbytes="10">
+                                            <input id="fareType2" type="text" data-maxbytes="10">
+                                            <input id="fareType3" type="text" data-maxbytes="10">
+                                            <input id="fareType4" type="text" data-maxbytes="10">
+                                            <input id="fareType5" type="text" data-maxbytes="10">
+                                            <input id="fareType6" type="text" data-maxbytes="10">
+                                            <input id="fareType7" type="text" data-maxbytes="10">
+                                            <input id="fareType8" type="text" data-maxbytes="10">
+                                            <input id="fareType9" type="text" data-maxbytes="10">
+                                            </div>
+
+                                        </div>
+
+                                    </section>
+
+                                    <section id="operation-report">
+
+                                    <label class="section-label">運転日報</label>
+
+                                        <div class="Variable-Name">
+
+                                        <label class="head-label">変動名称</label>
+
+                                            <div class="variableNameLabel">
+                                            <label class="field_label">名称(1)</label>
+                                            <label class="field_label">名称(2)</label>
+                                            <label class="field_label">名称(3)</label>
+                                            <label class="field_label">名称(4)</label>
+                                            <label class="field_label">名称(5)</label>
+                                            <label class="field_label">名称(6)</label>
+                                            <label class="field_label">名称(7)</label>
+                                            <label class="field_label">名称(8)</label>
+                                            <label class="field_label">名称(9)</label>
+                                            </div>
+
+                                            <div class="variableNameText">
+                                            <input type="text" id="compensation1" data-maxbytes="10">
+                                            <input type="text" id="compensation2" data-maxbytes="10">
+                                            <input type="text" id="compensation3" data-maxbytes="10">
+                                            <input type="text" id="compensation4" data-maxbytes="10">
+                                            <input type="text" id="compensation5" data-maxbytes="10">
+                                            <input type="text" id="compensation6" data-maxbytes="10">
+                                            <input type="text" id="compensation7" data-maxbytes="10">
+                                            <input type="text" id="compensation8" data-maxbytes="10">
+                                            <input type="text" id="compensation9" data-maxbytes="10">
+                                            </div>
+
+                                        </div>
+
+                                    </section>
+
+                                    <section id="operation-allowance">
+
+                                    <div></div>
+
+                                        <div class="opAllowance">
+                                        <label class="head-label">運行手当</label>
+
+                                            <div class="opAllowanceLabel">
+                                            <label class="field_label">手当名(1)</label>
+                                            <label class="field_label">手当名(2)</label>
+                                            <label class="field_label">手当名(3)</label>
+                                            <label class="field_label">手当名(4)</label>
+                                            <label class="field_label">手当名(5)</label>
+                                            <label class="field_label">手当名(6)</label>
+                                            <label class="field_label">手当名(7)</label>
+                                            </div>
+
+                                            <div class="opAllowanceText">
+                                            <input type="text" id="allowance1" data-maxbytes="10">
+                                            <input type="text" id="allowance2" data-maxbytes="10">
+                                            <input type="text" id="allowance3" data-maxbytes="10">
+                                            <input type="text" id="allowance4" data-maxbytes="10">
+                                            <input type="text" id="allowance5" data-maxbytes="10">
+                                            <input type="text" id="allowance6" data-maxbytes="10">
+                                            <input type="text" id="allowance7" data-maxbytes="10">
+                                            </div>
+                                        </div>
+
+                                        <div class="noticePeriod">
+                                        <label class="label1">警告日数</label>
+                                        <input type="text" id="warningDays" maxlength="2" inputmode="numeric">
+                                        <label class="label2">日</label>
+                                        </div>
+
+                                    </section>
+
+                                    <section id="expense-voucher">
+
+                                    <label class="section-label">経費伝票</label>
+
+                                        <div class="expVoucher">
+                                        <label class="head-label">経費伝票</label>
+
+                                            <div class="expVoucherLabel">
+                                            <label class="field_label">支給名(1)</label>
+                                            <label class="field_label">支給名(2)</label>
+                                            <label class="field_label">支給名(3)</label>
+                                            <label class="field_label">支給名(4)</label>
+                                            <label class="field_label">支給名(5)</label>
+                                            </div>
+
+                                            <div class="expVoucherText">
+                                            <input type="text" id="payment1" data-maxbytes="10">
+                                            <input type="text" id="payment2" data-maxbytes="10">
+                                            <input type="text" id="payment3" data-maxbytes="10">
+                                            <input type="text" id="payment4" data-maxbytes="10">
+                                            <input type="text" id="payment5" data-maxbytes="10">
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                                <div class="tab-detailSection2">
+                                    <section id="billingProcessingSettings">
+
+                                        <div class="billingProcessingSetting">
+                                        <label class="cust_label">実車Km入力</label>
+                                        <div class="option-button-group">
+                                            <input type="text" id="actualKmType" class="eaMilage radBtnInpt" value="1" maxlength="1">
+                                            <button type="button" id="eaMilage0" class="select-option-btn" onclick="optionButton(this)" >0：日 報 毎　</button>
+                                            <button type="button" id="eaMilage1" class="select-option-btn active" onclick="optionButton(this)" >1：日報明細毎</button>
+                                        </div>
+                                        </div>
+
+                                        <div class="billingProcessingSetting">
+                                        <label class="cust_label">課税 割増</label>
+                                        <div class="option-button-group">
+                                            <input class="taxSurcharge radBtnInpt" type="text" id="taxablePremium" value="1" maxlength="1">
+                                            <button type="button" id="taxSurcharge0" class="select-option-btn" onclick="optionButton(this)" >0：値引対象内</button>
+                                            <button type="button" id="taxSurcharge1" class="select-option-btn active" onclick="optionButton(this)" >1：値引対象外</button>
+                                        </div>
+                                        </div>
+
+                                        <div class="billingProcessingSetting">
+                                        <label class="cust_label">非課税 割増</label>
+                                            <div class="option-button-group">
+                                            <input class="noTaxSurcharge radBtnInpt" type="text" id="nonTaxablePremium" value="1" maxlength="1">
+                                            <button type="button" id="noTaxSurcharge0" class="select-option-btn" onclick="optionButton(this)" >0：値引対象内</button>
+                                            <button type="button" id="noTaxSurcharge1" class="select-option-btn active" onclick="optionButton(this)" >1：値引対象外</button>
+                                        </div>
+                                        </div>
+
+                                        <div class="billingProcessingSetting">
+                                        <label class="cust_label">請求日 設定</label>
+                                            <div class="option-button-group">
+                                            <input class="invoiceDateSetting radBtnInpt" type="text" id="billingDateType" value="1" maxlength="1">
+                                            <button type="button" id="invoiceDateSetting0" class="select-option-btn" onclick="optionButton(this)" >0：運 行 日　</button>
+                                            <button type="button" id="invoiceDateSetting1" class="select-option-btn active" onclick="optionButton(this)" >1：積　　日　</button>
+                                            <button type="button" id="invoiceDateSetting2" class="select-option-btn" onclick="optionButton(this)" >2：卸　　日　</button>
+                                        </div>
+                                        </div>
+
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+
+                    </section>
+
+                <!-- Serial Setting -->
+                    <section id="serialSetting" class="tab-content">
+                        <div class="tab-details">
+                            <section id="serialNumberSetting">
+                            <label class="section-label">シリアルNo.</label>
+
+                                @* Ten boxes as legacy TxtSerial(1-10): all masked, max 15.
+                                   A box is locked only when its SEC flag is 1 (management_master.js lockSerials). *@
+                                <div class="serialNumber">
+                                <label class="cust_label">製品ｼﾘｱﾙNo</label>
+                                <input type="password" id="serial1" maxlength="15">
+                                </div>
+
+                                <div class="serialNumber">
+                                <label class="cust_label">運行管理ｼﾘｱﾙNo</label>
+                                <input type="password" id="serial2" maxlength="15">
+                                </div>
+
+                                <div class="serialNumber">
+                                <label class="cust_label">車輌管理ｼﾘｱﾙNo</label>
+                                <input type="password" id="serial3" maxlength="15">
+                                </div>
+
+                                <div class="serialNumber">
+                                <label class="cust_label">ﾃﾞｼﾞﾀｺｼﾘｱﾙNo</label>
+                                <input type="password" id="serial4" maxlength="15">
+                                </div>
+
+                                <div class="serialNumber">
+                                <label class="cust_label">ETCｼﾘｱﾙNo</label>
+                                <input type="password" id="serial5" maxlength="15">
+                                </div>
+
+                                @* 配送ﾃﾞｽ (box 6) is hidden in legacy; kept so ｼﾘｱﾙNO6 is loaded and saved back unchanged *@
+                                <div class="serialNumber" hidden>
+                                <label class="cust_label">配送ﾃﾞｽｼﾘｱﾙNo</label>
+                                <input type="password" id="serial6" maxlength="15">
+                                </div>
+
+                                <div class="serialNumber">
+                                <label class="cust_label">送受信ｼﾘｱﾙNo</label>
+                                <input type="password" id="serial7" maxlength="15">
+                                </div>
+
+                                <div class="serialNumber">
+                                <label class="cust_label">財務連動ｼﾘｱﾙNo</label>
+                                <input type="password" id="serial8" maxlength="15">
+                                </div>
+
+                                <div class="serialNumber">
+                                <label class="cust_label">給与連動ｼﾘｱﾙNo</label>
+                                <input type="password" id="serial9" maxlength="15">
+                                </div>
+
+                                <div class="serialNumber">
+                                <label class="cust_label">ｸﾞﾘｰﾝｼﾘｱﾙNo</label>
+                                <input type="password" id="serial10" maxlength="15">
+                                </div>
+                            </section>
+                        </div>
+                    </section>
+
+                <!-- Option Setting -->
+                    <section id="optionSetting" class="tab-content">
+                        <div class="tab-details">
+                            <div class="opSettingSections">
+                                <section>
+                                <label class="section-label">給与連動</label>
+
+                                    <div class="salary-Linked">
+                                    <label class="cust_label">給与ﾃｷｽﾄﾌｧｲﾙ</label>
+                                    <input type="text" id="salaryFile" class="textFileName" data-maxbytes="200">
+                                    <input type="file" class="fileSelector folderSelector" webkitdirectory="" hidden/>
+                                    <button type="button" class="btnBrowse">...</button>
+                                    </div>
+
+                                    <div class="salary-Linked">
+                                    <label class="cust_label">給与締切日</label>
+                                    <input type="text" id="salaryClosingDay" maxlength="2" inputmode="numeric">
+                                    <label>日</label>
+                                    </div>
+
+                                    <div class="salary-Linked">
+                                    <label class="cust_label">運賃手当(%)</label>
+                                    <label>[運転手</label>
+                                    <input type="text" id="salaryRate1" class="decimal-input" data-int-digits="3" data-dec-digits="2" data-max-value="100.00" value="0.00">
+                                    <label>％] × [車　輌</label>
+                                    <input type="text" id="salaryRate2" class="decimal-input" data-int-digits="3" data-dec-digits="2" data-max-value="100.00" value="0.00">
+                                    <label>％] × [品　名</label>
+                                    <input type="text" id="salaryRate3" class="decimal-input" data-int-digits="3" data-dec-digits="2" data-max-value="100.00" value="0.00">
+                                    <label>％] × [荷　主</label>
+                                    <input type="text" id="salaryRate4" class="decimal-input" data-int-digits="3" data-dec-digits="2" data-max-value="100.00" value="0.00">
+                                    <label>％]</label>
+                                    </div>
+                                </section>
+
+                                <section>
+                                <label class="section-label">財務連動</label>
+
+                                    <div class="financial-Link">
+                                    <label class="cust_label">財務ﾃｷｽﾄﾌｧｲﾙ</label>
+                                    <input type="text" id="financeFile" class="textFileName" data-maxbytes="200">
+                                    <input type="file" class="fileSelector folderSelector" webkitdirectory="" hidden />
+                                    <button type="button" class="btnBrowse">...</button>
+                                    </div>
+
+                                    <div class="financial-Link">
+
+                                    <label class="cust_label">仕訳作成</label>
+
+                                        <div>
+
+                                            <div class="labelInputs">
+                                            <label>売上</label>
+                                            <input type="text" id="financeType1" maxlength="1" inputmode="numeric">
+
+                                            <label>仕入</label>
+                                            <input type="text" id="financeType2" maxlength="1" inputmode="numeric">
+
+                                            <label>下払</label>
+                                            <input type="text" id="financeType3" maxlength="1" inputmode="numeric">
+
+                                            <label>経費</label>
+                                            <input type="text" id="financeType4" maxlength="1" inputmode="numeric">
+
+                                            <label>[1:合計 空:明細]</label>
+                                            </div>
+
+                                            <div class="labelInputs">
+                                            <label>入金</label>
+                                            <input type="text" id="financeType5" maxlength="1" inputmode="numeric">
+
+                                            <label>支払(仕入)</label>
+                                            <input type="text" id="financeType6" maxlength="1" inputmode="numeric">
+
+                                            <label>支払(下払)</label>
+                                            <input type="text" id="financeType7" maxlength="1" inputmode="numeric">
+
+                                            <label>有料代</label>
+                                            <input type="text" id="financeType8" maxlength="1" inputmode="numeric">
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </section>
+
+                                <section>
+                                <label class="section-label">送受信連動</label>
+
+                                    <div class="srSynchronization">
+
+                                    <label class="cust_label">送信先ｱﾄﾞﾚｽ</label>
+
+                                        <div class="srInputs">
+                                        <input type="text" id="mailTo1" data-maxbytes="100">
+                                        <input type="text" id="mailTo2" data-maxbytes="100">
+                                        </div>
+
+                                    </div>
+
+                                </section>
+
+                                <section>
+                                <label class="section-label">ETC連動</label>
+
+                                    <div class="etc-Link">
+                                    <label class="cust_label">カード優先</label>
+                                    <div class="option-button-group">
+                                        <input id="cardPriority" type="text" class="radBtnInpt" value="0" maxlength="1">
+                                        <button id="cardPriority0" type="button" class="select-option-btn active" onclick="optionButton(this)" >0：車　　輌</button>
+                                        <button id="cardPriority1" type="button" class="select-option-btn" onclick="optionButton(this)"  >1：運 転 手</button>
+                                    </div>
+                                    </div>
+
+                                </section>
+                            </div>
+                        </div>
+                    </section>
+
+                </section>
+
+            </section>
+
+        </main>
+
+    <!-- Message -->
+        <section class="message-area">
+
+        <label> ﾒｯｾｰｼﾞ: </label>
+		<span id="message-label"></span>
+
+        </section>
+
+    <!-- Function Footer -->
+        @* legacy Fkey.ButtonText (FrmM_Kanri.designer.vb): only F1 / F4 / F11 / F12 are used,
+           the other keys show two full-width spaces; F9 is blank on this screen (no リスト) *@
+        <footer class="function-footer">
+
+            <button type="button" id="btnRegister">
+            F1:登 録
+            </button>
+
+            <button type="button" id="btnCopy"
+                disabled>
+            F2:&#x3000;&#x3000;
+            </button>
+
+            <button type="button" id="btnF3"
+                disabled>
+            F3:&#x3000;&#x3000;
+            </button>
+
+            <button type="button" id="btnDelete" disabled>
+            F4:削 除
+            </button>
+
+            <button type="button" id="btnF5"
+                disabled>
+            F5:&#x3000;&#x3000;
+            </button>
+
+            <button type="button" id="btnF6"
+                disabled>
+            F6:&#x3000;&#x3000;
+            </button>
+
+            <button type="button" id="btnF7"
+                disabled>
+            F7:&#x3000;&#x3000;
+            </button>
+
+            <button type="button" id="btnF8"
+                disabled>
+            F8:&#x3000;&#x3000;
+            </button>
+
+            <button type="button"
+                id="btnList"
+                disabled>
+            F9:&#x3000;&#x3000;
+            </button>
+
+            <button type="button" id="btnF10"
+                disabled>
+            F10:&#x3000;&#x3000;
+            </button>
+
+            <button type="button" id="btnBack">
+            F11:中 止
+            </button>
+
+            <button type="button"
+                id="btnExit"
+                data-exit-url="@Url.Action("Main_menu", "MainMenu")">
+            F12:終 了
+            </button>
+
+        </footer>
+
+    </div>
+
+    <!-- F9 List Popup -->
+@*     <div id="printPopup" class="popup-overlay">
+        <div id="printPopupWindow" class="popup-window">
+        <partial name="~/Views/Shared/MasterList/_MasterListPartial.cshtml" />
+        </div>
+    </div> *@
+
+
+<script src="~/js/common_master.js" asp-append-version="true"></script>
+
+@* date boxes typed slot by slot (施行日 / 処理月度) *@
+<script src="~/js/date_slots.js" asp-append-version="true"></script>
+
+<script src="~/js/management_master.js" asp-append-version="true"></script>
+
+<script src="~/js/japanesecalendar.js" asp-append-version="true"></script>
+
+@* grid columns resizable and movable by drag, like the legacy DataGridViewEx *@
+<script src="~/js/grid_columns.js" asp-append-version="true"></script>
+
+@* <script src="~/js/listscreen.js" asp-append-version="true"></script> *@

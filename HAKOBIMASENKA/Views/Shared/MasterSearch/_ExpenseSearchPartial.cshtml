@@ -1,0 +1,121 @@
+﻿@* Expense Search Popup *@
+<div id="expenseSearchPopup"
+     class="expense-search-overlay"
+     aria-hidden="true">
+
+    <section id="expenseSearchWindow"
+             class="expense-search-window"
+             data-search-url="/SearchScreen/ExpenseSearch">
+
+        @* Title bar *@
+        <header class="expense-search-titlebar">
+            <span>経費検索</span>
+
+            <div class="expense-search-window-controls">
+                <button type="button"
+                        id="btnExpenseSearchMinimize"
+                        aria-label="最小化">
+                    −
+                </button>
+
+                <button type="button"
+                        id="btnExpenseSearchMaximize"
+                        aria-label="最大化">
+                    □
+                </button>
+
+                <button type="button"
+                        id="btnExpenseSearchClose"
+                        aria-label="閉じる">
+                    ×
+                </button>
+            </div>
+        </header>
+
+        @* Heading and result count *@
+        <div class="expense-search-heading">
+            <label>経費検索</label>
+            <strong id="expenseSearchCount">件数:0</strong>
+        </div>
+
+        @* Search conditions *@
+        <div class="expense-search-conditions">
+            <div class="expense-search-row">
+                <label for="searchExpenseName">経 費 名</label>
+                <input type="text"
+                       id="searchExpenseName"
+                       autocomplete="off" />
+            </div>
+
+            <div class="expense-search-row">
+                <label for="searchExpenseCategory">経費区分</label>
+
+                <input type="text"
+                       id="searchExpenseCategoryCode"
+                       class="expense-search-category-code"
+                       maxlength="10"
+                       autocomplete="off" />
+
+                <select id="searchExpenseCategory">
+                    <option value="">すべて</option>
+                </select>
+            </div>
+        </div>
+
+        @* Search results *@
+        <div class="expense-search-results">
+            <div class="expense-search-table-scroll">
+                <table class="expense-search-table">
+                    <thead>
+                        <tr>
+                            <th data-sort="expenseCode">コード</th>
+                            <th data-sort="expenseName">経 費 名</th>
+                            <th data-sort="expenseCategory">区分</th>
+                            <th data-sort="unitPrice">単価</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="expenseSearchResults"></tbody>
+                </table>
+            </div>
+        </div>
+
+        @* Message area *@
+        <div id="expenseSearchMessage"
+             class="expense-search-message">
+            メッセージ：
+        </div>
+
+        @* Function-key footer *@
+        <footer class="expense-search-footer">
+            <button type="button" id="btnExpenseSearchSelect">
+                F1:選　択
+            </button>
+
+            <button type="button" id="btnExpenseSearchExecute">
+                F5:検　索
+            </button>
+
+            <button type="button" id="btnExpenseSearchF6">
+                F6:
+            </button>
+
+            <button type="button" id="btnExpenseSearchF9">
+                F9:
+            </button>
+
+            <button type="button" id="btnExpenseSearchRegister">
+                F10:ﾏｽﾀ登録
+            </button>
+
+            <button type="button" id="btnExpenseSearchCancel">
+                F11:中　止
+            </button>
+
+            <button type="button" id="btnExpenseSearchExit">
+                F12:終　了
+            </button>
+        </footer>
+
+    </section>
+</div>

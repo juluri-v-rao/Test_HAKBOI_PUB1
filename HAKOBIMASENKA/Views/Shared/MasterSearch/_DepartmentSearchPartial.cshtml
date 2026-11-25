@@ -1,0 +1,79 @@
+﻿<link rel="stylesheet" href="~/css/master_search_css/department_search.css" asp-append-version="true" />
+@* Department Search Popup *@
+<div id="departmentSearchPopup"
+     class="department-search-overlay"
+     aria-hidden="true">
+
+    <section id="departmentSearchWindow"
+             class="department-search-window"
+             data-search-url="/SearchScreen/DepartmentSearch">
+
+        @* Title bar *@
+        <header class="department-search-titlebar">
+            <span>部門検索</span>
+
+            <div class="department-search-window-controls">
+                <button type="button"
+                        id="btnDepartmentSearchMinimize"
+                        aria-label="最小化">
+                    −
+                </button>
+
+                <button type="button"
+                        id="btnDepartmentSearchMaximize"
+                        aria-label="最大化">
+                    □
+                </button>
+
+                <button type="button"
+                        id="btnDepartmentSearchClose"
+                        aria-label="閉じる">
+                    ×
+                </button>
+            </div>
+        </header>
+
+        @* Heading *@
+        <div class="department-search-heading">
+            <label>部門検索</label>
+        </div>
+
+        @* Search results *@
+        <div class="department-search-results">
+            <div class="department-search-table-scroll">
+                <table class="department-search-table">
+                    <thead>
+                        <tr>
+                            <th data-sort="code">コード</th>
+                            <th data-sort="departmentName">部 門</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="departmentSearchResults"></tbody>
+                </table>
+            </div>
+        </div>
+
+        @* Message area *@
+        <div id="departmentSearchMessage"
+             class="department-search-message">
+            メッセージ：
+        </div>
+
+        @* Function-key footer *@
+        <footer class="department-search-footer">
+            <button type="button" id="btnDepartmentSearchSelect">
+                F1:選　択
+            </button>
+
+            <button type="button" id="btnDepartmentSearchRegister">
+                F10:ﾏｽﾀ登録
+            </button>
+
+            <button type="button" id="btnDepartmentSearchExit">
+                F12:終　了
+            </button>
+        </footer>
+
+    </section>
+</div>

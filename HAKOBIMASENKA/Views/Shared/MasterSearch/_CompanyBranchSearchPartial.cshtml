@@ -1,0 +1,95 @@
+﻿<link rel="stylesheet" href="~/css/master_search_css/company_branch_search.css" asp-append-version="true" />
+@* Company Branch Search Popup *@
+<div id="companyBranchSearchPopup"
+     class="company-branch-search-overlay"
+     aria-hidden="true">
+
+    <section id="companyBranchSearchWindow"
+             class="company-branch-search-window"
+             data-search-url="/SearchScreen/CompanyBranchSearch">
+
+        @* Title bar *@
+        <header class="company-branch-search-titlebar">
+            <span>自社支店検索</span>
+
+            <div class="company-branch-search-window-controls">
+                <button type="button"
+                        id="btnCompanyBranchSearchMinimize"
+                        aria-label="最小化">
+                    −
+                </button>
+
+                <button type="button"
+                        id="btnCompanyBranchSearchMaximize"
+                        aria-label="最大化">
+                    □
+                </button>
+
+                <button type="button"
+                        id="btnCompanyBranchSearchClose"
+                        aria-label="閉じる">
+                    ×
+                </button>
+            </div>
+        </header>
+
+        @* Heading *@
+        <div class="company-branch-search-heading">
+            <label>自社支店検索</label>
+        </div>
+
+        @* Search results *@
+        <div class="company-branch-search-results">
+            <div class="company-branch-search-table-scroll">
+                <table class="company-branch-search-table" data-grid-columns>
+                    <thead>
+                        <tr>
+                            <th data-sort="companyCode">ｺｰﾄﾞ</th>
+                            <th data-sort="abbreviation">支　店　名</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="companyBranchSearchResults"></tbody>
+                </table>
+            </div>
+        </div>
+
+        @* Message area *@
+        <div id="companyBranchSearchMessage"
+             class="company-branch-search-message">
+            メッセージ：
+        </div>
+
+        @* Function-key footer *@
+        <footer class="company-branch-search-footer">
+
+            <button type="button" id="btnCompanyBranchSearchSelect">
+                F1:選 択
+            </button>
+
+            <button type="button" disabled>F2:　　</button>
+            <button type="button" disabled>F3:　　</button>
+            <button type="button" disabled>F4:　　</button>
+
+            <button type="button" hidden> F5:検 索 </button>   
+
+            <button type="button" disabled>F6:　　</button>
+            <button type="button" disabled>F7:　　</button>
+            <button type="button" disabled>F8:　　</button>
+            <button type="button" disabled>F9:　　</button>
+
+            <button type="button" id="btnCompanyBranchSearchF10" disabled>F10:　　</button>
+
+            <button type="button" disabled>
+                F11:中 止
+            </button>
+
+            <button type="button" id="btnCompanyBranchSearchExit">
+                F12:終 了
+            </button>
+
+        </footer>
+
+    </section>
+</div>
+<script src="~/js/grid_columns.js" asp-append-version="true"></script>

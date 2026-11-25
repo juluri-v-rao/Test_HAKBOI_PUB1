@@ -1,0 +1,982 @@
+﻿@model HAKOBIMASENKA.ViewModels.VehicleMasterResultDto
+@{
+    ViewData["Title"] = "車輌マスタ";
+}
+
+@section Styles
+{
+    <link rel="stylesheet" href="~/css/common.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/vehicle_master.css" asp-append-version="true">
+    <link rel="stylesheet" href="~/css/listscreen.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/japanesecalendar.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/master_search_css/vehicle_search.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/master_search_css/driver_search.css" asp-append-version="true" />
+    <link rel="stylesheet"
+          href="~/css/master_search_css/chartered_search.css"
+          asp-append-version="true" />
+    
+}
+
+<div class="main-container">
+
+    @await Html.PartialAsync("~/Views/Controls/calendar_common.cshtml")
+    <!-- Screen Header -->
+    <header class="page-header">
+        <div class="screen-name">車輌マスタ</div>
+        @* <button type="button" id="btnNew" class="new-button" disabled> 新　規</button> *@
+        <label type="button"
+               id="mode-lbl"
+               class="lbl-new">
+            新　規
+        </label>
+    </header>
+
+    <!-- Master Section -->
+    <section class="master-section">
+        <div class="master-row">
+            <label>号　　車</label>
+            <input type="text" id="carCode" maxlength="10">
+        </div>
+        <div class="master-row">
+            <label>車　　番</label>
+            <input type="text" id="carNumber" maxlength="20">
+        </div>
+        <div class="master-row">
+            <label>メーカー名</label>
+            <input type="text" id="makerName" maxlength="20">
+
+            <label style="margin-left:40px">型　　式</label>
+            <input type="text" id="model" maxlength="30">
+        </div>
+
+        <div class="master-row">
+            <label>車台番号</label>
+            <input type="text" id="chassisNumber" maxlength="20">
+
+            <label style="margin-left:40px">エンジン</label>
+            <input type="text" id="engine" maxlength="20">
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="mainContent-layout">
+
+        <section class="edit-panel">
+
+            @* Basic Settings
+            Vehicle Management Settings
+            Fixed Expense Settings
+            Repair/Tire Replacement History
+            Digital Tachograph Option Settings *@
+
+            <!-- TAB BUTTONS -->
+            <nav class="tab-navigation">
+                <button type="button" class="tab-button active" data-tab="basicSetting">
+                    基本設定
+                </button>
+                <button type="button"
+                        class="tab-button"
+                        data-tab="vehicleManagement"
+                        hidden="@(!Model.ShowVehicleManagementTab)">
+                    車輌管理設定
+                </button>
+
+                <button type="button"
+                        class="tab-button"
+                        data-tab="fixedCost"
+                        hidden="@(!Model.ShowFixedCostTab)">
+                    固定経費設定
+                </button>
+
+                <button type="button" class="tab-button" data-tab="repairHistory">
+                    修理・ﾀｲﾔ交換履歴
+                </button>
+                <button type="button"
+                        class="tab-button"
+                        data-tab="salarySetting"
+                        hidden="@(!Model.ShowSalaryTab)">
+                    給与ｵﾌﾟｼｮﾝ設定
+                </button>
+                <button type="button"
+                        class="tab-button"
+                        data-tab="digitacoSetting"
+                        hidden="@(!Model.ShowDigitalTachographTab)">
+                    ﾃﾞｼﾞﾀｺｵﾌﾟｼｮﾝ設定
+                </button>
+            </nav>
+
+
+            <!-- TAB CONTENT -->
+            <section class="tab-container">
+
+                <section id="basicSetting" class="tab-content active">
+
+                    <div class="tab-details">
+
+                        <!-- 初年度 -->
+                        <div class="tab-row">
+                            <label class="tab-label">初 年 度</label>
+                            <div class="first-year-wrapper">
+                              @*   <!-- FIRST YEAR DISPLAY -->
+                                <input type="text" id="firstYear" class="first-year-display" placeholder="__ __年__月" /> *@
+
+                                <!--JAPANESE CALENDAR -->
+                                <input type="text"
+                                       id="firstYear"
+                                       class="jp-calendar-input first-year-display" 
+                                       placeholder="__ __年__月" />
+
+                                <!-- ACTUAL SELECTED DATE: YYYY-MM-DD -->
+                                <input type="hidden" id="firstYearMonth" value="" />
+                                <!-- COMMON JAPANESE CALENDAR -->
+                               @*  @{
+                                    ViewData["CalendarId"] = "japaneseCalendar";
+                                }
+                                <partial name="~/Views/Shared/_JapaneseCalendar.cshtml" /> *@
+                            </div>
+                        </div>
+
+                        <!-- 登録年月日 -->
+                        <div class="tab-row">
+                            <label class="tab-label">登録年月日</label>
+
+                            <div class="first-year-wrapper">
+                              @*   <!-- REGISTRATION DATE DISPLAY -->
+                                <input type="text" id="registrationDate" class="first-year-display" data-show-day="true" placeholder="__ __年__月__日" readonly /> *@
+
+                                <!--JAPANESE CALENDAR -->
+                                <input type="text"
+                                       id="registrationDate"
+                                       class="jp-calendar-input first-year-display"
+                                       data-show-day="true" placeholder="__ __年__月__日" />
+
+                                <!-- ACTUAL SELECTED DATE: YYYY-MM-DD -->
+                                <input type="hidden" id="registrationDateValue" value="" />
+
+                               @*  <!-- COMMON JAPANESE CALENDAR -->
+                                @{
+                                    ViewData["CalendarId"] = "registrationDateCalendar";
+                                } 
+                                <partial name="~/Views/Shared/_JapaneseCalendar.cshtml" /> *@
+                            </div>
+                        </div>
+
+                        <!-- 車検日 -->
+                        <div class="tab-row">
+                            <label class="tab-label">車 検 日</label>
+
+                            <div class="first-year-wrapper">
+                                <!-- REGISTRATION DATE DISPLAY -->
+                                @* <input type="text" id="inspectionDate" class="first-year-display" data-show-day="true" placeholder="__ __年__月__日" readonly /> *@
+
+                                <!--JAPANESE CALENDAR -->
+                                <input type="text"
+                                       id="inspectionDate"
+                                       class="jp-calendar-input first-year-display"
+                                       data-show-day="true" placeholder="__ __年__月__日" />
+
+                                <!-- ACTUAL SELECTED DATE: YYYY-MM-DD -->
+                                <input type="hidden" id="inspectionDateValue" value="" />
+
+                                <!-- COMMON JAPANESE CALENDAR -->
+                              @*   @{
+                                    ViewData["CalendarId"] = "inspectionDateCalendar";
+                                }
+
+                                <partial name="~/Views/Shared/_JapaneseCalendar.cshtml" /> *@
+                            </div>
+                        </div>
+
+                        @*  <div class="tab-row">
+                            <label>車検日</label>
+                            <input type="date">
+                        </div> *@
+
+                        <div class="tab-row">
+                            <label>総走行Km</label>
+                            <div class="area-row">
+                                @* <input type="text" id="totaldistancetraveled" maxlength="7" oninput="this.value=this.value.replace(/[^0-9]/g,'')"> *@
+                                <input type="text"
+                                       id="totaldistancetraveled"
+                                       maxlength="9"
+                                       style="text-align: right;"
+                                       oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,7).replace(/\B(?=(\d{3})+(?!\d))/g, ',')">
+                                @* <span>Km</span> *@
+                                <label>Km</label>
+                            </div>
+                        </div>
+
+                        <div class="tab-row">
+                            <label>最大積載重量</label>
+                            <div class="area-row">
+                                <input type="text" id="maximumloadcapacity" maxlength="6"
+                                       style="text-align: right;"
+                                       oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,7).replace(/\B(?=(\d{3})+(?!\d))/g, ',')">
+                                @* <span>Kg</span> *@
+                                <label>Kg</label>
+
+                            </div>
+                        </div>
+
+                        <div class="tab-row">
+                            <label for="transportTypeCode">運賃形態</label>
+                            <div class="transport-type-container">
+                                <input type="text" id="transportTypeCode" maxlength="1"
+                                       class="small-code" inputmode="numeric"
+                                       autocomplete="off" value="" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+
+                                <select id="transportType" tabindex="-1">
+                                    <option value=""></option>
+                                </select>
+
+                                @* <select id="transportType">
+                                    <option value=""></option>
+                                    <option value="1">2t車</option>
+                                    <option value="2">4t車</option>
+                                    <option value="3">8t車</option>
+                                    <option value="4">10t車</option>
+                                    <option value="5">20t車</option>
+                                    <option value="6">30t車</option>
+                                </select> *@
+                            </div>
+                        </div>
+
+                        @* <div class="tab-row">
+                            <label>納車日</label>
+                            <input type="date">
+                        </div> *@
+                        <!-- 納車日 -->
+                        <div class="tab-row">
+                            <label class="tab-label">納 車 日</label>
+
+                            <div class="first-year-wrapper">
+                                <!-- REGISTRATION DATE DISPLAY -->
+                                @* <input type="text" id="deliveryDate" class="first-year-display" data-show-day="true" data-no-era="true" placeholder="____年__月__日" readonly /> *@
+
+                                <!--JAPANESE CALENDAR -->
+                                <input type="text"
+                                       id="deliveryDate"
+                                       class="jp-calendar-input first-year-display"
+                                       data-show-day="true" data-no-era="true" placeholder="____年__月__日" />
+
+                                <!-- ACTUAL SELECTED DATE: YYYY-MM-DD -->
+                                <input type="hidden" id="deliveryDateValue" value="" />
+
+                                <!-- COMMON JAPANESE CALENDAR -->
+                               @*  @{
+                                    ViewData["CalendarId"] = "deliveryDateCalendar";
+                                }
+
+                                <partial name="~/Views/Shared/_JapaneseCalendar.cshtml" /> *@
+                            </div>
+                        </div>
+
+                        @* <div class="tab-row">
+                            <label>廃車日</label>
+                            <input type="date">
+                        </div> *@
+
+                        <div class="tab-row">
+                            <label class="tab-label">廃 車 日</label>
+
+                            <div class="first-year-wrapper">
+                                <!-- REGISTRATION DATE DISPLAY -->
+                                @* <input type="text" id="deregistrationdate" class="first-year-display" data-show-day="true" data-no-era="true" placeholder="____年__月__日" readonly /> *@
+                                <!--JAPANESE CALENDAR -->
+                                <input type="text"
+                                       id="deregistrationdate"
+                                       class="jp-calendar-input first-year-display"
+                                       data-show-day="true" data-no-era="true" placeholder="____年__月__日" />
+
+                                <!-- ACTUAL SELECTED DATE: YYYY-MM-DD -->
+                                <input type="hidden" id="deregistrationDateValue" value="" />
+
+                                <!-- COMMON JAPANESE CALENDAR -->
+                               @*  @{
+                                    ViewData["CalendarId"] = "deregistrationDateCalendar";
+                                }
+                                <partial name="~/Views/Shared/_JapaneseCalendar.cshtml" /> *@
+                            </div>
+                        </div>
+
+                        <div class="tab-row">
+                            <label>車輌区分</label>
+
+                            <div class="vehicle-type-container">
+                                <input type="text" id="vehicleTypeCode" value="0" maxlength="1"
+                                       inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+
+                                <button type="button"
+                                        class="vehicle-type active"
+                                        data-value="0">
+                                    0：自　社
+                                </button>
+
+                                <button type="button"
+                                        class="vehicle-type"
+                                        data-value="1">
+                                    1：傭　車
+                                </button>
+
+                                <button type="button"
+                                        class="vehicle-type"
+                                        data-value="2">
+                                    2：契　約
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="tab-row">
+                            <label for="departmentid">部　　門</label>
+
+                            <div class="area-row">
+                                <input type="text" id="departmentid" class="small-code" maxlength="2"
+                                       inputmode="numeric"
+                                       autocomplete="off"
+                                       oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                <input type="text" id="departmentname"
+                                       readonly
+                                       class="master-name">
+                            </div>
+                        </div>
+
+                        <div class="tab-row dispatch-table-row">
+                            <label>配 車 表</label>
+
+                            <div class="area-row-chk">
+                                <input type="checkbox" id="dispatchTableCheckbox">
+                                <label for="dispatchTableCheckbox">表示しない</label>
+                                @* <span>表示しない</span> *@
+                            </div>
+                        </div>
+
+                    </div>
+
+                </section>
+
+                <!-- 車輌管理設定 Tab2 -->
+                <section id="vehicleManagement"
+                         class="tab-content"
+                         hidden="@(!Model.ShowVehicleManagementTab)">
+                    <div class="vehicle-management-layout">
+                        <!-- LEFT: MAINTENANCE -->
+                        <div class="maintenance-panel">
+                            <!-- OIL MANAGEMENT -->
+                            <section class="oil-panel">
+                                <h3>オイル管理</h3>
+                                <div class="maintenance-grid oil-grid">
+                                    <!-- HEADER -->
+                                    <div class="maintenance-header">
+                                        <div class="maintenance-header-label">No</div>
+                                        <div class="maintenance-header-label">交換基準Km</div>
+                                        <div class="maintenance-header-label">前回交換日</div>
+                                        <div class="maintenance-header-label">交換後Km</div>
+                                    </div>
+                                    <!-- ROW -->
+                                    <div class="maintenance-row">
+                                        <div class="maintenance-no">1</div>
+                                        <div class="km-cell">
+                                            <input type="text" id="exchangecriteria" class="km-input"
+                                                   style="text-align: right;"
+                                                   oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,6).replace(/\B(?=(\d{3})+(?!\d))/g, ',')">
+                                            @* <span>Km</span> *@
+                                            <label>Km</label>
+                                        </div>
+                                        @* <div class="date-cell"><input type="date"></div> *@
+                                        <div class="date-cell">
+                                            <div class="first-year-wrapper">
+                                              @*   <!-- MAINTENANCE DATE DISPLAY -->
+                                                <input type="text"
+                                                       id="lastexchangedate"
+                                                       class="first-year-display"
+                                                       data-show-day="true"
+                                                       data-no-era="true"
+                                                       placeholder="____年__月__日"
+                                                       readonly /> *@
+
+                                                <!--JAPANESE CALENDAR -->
+                                                <input type="text"
+                                                       id="lastexchangedate"
+                                                       class="jp-calendar-input first-year-display"
+                                                       data-show-day="true" data-no-era="true" placeholder="____年__月__日" />
+
+                                                <!-- ACTUAL SELECTED DATE: YYYY-MM-DD -->
+                                                <input type="hidden"
+                                                       id="lastexchangedateValue"
+                                                       value="" />
+
+                                                <!-- COMMON JAPANESE CALENDAR -->
+                                               @*  @{
+                                                    ViewData["CalendarId"] = "lastexchangedateCalendar";
+                                                }
+                                                <partial name="~/Views/Shared/_JapaneseCalendar.cshtml" /> *@
+                                            </div>
+                                        </div>
+                                        <div class="km-cell">
+                                            <input type="text" id="afterreplacement" class="km-input"
+                                                   style="text-align: right;"
+                                                   oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,6).replace(/\B(?=(\d{3})+(?!\d))/g, ',')">
+                                            @* <span>Km</span> *@
+                                            <label>Km</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- TIRE MANAGEMENT -->
+                            <section class="tire-panel">
+                                <h3>タイヤ管理</h3>
+                                <div class="maintenance-grid tire-grid">
+                                    <div class="maintenance-header">
+                                        <div class="maintenance-header-label">No</div>
+                                        <div class="maintenance-header-label">交換基準Km</div>
+                                        <div class="maintenance-header-label">前回交換日</div>
+                                        <div class="maintenance-header-label">交換後Km</div>
+                                        <div class="maintenance-header-label">No</div>
+                                        <div class="maintenance-header-label">交換基準Km</div>
+                                        <div class="maintenance-header-label">前回交換日</div>
+                                        <div class="maintenance-header-label">交換後Km</div>
+                                    </div>
+
+                                    @for (int i = 1; i <= 11; i++)
+                                    {
+                                        <div class="maintenance-row">
+                                            <div class="maintenance-no" data-tire-no="@i">@i</div>
+
+                                            <div class="km-cell">
+                                                <input type="text" class="km-input" data-tire-position="@i"  data-tire-field="criteria" style="text-align: right;"
+                                                       oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,6).replace(/\B(?=(\d{3})+(?!\d))/g, ',')">
+                                                @* <span>Km</span> *@
+                                                <label>Km</label>
+                                            </div>
+
+                                            @* Maintenance date for row i *@
+                                            <div class="date-cell">
+                                                <div class="first-year-wrapper">
+                                                   @*  <input type="text"
+                                                           id="maintenanceDate@(i)"
+                                                           data-tire-position="@i"
+                                                           data-tire-field="date"
+                                                           class="first-year-display"
+                                                           data-show-day="true"
+                                                           data-no-era="true"
+                                                           placeholder="____年__月__日"
+                                                           readonly /> *@
+
+                                                    <!--JAPANESE CALENDAR -->
+                                                    <input type="text"
+                                                           id="maintenanceDate@(i)"
+                                                           data-tire-position="@i"
+                                                           data-tire-field="date"
+                                                           class="jp-calendar-input first-year-display"
+                                                           data-show-day="true"
+                                                           data-no-era="true"
+                                                           placeholder="____年__月__日" />
+
+                                                    <input type="hidden"
+                                                           id="maintenanceDateValue@(i)"
+                                                           data-tire-position="@i"
+                                                           data-tire-field="date-value"
+                                                           value="" />
+
+                                                   @*  @{
+                                                        ViewData["CalendarId"] = $"maintenanceDateCalendar{i}";
+                                                    }
+                                                    <partial name="~/Views/Shared/_JapaneseCalendar.cshtml" /> *@
+                                                </div>
+                                            </div>
+
+                                            <div class="km-cell">
+                                                <input type="text" class="km-input" data-tire-position="@i" data-tire-field="after" style="text-align: right;"
+                                                       oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,6).replace(/\B(?=(\d{3})+(?!\d))/g, ',')">
+                                                @* <span>Km</span> *@
+                                                <label>Km</label>
+                                            </div>
+
+                                            <div class="maintenance-no" data-tire-no="@(i + 11)">@(i + 11)</div>
+
+                                            <div class="km-cell">
+                                                <input type="text" class="km-input" data-tire-position="@(i + 11)" data-tire-field="criteria" style="text-align: right;"
+                                                       oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,6).replace(/\B(?=(\d{3})+(?!\d))/g, ',')">
+                                                @* <span>Km</span> *@
+                                                <label>Km</label>
+                                            </div>
+
+                                            @* Maintenance date for row i + 11 *@
+                                            <div class="date-cell">
+                                                <div class="first-year-wrapper">
+                                              @*       <input type="text"
+                                                           id="maintenanceDate@(i + 11)"
+                                                           data-tire-position="@(i + 11)"
+                                                           data-tire-field="date"
+                                                           class="first-year-display"
+                                                           data-show-day="true"
+                                                           data-no-era="true"
+                                                           placeholder="____年__月__日"
+                                                           readonly /> *@
+                                                    <!--JAPANESE CALENDAR -->
+                                                    <input type="text"
+                                                           id="maintenanceDate@(i + 11)"
+                                                           data-tire-position="@(i + 11)"
+                                                           data-tire-field="date"
+                                                           class="jp-calendar-input first-year-display"
+                                                           data-show-day="true"
+                                                           data-no-era="true"
+                                                           placeholder="____年__月__日" />
+
+                                                    <input type="hidden"
+                                                           id="maintenanceDateValue@(i + 11)"
+                                                           data-tire-position="@(i + 11)"
+                                                           data-tire-field="date-value"
+                                                           value="" />
+
+                                                   @*  @{
+                                                        ViewData["CalendarId"] = $"maintenanceDateCalendar{i + 11}";
+                                                    }
+                                                    <partial name="~/Views/Shared/_JapaneseCalendar.cshtml" /> *@
+                                                </div>
+                                            </div>
+
+                                            <div class="km-cell">
+                                                <input type="text" class="km-input" data-tire-position="@(i + 11)"  data-tire-field="after" style="text-align: right;"
+                                                       oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,6).replace(/\B(?=(\d{3})+(?!\d))/g, ',')">
+                                                @* <span>Km</span> *@
+                                                <label>Km</label>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </section>
+                        </div>
+
+                        <!-- RIGHT: VEHICLE DIAGRAM -->
+                        <aside class="vehicle-diagram-panel">
+                            <!-- CAB -->
+                            <div class="truck-cab">
+                                <div class="light"></div>
+                                <div class="light"></div>
+                                <div class="light"></div>
+                                <div class="light"></div>
+                                <div class="steering"></div>
+                                <div class="front-tire" data-tire-no="1">1</div>
+                                <div class="front-tire" data-tire-no="2">2</div>
+                            </div>
+
+                            <!-- BODY -->
+                            <div class="truck-diagram">
+                                <div class="truck-grid">
+                                    <div class="tire-group">
+                                        <div class="tire" data-tire-no="3">3</div>
+                                        <div class="tire" data-tire-no="4">4</div>
+                                        <div class="tire" data-tire-no="5">5</div>
+                                        <div class="tire" data-tire-no="6">6</div>
+                                    </div>
+
+                                    <div class="tire-group">
+                                        <div class="tire" data-tire-no="7">7</div>
+                                        <div class="tire" data-tire-no="8">8</div>
+                                        <div class="tire" data-tire-no="9">9</div>
+                                        <div class="tire" data-tire-no="10">10</div>
+                                    </div>
+
+                                    <div class="tire-group">
+                                        <div class="tire" data-tire-no="11">11</div>
+                                        <div class="tire" data-tire-no="12">12</div>
+                                        <div class="tire" data-tire-no="13">13</div>
+                                        <div class="tire" data-tire-no="14">14</div>
+                                    </div>
+
+                                    <div class="tire-group">
+                                        <div class="tire" data-tire-no="15">15</div>
+                                        <div class="tire" data-tire-no="16">16</div>
+                                        <div class="tire" data-tire-no="17">17</div>
+                                        <div class="tire" data-tire-no="18">18</div>
+                                    </div>
+
+                                    <div class="tire-group">
+                                        <div class="tire" data-tire-no="19">19</div>
+                                        <div class="tire" data-tire-no="20">20</div>
+                                        <div class="tire" data-tire-no="21">21</div>
+                                        <div class="tire" data-tire-no="22">22</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="truck-footer">CAL SYSTEM</div>
+                        </aside>
+                    </div>
+                </section>
+
+                <!-- 固定経費設定 Tab3 -->
+                <section id="fixedCost"
+                         class="tab-content"
+                         hidden="@(!Model.ShowFixedCostTab)">
+                    <div class="fixed-cost-layout">
+                        <!-- LEFT PANEL -->
+                        <section class="expense-entry-area">
+                            <div class="expense-form">
+
+                                <div class="expense-row">
+                                    <label>経費項目</label>
+                                    <input type="text" id="expenseitems" maxlength="4"
+                                           inputmode="numeric"
+                                           autocomplete="off"
+                                           oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                                    <input type="text" class="master-name-expenseitems" readonly>
+                                </div>
+
+                                <div class="expense-row">
+                                    <label>運転手ｺｰﾄﾞ</label>
+                                    <input type="text" id="drivercode" maxlength="10" autocomplete="off">
+                                    <input type="text" class="master-name-drivercode" readonly>
+                                </div>
+
+                                <div class="expense-row">
+                                    <label>計上方法</label>
+                                    <input type="text" class="small-code" id="accountingmethod" value="0" maxlength="1">
+                                    <input type="text" class="master-name-accountingmethod" value="毎　月" readonly>
+                                </div>
+
+                                <div class="expense-row">
+                                    <label>毎　　月</label>
+                                    <input type="text" id="monthly" class="month-value-input">
+                                </div>
+
+                            </div>
+
+                            <!-- 月指定 -->
+                            <fieldset class="group-box-vehicle">
+                                <legend>月指定</legend>
+                                <div class="month-grid">
+                                    <div class="month-row"><label>1月</label><input type="text" class="month-value-input" id="month1"></div>
+                                    <div class="month-row"><label>5月</label><input type="text" class="month-value-input" id="month5"></div>
+                                    <div class="month-row"><label>9月</label><input type="text" class="month-value-input" id="month9"></div>
+                                    <div class="month-row"><label>2月</label><input type="text" class="month-value-input" id="month2"></div>
+                                    <div class="month-row"><label>6月</label><input type="text" class="month-value-input" id="month6"></div>
+                                    <div class="month-row"><label>10月</label><input type="text" class="month-value-input" id="month10"></div>
+                                    <div class="month-row"><label>3月</label><input type="text" class="month-value-input" id="month3"></div>
+                                    <div class="month-row"><label>7月</label><input type="text" class="month-value-input" id="month7"></div>
+                                    <div class="month-row"><label>11月</label><input type="text" class="month-value-input" id="month11"></div>
+                                    <div class="month-row"><label>4月</label><input type="text" class="month-value-input" id="month4"></div>
+                                    <div class="month-row"><label>8月</label><input type="text" class="month-value-input" id="month8"></div>
+                                    <div class="month-row"><label>12月</label><input type="text" class="month-value-input" id="month12"></div>
+                                </div>
+                                <div class="expense-total">
+                                    <label>合計</label>
+                                    <input type="text" id="monthlyTotal" style="text-align: right;" readonly>
+                                </div>
+                            </fieldset>
+
+                            <div class="expense-actions">
+                                <button type="button" id="btnExpenseDelete">削　除</button>
+                                <button type="button" id="btnExpenseCancel">中　止</button>
+                                <button type="button" id="btnExpenseRecall">←呼　出</button>
+                                <button type="button" id="btnExpenseModify">→修　正</button>
+                            </div>
+                        </section>
+
+                        <!-- RIGHT GRID -->
+                        <aside class="expense-list">
+                            <table class="expense-table" data-grid-columns>
+                                <thead>
+                                    <tr>
+                                        <th>経費ｺｰﾄﾞ</th>
+                                        <th>経費項目</th>
+                                        <th>運転手ｺｰﾄﾞ</th>
+                                        <th>運 転 手</th>
+                                        <th>計上方法</th>
+                                        <th>経　　費</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="expenseTableBody">
+                                    <!-- Rows will be added by JavaScript. -->
+                                </tbody>
+                            </table>
+                        </aside>
+                    </div>
+                </section>
+
+                <!-- 修理・タイヤ交換履歴 Tab4 -->
+                <section id="repairHistory" class="tab-content">
+                    <div class="repair-layout">
+                        <!-- Search -->
+                        @* <div class="repair-search">
+                            <div class="repair-row">
+                                <label>経費区分</label>
+                                <div class="lookup-row">
+                                    <input type="text" class="master-code" />
+                                    <select><option></option></select>
+                                </div>
+                                <label>経費項目</label>
+                                <div class="lookup-row">
+                                    <input type="text" class="master-code" />
+                                    <input type="text" class="master-name" />
+                                </div>
+                            </div>
+                            <div class="repair-row1">
+                                <label>対象期間</label>
+                                <div class="date-row">
+                                    <input type="date" />
+                                    <span>～</span>
+                                    <input type="date" />
+                                </div>
+                                <div></div>
+                                <div class="repair-buttons">
+                                    <button type="button">中止</button>
+                                    <button type="button">照会</button>
+                                </div>
+                            </div>
+                        </div> *@
+
+                        <div class="repair-search">
+                            @* <div class="repair-row">
+                                <label>経費区分</label>
+                                <div class="lookup-row">
+                                    <input type="text" id="expenseCategoryCode" class="repair-code" maxlength="2">
+                                    <select id="expenseCategory" class="repair-category-select">
+                                        <option value="0"></option>
+                                        <option value="1">Lamp</option>
+                                        <option value="2">Battery</option>
+                                        <option value="3">Test1</option>
+                                        <option value="4">Test2</option>
+                                        <option value="5">Test3</option>
+                                    </select>
+                                </div>
+                            </div> *@
+
+                            <div class="repair-row">
+                                <label for="expenseCategoryCode">経費区分</label>
+
+                                <div class="lookup-row">
+                                    <input type="text"
+                                           id="expenseCategoryCode"
+                                           class="repair-code"
+                                           maxlength="2"
+                                           inputmode="numeric"
+                                           autocomplete="off">
+
+                                    <select id="expenseCategory"
+                                            class="repair-category-select"
+                                            tabindex="-1">
+                                        <option value="0"></option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="repair-row">
+                                <label for="expenseItemCode" class="expense-item-label">経費項目</label>
+                                <div class="lookup-row">
+
+                                    <input type="text"
+                                           id="expenseItemCode"
+                                           maxlength="4"
+                                           inputmode="numeric"
+                                           autocomplete="off"
+                                           oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+
+                                    <input type="text"
+                                           id="expenseItemName"
+                                           maxlength="30">
+
+                                    @* <input type="text" id="expenseItemCode" class="repair-code" maxlength="4">
+                                    <input type="text" id="expenseItemName" class="repair-name" maxlength="30"> *@
+                                </div>
+                            </div>
+
+                            <div class="repair-row">
+                                <label>対象期間</label>
+
+                                <div class="date-row">
+                                    <div class="first-year-wrapper">
+                                      @*   <input type="text"
+                                               id="startDate"
+                                               class="repair-date first-year-display"
+                                               data-show-day="true"
+                                               data-no-era="true"
+                                               placeholder="____年__月__日"
+                                               readonly /> *@
+
+                                        <input type="text"
+                                               id="startDate" 
+                                               class="jp-calendar-input repair-date first-year-display"
+                                               data-show-day="true"
+                                               data-no-era="true"
+                                               placeholder="____年__月__日" />
+
+                                        <input type="hidden" id="startDateValue" value="" />
+
+                                        @* @{
+                                            ViewData["CalendarId"] = "startDateCalendar";
+                                        }
+                                        <partial name="~/Views/Shared/_JapaneseCalendar.cshtml" /> *@
+                                    </div>
+
+                                    <span>～</span>
+
+                                    <div class="first-year-wrapper">
+                                        @* <input type="text"
+                                               id="endDate"
+                                               class="repair-date first-year-display"
+                                               data-show-day="true"
+                                               data-no-era="true"
+                                               placeholder="____年__月__日"
+                                               readonly /> *@
+
+                                        <input type="text"
+                                               id="endDate"
+                                               class="jp-calendar-input repair-date first-year-display"
+                                               data-show-day="true"
+                                               data-no-era="true"
+                                               placeholder="____年__月__日" />
+
+                                        <input type="hidden" id="endDateValue" value="" />
+
+                                        @* @{
+                                            ViewData["CalendarId"] = "endDateCalendar";
+                                        }
+                                        <partial name="~/Views/Shared/_JapaneseCalendar.cshtml" /> *@
+                                    </div>
+                                </div>
+
+                                <div class="repair-buttons">
+                                    <button type="button" id="btnCancel">中　止</button>
+                                    <button type="button" id="btnSearch">照　会</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Grid -->
+                        <div class="repair-grid-panel">
+                            <table class="repair-grid" data-grid-columns>
+                                <thead>
+                                    <tr>
+                                        <th>精算日</th>
+                                        <th>運 転 手</th>
+                                        <th>経費項目</th>
+                                        <th>数　　量</th>
+                                        <th>単　　価</th>
+                                        <th>金　　額</th>
+                                        <th>走行距離</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="repairHistoryBody"></tbody>
+                            </table>
+                        </div>
+
+                        <!-- Footer Readonly -->
+                        <div class="expense-totals">
+                            <div class="total-item">
+                                <label>数量計</label>
+                                <input type="text" id="repairQuantityTotal"
+                                       value="0.00" readonly>
+                            </div>
+
+                            <div class="total-item">
+                                <label>金額計</label>
+                                <input type="text" id="repairAmountTotal"
+                                       value="0" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- 給与オプション設定 -->
+                <section id="salarySetting"
+                         class="tab-content"
+                         hidden="@(!Model.ShowSalaryTab)">
+                    <div class="tab-row">
+                        <label>手当掛率</label>
+                        <div class="salary-input">
+                            <input type="text"
+                                   id="salary"
+                                   name="AllowanceRate"
+                                   inputmode="decimal"
+                                   maxlength="6"
+                                   value="100.00" />
+                            <span class="input-span">％</span>
+                        </div>
+                    </div>
+                </section>
+                <!-- デジタコオプション設定 Tab5 -->
+                <section id="digitacoSetting"
+                         class="tab-content"
+                         hidden="@(!Model.ShowDigitalTachographTab)">
+                    <div class="digitaco-layout">
+                        <div class="digitaco-row">
+                            <label>ﾃﾞｼﾞﾀｺｺｰﾄﾞ</label>
+                            <input type="text" id="digitaltachographcode" maxlength="30" />
+                        </div>
+                        <div class="digitaco-row">
+                            <label>カード番号</label>
+                            <input type="text" id="cardnumber" maxlength="16" />
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </section>
+    </main>
+
+    <!-- Message -->
+    <section class="message-area">
+        <label>ﾒｯｾｰｼ：</label>
+        <span id="messageText"></span>
+    </section>
+
+    <!-- Function Keys -->
+    <footer class="function-footer">
+        <button id="btnRegister">F1:登　録</button>
+        <button id="btnCopy" disabled>F2:コピー</button>
+        <button id="btnF3" disabled>F3:</button>
+        @* <button id="btnF3">F3:</button> *@
+        <button id="btnDelete" disabled>F4:削　除</button>
+        @* <button id="btnF5">F5:検索</button> *@
+        <button type="button" id="btnF5">F5:検　索</button>
+        <button type="button" id="btnMasterSearch" disabled>F6:マスタ検索</button>
+        <button id="btnF7">F7:≪　前</button>
+        <button id="btnF8">F8:次　≫</button>
+        <button type="button" id="btnList" disabled>F9:リスト</button>
+        <button id="btnF10" disabled>F10:</button>
+        <button type="button" id="btnClear">F11:中　止</button>
+        <button type="button"
+                id="btnExit_F12"
+                data-exit-url="@Url.Action("Main_menu", "MainMenu")">
+            F12:終　了
+        </button>
+    </footer>
+</div>
+
+<!-- F9 List Popup -->
+<div id="printPopup" class="popup-overlay">
+    <div id="printPopupWindow" class="popup-window">
+        <partial name="~/Views/Shared/MasterList/_MasterListPartial.cshtml" />
+    </div>
+</div>
+
+@* Vehicle Search Popup *@
+<partial name="~/Views/Shared/MasterSearch/_VehicleSearchPartial.cshtml"
+         view-data='new ViewDataDictionary(ViewData)
+         {
+             ["ScreenName"] = "車輌検索"
+         }' />
+
+@* Driver Search Popup *@
+<partial name="~/Views/Shared/MasterSearch/_DriverSearchPartial.cshtml"
+         view-data='new ViewDataDictionary(ViewData)
+         {
+             ["ScreenName"] = "運転手検索"
+         }' />
+   
+@* Chartered Search Popup *@
+<partial name="~/Views/Shared/MasterSearch/_CharteredSearchPartial.cshtml" />
+
+<script src="~/js/vehicle_master.js" asp-append-version="true"></script>
+<script src="~/js/master_screen.js"></script>  
+<script src="~/js/listscreen.js" asp-append-version="true"></script>
+<script src="~/js/japanesecalendar.js" asp-append-version="true"></script>
+@* <script src="~/js/grid_columns.js" asp-append-version="true"></script> *@
+<script src="~/js/common_master.js" asp-append-version="true"></script>
+
+<script src="~/js/master_search_js/vehicle_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/chartered_search.js" asp-append-version="true"></script>
+<script src="~/js/master_search_js/driver_search.js" asp-append-version="true"></script>
+ 

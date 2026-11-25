@@ -1,0 +1,114 @@
+﻿@* Transport Performance Type Search Popup *@
+<div id="transportationRecordSearchPopup"
+     class="transportation-record-search-overlay"
+     aria-hidden="true">
+
+    <section id="transportationRecordSearchWindow"
+             class="transportation-record-search-window"
+             data-search-url="/SearchScreen/TransportationRecordSearch">
+
+        @* Title bar *@
+        <header class="transportation-record-search-titlebar">
+            <span>輸送実績区分検索</span>
+
+            <div class="transportation-record-search-window-controls">
+                <button type="button"
+                        id="btnTransportationRecordSearchMinimize"
+                        aria-label="最小化">
+                    −
+                </button>
+
+                <button type="button"
+                        id="btnTransportationRecordSearchMaximize"
+                        aria-label="最大化">
+                    □
+                </button>
+
+                <button type="button"
+                        id="btnTransportationRecordSearchClose"
+                        aria-label="閉じる">
+                    ×
+                </button>
+            </div>
+        </header>
+
+        @* Heading and result count *@
+        <div class="transportation-record-search-heading">
+            <label>輸送実績区分検索</label>
+            <strong id="transportationRecordSearchCount">件数:0</strong>
+        </div>
+
+        @* Search condition *@
+        <div class="transportation-record-search-conditions">
+            <div class="transportation-record-search-row">
+                <label for="searchTransportationRecordNameinput">
+                    輸送実績
+                </label>
+
+                <input type="text"
+                       id="searchTransportationRecordNameinput"
+                       autocomplete="off" />
+            </div>
+        </div>
+
+        @* Search results *@
+        <div class="transportation-record-search-results">
+            <div class="transportation-record-search-table-scroll">
+                <table class="transportation-record-search-table" data-grid-columns>
+                    <thead>
+                        <tr>
+                            <th data-sort="code">コード</th>
+                            <th data-sort="transportationRecordName">名称</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="transportationRecordSearchResults"></tbody>
+                </table>
+            </div>
+        </div>
+
+        @* Message area *@
+        <div class="transportation-record-search-message">
+            <span>メッセージ：</span>
+            <span id="transportationRecordSearchMessage"
+                  role="status"
+                  aria-live="polite"></span>
+        </div>
+        @* Function-key footer *@
+        <footer class="transportation-record-search-footer">
+
+            <button type="button" id="btnTransportationRecordSearchSelect">
+                F1:選 択
+            </button>
+
+            <button type="button" disabled>F2:　　</button>
+            <button type="button" disabled>F3:　　</button>
+            <button type="button" disabled>F4:　　</button>
+
+            <button type="button" id="btnTransportationRecordSearchExecute">
+                F5:検 索
+            </button>
+
+            <button type="button" disabled>F6:　　</button>
+            <button type="button" disabled>F7:　　</button>
+            <button type="button" disabled>F8:　　</button>
+            <button type="button" disabled>F9:　　</button>
+
+            <button type="button" id="btnTransportationRecordSearchRegister">
+                F10:ﾏｽﾀ登録
+            </button>
+
+            <button type="button" id="btnTransportationRecordSearchCancel">
+                F11:中 止
+            </button>
+
+            <button type="button" id="btnTransportationRecordSearchExit">
+                F12:終 了
+            </button>
+
+        </footer>
+
+    </section>
+</div>
+
+<script src="~/js/grid_columns.js" asp-append-version="true"></script>

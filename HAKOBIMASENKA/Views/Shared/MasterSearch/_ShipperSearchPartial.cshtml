@@ -1,0 +1,167 @@
+﻿<link rel="stylesheet" href="~/css/master_search_css/shipper_search.css" asp-append-version="true" />
+
+@* Shipper Search Popup *@
+<div id="shipperSearchPopup"
+     class="shipper-search-overlay"
+     aria-hidden="true">
+
+    <section id="shipperSearchWindow"
+             class="shipper-search-window"
+             data-search-url="/SearchScreen/ShipperSearch">
+
+        @* Title bar *@
+        <header class="shipper-search-titlebar">
+            <span>荷主検索</span>
+
+            <div class="shipper-search-window-controls">
+                <button type="button" id="btnShipperSearchMinimize"
+                        aria-label="最小化">
+                    −
+                </button>
+                <button type="button" id="btnShipperSearchMaximize"
+                        aria-label="最大化">
+                    □
+                </button>
+                <button type="button" id="btnShipperSearchClose"
+                        aria-label="閉じる">
+                    ×
+                </button>
+            </div>
+        </header>
+
+        @* Heading and result count *@
+        <div class="shipper-search-heading">
+            <label>荷主検索</label>
+            <strong id="shipperSearchCount">件数:0</strong>
+        </div>
+
+        @* Search conditions *@
+        <div class="shipper-search-conditions">
+            <div class="shipper-search-row">
+                <label for="searchShipperFurigana">フリガナ</label>
+                <input type="text" id="searchShipperFurigana"
+                       autocomplete="off" />
+            </div>
+
+            <div class="shipper-search-row">
+                <label for="searchShipperName">名　称</label>
+                <input type="text" id="searchShipperName"
+                       autocomplete="off" />
+            </div>
+
+            <div class="shipper-search-row">
+                <label for="searchShipperPhone">電話番号</label>
+                <input type="text" id="searchShipperPhone"
+                       autocomplete="off" maxlength="15"/>
+            </div>
+        </div>
+
+        @* Results grid *@
+        <div class="shipper-search-results">
+            <div class="shipper-search-table-scroll">
+                <table class="shipper-search-table" data-grid-columns>
+                    <thead>
+                        <tr>
+                            <th data-sort="shipperCode">コード</th>
+                            <th data-sort="abbreviation">略　称</th>
+                            <th id="shipperSearchTradeHeader">取引</th>
+                            <th data-sort="phoneNumber">電話番号</th>
+                            <th data-sort="shipperName">名　　称</th>
+                            <th data-sort="address">住　　所</th>
+                        </tr>
+                    </thead>
+                    <tbody id="shipperSearchResults"></tbody>
+                </table>
+            </div>
+        </div>
+
+        @* Message area *@
+       @*  <div id="shipperSearchMessage"
+             class="shipper-search-message"></div> *@
+
+        <div class="shipper-search-message">
+            <span>メッセージ：</span>
+            <span id="shipperSearchMessage"
+                  role="status"
+                  aria-live="polite"></span>
+        </div>
+
+        @* Function-key footer *@
+        @* Function-key footer *@
+        <footer class="shipper-search-footer">
+
+            <button type="button" id="btnShipperSearchSelect">F1:選 択</button>
+
+            <button type="button" disabled>F2:　　</button>
+            <button type="button" disabled>F3:　　</button>
+            <button type="button" disabled>F4:　　</button>
+
+            <button type="button" id="btnShipperSearchExecute">F5:検 索</button>
+
+            <button type="button" disabled>F6:　　</button>
+            <button type="button" disabled>F7:　　</button>
+            <button type="button" disabled>F8:　　</button>
+
+            <button type="button" id="btnShipperSearchF9" disabled>F9:　　</button>
+
+            <button type="button" id="btnShipperSearchRegister">F10:ﾏｽﾀ登録</button>
+
+            <button type="button" id="btnShipperSearchCancel">F11:中 止</button>
+
+            <button type="button" id="btnShipperSearchExit">F12:終 了</button>
+
+        </footer>
+
+    </section>
+</div>
+<script src="~/js/grid_columns.js" asp-append-version="true"></script>
+
+@* ========================================= *@
+@* Shipper Master Registration Modal *@
+@* ========================================= *@
+
+<div id="shipperMasterModal"
+     class="shipper-master-modal"
+     style="display: none;">
+
+    <div id="shipperMasterWindow"
+         class="shipper-master-modal-content">
+
+        @* Modal title bar and window controls *@
+        <header class="shipper-search-titlebar">
+
+            <span>荷主マスタ登録</span>
+
+            <div class="shipper-search-window-controls">
+
+                <button type="button"
+                        id="btnShipperMasterMinimize"
+                        aria-label="最小化">
+                    −
+                </button>
+
+                <button type="button"
+                        id="btnShipperMasterMaximize"
+                        aria-label="最大化">
+                    □
+                </button>
+
+                <button type="button"
+                        id="btnShipperMasterClose"
+                        aria-label="閉じる">
+                    ×
+                </button>
+
+            </div>
+
+        </header>
+
+        @* Shipper Master registration page *@
+        <iframe id="shipperMasterFrame"
+                title="荷主マスタ登録"
+                src="about:blank">
+        </iframe>
+
+    </div>
+
+</div>

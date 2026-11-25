@@ -1,0 +1,28 @@
+name: Auto PR Development to main
+
+on:
+  push:
+    branches:
+      - Development
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create or update PR into main
+        env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
+        run: |
+          existing=$(gh pr list --base main --head Development --state open --json number --jq '.[0].number')
+          if [ -z "$existing" ]; then
+            gh pr create \
+              --base main \
+              --head Development \
+              --title "Sync: Development into main" \
+              --body "Automated PR — new commits were pushed to Development and need to be promoted into main."
+            echo "PR created."
+          else
+            echo "Open PR already exists (#$existing) — nothing to do."
+          fi

@@ -1,0 +1,119 @@
+﻿@model List<HAKOBIMASENKA.Models.ViewModels.AreaMasterResultDto>
+
+@{
+    ViewData["Title"] = "エリアマスタ";
+}
+
+@section Styles
+{
+    <link rel="stylesheet" href="~/css/area-master.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/listscreen.css" asp-append-version="true" />
+}
+
+<div class="main-container">
+
+    <header class="page-header">
+        <div class="screen-name">エリアマスタ</div>
+        <button type="button" id="btnNew" class="new-button" disabled>新 規</button>
+    </header>
+
+    <section class="master-section">
+        <div class="master-row">
+            <label>エリアコード</label>
+            <input type="text" id="areaCode" maxlength="4">
+        </div>
+
+        <div class="master-row">
+            <label>エリア名</label>
+            <input type="text" id="areaName" maxlength="16">
+        </div>
+    </section>
+
+    <main class="mainContent-layout">
+
+        <section class="edit-panel">
+            <nav class="tab-navigation">
+                <button type="button" class="tab-button active" data-tab="digital">
+                    デジタルオプション設定
+                </button>
+            </nav>
+
+            <section class="tab-container">
+                <section id="digital" class="tab-content active">
+                    <div class="tab-details">
+                        <div class="tab-row">
+                            <label for="digitalCode">デジタココード</label>
+                            <input type="text" id="digitalCode" maxlength="15">
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </section>
+
+        <aside class="list-panel">
+            <table class="table-list">
+                <thead>
+                    <tr>
+                        <th>コード</th>
+                        <th>名　称</th>
+                    </tr>
+                </thead>
+                <tbody class="table-body">
+                    @foreach (var area in Model)
+                    {
+                        <tr class="list-grid-row"
+                            data-code="@area.AreaCode"
+                            data-name="@area.AreaName"
+                            data-digital-code="@area.DigitalCode">
+                            <td>@area.AreaCode</td>
+                            <td>@area.AreaName</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </aside>
+
+    </main>
+
+    <section class="message-area">
+        <label>メッセージ：</label>
+    </section>
+
+    <div id="listWindowOverlay" class="list-window-overlay"></div>
+
+    <footer class="function-footer">
+        <button id="btnRegister">F1:登録</button>
+        <button id="btnCopy" disabled>F2:コピー</button>
+        <button id="btnF3" disabled>F3:</button>
+        <button id="btnDelete" disabled>F4:削除</button>
+        <button id="btnF5" disabled>F5:</button>
+        <button type="button" id="btnMasterSearch" disabled>F6:</button>
+        <button id="btnF7" disabled>F7:</button>
+        <button id="btnF8" disabled>F8:</button>
+        <button type="button" id="btnList">F9:リスト</button>
+        <button id="btnF10" disabled>F10:</button>
+        <button type="button" id="btnClear">F11:中止</button>
+        <button type="button" id="btnExit">F12:終了</button>
+   @*      <a id="btnExit"
+           asp-controller="MainMenu"
+           asp-action="Main_menu"
+           class="function-button"
+           data-exit-url="@Url.Action("Main_menu", "MainMenu")">F12:終了</a> *@
+    </footer>
+
+</div>
+
+<!-- F9 List Popup -->
+<div id="printPopup" class="popup-overlay">
+    <div id="printPopupWindow" class="popup-window">
+        <partial name="~/Views/Shared/MasterList/_MasterListPartial.cshtml" />
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/common_master.js" asp-append-version="true"></script>
+    <script src="~/js/area-master_new.js" asp-append-version="true"></script>
+    <script src="~/js/master_screen.js" asp-append-version="true"></script>
+    <script src="~/js/listscreen.js" asp-append-version="true"></script>
+}

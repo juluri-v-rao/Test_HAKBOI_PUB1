@@ -1,0 +1,283 @@
+﻿@*
+=========================================
+Screen: Product Category Master
+
+Navigation:
+    Main Menu
+        → Basic Master
+        → Product Category Master
+
+Migrated From: FrmM_Mast1.designer.vb
+
+Purpose: Maintain Product Category Master data.
+
+=========================================
+*@
+
+@{
+    ViewData["Title"] = "品名区分マスタ";
+    }
+
+@section Styles
+    {
+    <link rel="stylesheet" href="~/css/product_category_master.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/listscreen.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/common.css" asp-append-version="true" />
+    }
+
+@* Main Window *@
+    <div class="main-container">
+
+    @Html.AntiForgeryToken()
+
+    <!-- Screen Header -->
+        <header class="page-header">
+
+            <div class="screen-name">
+            品名区分マスタ
+            </div>
+
+            <label type="button"
+               id="mode-lbl"
+               class="lbl-new">
+            新　規
+            </label>
+
+        </header>
+
+    <!-- Master Section -->
+        <section class="master-section">
+
+            <div class="master-row1">
+
+                <label>
+                区分ｺｰﾄﾞ
+                </label>
+
+            <input type="text"
+                   class="input-value"
+                   id="pcCode"
+                   value="@Model.コード"
+                   maxlength="4"
+                   inputmode="numeric" />
+
+            </div>
+
+            <div class="master-row">
+
+                <label>
+                区 分 名
+                </label>
+
+            <input type="text"
+                   class="input-value jis-validation"
+                   id="pcName"
+                   data-maxbytes="16"
+                   autocomplete="off" />
+
+            </div>
+
+        </section>
+
+    <!-- Main Content -->
+        <main class="mainContent-layout">
+
+        <!-- Editable Area -->
+            @* the デジタコ tab is shown only with the デジタコ licence (legacy DIGI_Chk = 管理マスタ SEC4);
+               hidden but keeping its space, so the grid stays in place (legacy Visible = False) *@
+            <section class="edit-panel" style="@(ViewBag.ShowDigitalTab == true ? "" : "visibility: hidden")">
+
+            <!-- Tab Navigation -->
+                <nav class="tab-navigation">
+
+                    <button type="button"
+                        id="tab-btn"
+                        class="tab-button active"
+                        data-tab="digital">
+                    ﾃﾞｼﾞﾀｺｵﾌﾟｼｮﾝ設定
+                    </button>
+
+                </nav>
+
+            <!-- Tab Container -->
+                <section class="tab-container">
+
+                <!-- Digital Option Setting -->
+                    <section id="digital"
+                         class="tab-content active">
+
+                        <div id="tab-area" class="tab-details">
+
+                            <div class="tab-row">
+
+                                <label for="digitalCode">
+                                ﾃﾞｼﾞﾀｺｺｰﾄﾞ
+                                </label>
+
+                            <input type="text"
+                                   class="input-value digital-code-input"
+                                   id="digitalCode"
+                                   inputmode="numeric"
+                                   autocomplete="off" />
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </section>
+
+            </section>
+
+        <!-- Right Side Grid Table -->
+            <div id="grid" tabindex="0" class="list-panel">
+
+                <table class="table-list" data-grid-columns>
+
+                    <thead>
+
+                        <tr>
+
+                            <th class="header code-header" data-sort="numeric" data-column="0">
+                            ｺｰﾄﾞ
+                            </th>
+
+                            <th class="header name-header" data-sort="text" data-column="1">
+                            名　　称
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody class="table-body">
+
+                    @foreach (var item in ViewBag.List)
+                        {
+                            <tr class="list-grid-row" tabindex="0" data-code="@item.コード">
+
+                            <td>@item.コード</td>
+
+                            <td>@item.名称</td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </main>
+
+    <!-- Message -->
+        <section class="message-area">
+
+            <label>
+            ﾒｯｾｰｼﾞ:
+            </label>
+
+        </section>
+
+    <!-- Function Footer -->
+        <footer class="function-footer">
+
+            <button id="btnRegister">
+            F1:登 録
+            </button>
+
+            <button id="btnCopy"
+                disabled>
+            F2:コピー
+            </button>
+
+            <button id="btnF3"
+                disabled>
+            F3:&#x3000;&#x3000;
+            </button>
+
+            <button id="btnDelete"
+                disabled>
+            F4:削 除
+            </button>
+
+
+
+            @* unused keys show two full-width spaces, as legacy Fkey.ButtonText ("F3:　　", "F5:　　" …), in every mode;
+               opened from a search (legacy SYORID2 = "検索") F9 is blanked the same way *@
+            <button id="btnF5"
+                disabled>
+            F5:&#x3000;&#x3000;
+            </button>
+
+            <button id="btnF6"
+                disabled>
+            F6:&#x3000;&#x3000;
+            </button>
+
+            <button id="btnF7"
+                disabled>
+            F7:&#x3000;&#x3000;
+            </button>
+
+            <button id="btnF8"
+                disabled>
+            F8:&#x3000;&#x3000;
+            </button>
+
+            @if (ViewBag.FromSearch == true)
+            {
+                <button type="button"
+                    id="btnList"
+                    disabled>
+                F9:&#x3000;&#x3000;
+                </button>
+            }
+            else
+            {
+                @* F9 リスト (legacy FrmP_Select) is not in this phase *@
+                <button type="button"
+                    id="btnList"
+                    disabled>
+                F9:リスト
+                </button>
+            }
+
+            <button id="btnF10"
+                disabled>
+            F10:&#x3000;&#x3000;
+            </button>
+
+            <button id="btnBack">
+            F11:中 止
+            </button>
+
+            <button type="button"
+                id="btnExit"
+                data-exit-url="@Url.Action("Main_menu", "MainMenu")"
+                data-from-search="@(ViewBag.FromSearch == true ? "true" : "false")" >
+            F12:終 了
+            </button>
+
+        </footer>
+
+    </div>
+
+<!-- F9 List Popup -->
+    <div id="printPopup" class="popup-overlay">
+        <div id="printPopupWindow" class="popup-window">
+        <partial name="~/Views/Shared/MasterList/_MasterListPartial.cshtml" />
+        </div>
+    </div>
+
+
+<script src="~/js/common_master.js" asp-append-version="true"></script>
+
+<script src="~/js/product_category_master.js" asp-append-version="true"></script>
+
+@* columns resizable and movable by drag, like the legacy DataGridViewEx *@
+<script src="~/js/grid_columns.js" asp-append-version="true"></script>
+
+<script src="~/js/listscreen.js" asp-append-version="true"></script>

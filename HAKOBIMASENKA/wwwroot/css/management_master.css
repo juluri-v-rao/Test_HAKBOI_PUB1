@@ -1,0 +1,1369 @@
+﻿/* =========================================
+   Screen: Management Master
+
+   Navigation:
+       Main Menu
+           -> Basic Master
+           -> Management Master
+
+   Migrated From: FrmM_Kanri.designer.vb
+
+   Purpose: Management Master styling.
+
+  ========================================= */
+
+
+/* =========================================
+                    RESET
+   ========================================= */
+
+* {
+    font-size: 14px;
+}
+
+/* =========================================
+                HTML / BODY
+   ========================================= */
+
+html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background-color: silver;
+    color: #222;
+    overflow: hidden;
+}
+
+/* =========================================
+                MAIN PAGE
+   ========================================= */
+
+.main-container {
+    width: 100%;
+    height: 100vh;
+    padding: 0 2px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* =========================================
+            BASIC INFORMATION
+   ========================================= */
+.master-sections {
+    display: flex;
+    flex-direction: row;
+    background-color: gainsboro;
+    height: 235px;
+}
+
+.master-section {
+    margin-top: -2px;
+    padding: 12px;
+}
+
+.master-row {
+    display: flex;
+    margin-bottom: 4px;
+    width: 100%;
+}
+
+    .master-row label {
+        width: 105px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 12px;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+
+    .master-row input {
+        margin-left: 8px;
+        width: 225px;
+        height: 23px;
+        padding: 0 2px;
+    }
+
+/* =========================================
+               branch & below-rows
+   ========================================= */
+.master-section1 {
+    display: flex;
+    flex-direction: column;
+    margin-top: -2px;
+    padding: 12px;
+    gap: 9px;
+}
+
+.master-row1 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+    .master-row1 label {
+        width: 105px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 12px;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+
+    .master-row1 input {
+        margin-left: 8px;
+        width: 330px;
+        height: 23px;
+        padding: 0 2px;
+    }
+
+/* =========================================
+                    address
+   ========================================= */
+.master-address_row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+    .master-address_row label {
+        width: 105px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 12px;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+
+    .master-address_row input {
+        margin-left: 8px;
+        width: 250px;
+        height: 23px;
+        padding: 0 2px;
+    }
+
+.address-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* =========================================
+                phone & fax
+   ========================================= */
+
+.master-row_contact {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 4px;
+    width: stretch;
+    gap: 4px
+}
+
+    .master-row_contact label {
+        width: 105px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 12px;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+
+    .master-row_contact input {
+        margin-left: 4px;
+        width: 120px;
+        height: 23px;
+        padding: 0 2px;
+    }
+
+/* =========================================
+                postal Code
+   ========================================= */
+
+#postalCode {
+    width: 100px;
+}
+
+/* =========================================
+             registration number
+   ========================================= */
+
+#regNumber {
+    width: 130px;
+}
+
+#m_admin {
+    width: 180px;
+}
+
+/* =========================================
+                MAIN CONTENT
+   ========================================= */
+
+.mainContent-layout {
+    display: flex;
+    gap: 9px;
+    flex: 1;
+    min-height: 0;
+}
+
+/* =========================================
+                LEFT / EDIT AREA
+   ========================================= */
+
+.edit-panel {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+}
+
+/* =========================================
+                    TABS
+   ========================================= */
+
+.tab-navigation {
+    display: flex;
+    width: 60px;
+    margin-top: 6px;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 4px 10px;
+    background-color: #ececec;
+    border: 1px solid #bcbcbc;
+    border-radius: 2px 2px 0px 0px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 14px;
+    text-wrap: nowrap;
+}
+
+    .tab-button.active {
+        background-color: #fff;
+        border: none;
+        font-weight: normal;
+    }
+
+#tab-btn.active {
+    outline: none;
+}
+/* =========================================
+                TAB CONTAINER
+   ========================================= */
+
+.tab-container {
+    border: 2px solid #fff;
+    min-height: 550px;
+    padding: 12px;
+    background-color: gainsboro;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.tab-content {
+    display: none;
+}
+
+    .tab-content.active {
+        display: block;
+    }
+
+.tab-details {
+    display: flex;
+    display: flex;
+    flex-direction: row;
+    gap: 84px;
+    overflow: hidden;
+    /* room for the inputs' bottom box-shadow from common.css (1px, 2px on focus);
+       without it overflow:hidden cuts the shadow off the lowest inputs of each tab */
+    padding-bottom: 2px;
+}
+
+.tab-row {
+    display: flex;
+    align-items: start;
+}
+
+    .tab-row label {
+        width: 105px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 12px;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+
+    .tab-row input {
+        margin-left: 8px;
+        width: 150px;
+        height: 23px;
+        padding: 0 2px;
+/*        box-sizing: border-box;
+        border-color: black;
+        border-top: 1px;
+        border-left: 1px;
+        border-right: 1px;*/
+    }
+
+/* =========================================
+                RIGHT SIDE LIST
+   ========================================= */
+
+.list-panel {
+    background-color: #A0A0A0;
+    border: 1px solid #5e5e5e;
+    flex-shrink: 0;
+    overflow: auto;
+    height: 100px;
+    width: 460px;
+}
+
+.table-list {
+    border-collapse: collapse;
+}
+
+    .table-list th,
+    .table-list td {
+        border: 1px solid #d0d0d0;
+        padding: 2px 4px;
+        height: 21px;
+        text-align: left;
+        font-size: 14px;
+    }
+
+
+    .table-list th {
+        position: sticky;
+        top: 0;
+        background-color: #fff;
+        z-index: 100;
+        font-weight: normal;
+    }
+
+        .table-list th.name-header {
+            width: 380px;
+            text-align: center;
+        }
+
+    .table-list tbody tr:nth-child(odd) td {
+        cursor: pointer;
+    }
+
+    .table-list tbody tr:nth-child(even) td {
+        cursor: pointer;
+        background: silver;
+    }
+
+.table-body tr.selected td {
+    background-color: #0078d7 !important;
+    color: #fff;
+}
+
+.table-body {
+    background-color: #fff;
+    max-height: 600px;
+}
+
+
+/* =========================================
+                    MESSAGE
+   ========================================= */
+
+.message-area {
+    border-top: 1px solid #A0A0A0;
+    border-bottom: 1px solid #fff;
+    padding: 6px 0px 6px 6px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    margin-top: 6px;
+    margin-bottom: 2px;
+    font-weight: bold;
+    background: silver;
+}
+
+#message-label {
+    color: darkblue;
+    font-weight: bold;
+}
+
+/* =========================================
+            LIST WINDOW OVERLAY
+   ========================================= */
+
+.list-window-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+}
+
+
+/* =========================================
+                FUNCTION FOOTER
+   ========================================= */
+
+        #btnCopy, #btnF3,
+        #btnF5, #btnF6,
+        #btnF7, #btnF8,
+        #btnF10 {
+            text-align: left;
+            text-indent: 30px;
+        }
+
+.function-footer > :nth-child(4),
+.function-footer > :nth-child(8) {
+    margin-right: 12px;
+}
+/* =========================================
+               Custom-code row
+   ========================================= */
+.master-code {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+    .master-code label {
+        width: 105px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+
+    .master-code input {
+        margin-left: 8px;
+        width: 22px;
+        height: 22px;
+        outline: none;
+        padding: 0 2px;
+    }
+
+/* =========================================
+              Common-Sections
+   ========================================= */
+#basicSetting .section-label, #envSetting .section-label,
+#serialSetting .section-label, #optionSetting .section-label {
+/*other styles can be added*/
+margin-bottom:2px;
+margin-left:2px;
+}
+
+.field_label {
+    width: 125px;
+    height: 23px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: silver;
+    border: 1px solid;
+    border-color: #9e9e9e #fff #fff #9e9e9e;
+    font-size: 12px;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+.head-label {
+    width: 22px;
+    height: 215px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: silver;
+    border: 1px solid;
+    border-color: #9e9e9e #fff #fff #9e9e9e;
+    font-size: 12px;
+    font-weight: bold;
+    box-sizing: border-box;
+    text-align: center
+}
+
+.percent-label,
+.amount-label {
+    font-weight: bold;
+    align-content: center;
+}
+
+/* =========================================
+              Basic Setting - Tab1
+   ========================================= */
+
+/*---税率設定---*/
+.tax-setting1,
+.tax-setting2 {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 6px;
+}
+
+.tax-labels,
+.tax-inputs {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+}
+
+#taxDate1 {
+    width: 125px;
+    height: 23px;
+    padding: 0 2px;
+}
+
+#taxDate1:focus {
+    width: 125px;
+    height: 23px;
+    padding: 0 2px;
+}
+
+#taxDate2 {
+    width: 125px;
+    height: 23px;
+    padding: 0 2px;
+}
+
+#taxDate2:focus {
+    width: 125px;
+    height: 23px;
+    padding: 0 2px;
+}
+
+#amount1 {
+    width: 55px;
+    height: 23px;
+    padding: 0 2px;
+    justify-content: center;
+    margin-left: 20px;
+}
+
+    #amount1:focus {
+        width: 55px;
+        height: 23px;
+        padding: 0 2px;
+        justify-content: center;
+        margin-left: 20px;
+    }
+
+#amount2 {
+    width: 55px;
+    height: 23px;
+    padding: 0 2px;
+    justify-content: center;
+    margin-left: 48px;
+}
+
+    #amount2:focus {
+        width: 55px;
+        height: 23px;
+        padding: 0 2px;
+        justify-content: center;
+        margin-left: 48px;
+    }
+
+#percent1 {
+    width: 25px;
+    height: 23px;
+    padding: 0 2px;
+    justify-content: center;
+    margin-left: 50px;
+}
+
+#percent1:focus {
+    width: 25px;
+    height: 23px;
+    padding: 0 2px;
+    justify-content: center;
+    margin-left: 50px;
+}
+
+#percent2 {
+    width: 25px;
+    height: 23px;
+    padding: 0 2px;
+    justify-content: center;
+    margin-left: 85px;
+}
+
+#percent2:focus {
+    width: 25px;
+    height: 23px;
+    padding: 0 2px;
+    justify-content: center;
+    margin-left: 85px;
+}
+
+.tax-inputs {
+    margin-top: 2px;
+}
+
+/*---対象月度設定---*/
+#targetMonthSetting {
+    margin-top: 4px;
+}
+
+.target-month {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    margin-top: 2px;
+}
+
+#procDate {
+    width: 122px;
+    height: 23px;
+    padding: 0 2px;
+    justify-content: center;
+}
+
+#procDate:focus {
+    width: 122px;
+    height: 23px;
+    padding: 0 2px;
+    justify-content: center;
+}
+
+/*---伝票番号設定---*/
+#voucherNumberSetting {
+    margin-top: 4px;
+}
+
+.voucher-number {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    margin-top:2px;
+}
+
+.voucher label {
+    width: 90px;
+    height: 23px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: silver;
+    border: 1px solid;
+    border-color: #9e9e9e #fff #fff #9e9e9e;
+    font-size: 12px;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+.voucher input {
+    margin-left: 4px;
+    width: 65px;
+    height: 21px;
+    padding: 0 2px;
+    box-sizing: border-box;
+}
+
+    .voucher input:focus {
+        margin-left: 4px;
+        width: 65px;
+        height: 20px;
+        min-height: 20px;
+        max-height: 20px;
+        padding: 0 2px;
+    }
+
+.voucher {
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+}
+
+/*---端数初期設定---*/
+.roundSetting {
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    margin-top:2px;
+}
+
+.salesFractions,
+.consTaxClass,
+.consTaxFA {
+    width: 20px;
+    height: 23px;
+    padding: 0 2px;
+    justify-content: center;
+}
+
+/*---マシン設定---*/
+#machineSetting{
+    margin-top:2px;
+}
+
+.machSetting {
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    margin-top: 2px;
+}
+
+#clientNo {
+    width: 25px;
+    height: 23px;
+    padding: 0 2px;
+    justify-content: center;
+}
+
+#clientNo:focus {
+    width: 25px;
+    height: 23px;
+    padding: 0 2px;
+    justify-content: center;
+}
+
+#serverPath {
+    width: 295px;
+    height: 23px;
+    padding: 0 2px;
+    justify-content: center;
+}
+
+#serverPath:focus {
+    width: 295px;
+    height: 23px;
+    padding: 0 2px;
+    justify-content: center;
+}
+
+.depSettings,
+.inSettingDate,
+.regDAloc {
+    width: 20px;
+    height: 23px;
+    padding: 0 2px;
+    justify-content: center;
+}
+
+/*---入力設定---*/
+#inputSetting{
+    margin-top:2px;
+}
+
+.inSetting {
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    margin-top:2px;
+}
+
+/*---部門設定---*/
+#departmentSetting {
+    margin-top: 2px;
+}
+
+/* margin-top like the other sections' rows, so the 2px gap sits under 部門設定 */
+.depSetting {
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    margin-top: 2px;
+}
+
+/*---請求書設定---*/
+#billingSetting {
+    margin-top: 2px;
+}
+
+/* margin-top like the other sections' rows, so the 2px gap sits under 請求書設定 */
+.billSetting {
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    margin-top: 2px;
+}
+
+.invoice {
+    width: 80px;
+    height: 23px;
+    padding: 0 2px;
+    justify-content: center;
+}
+/* =========================================
+         Environment Setting - Tab2
+   ========================================= */
+
+.tab-detailSections {
+    display: flex;
+    flex-direction: column;
+}
+
+.tab-detailSection1 {
+    display: flex;
+    flex-direction: row;
+    gap: 22px;
+}
+
+/*---車輌マスタ---*/
+#vehicleMaster {
+    display: flex;
+    flex-direction: column;
+}
+
+.fare-Structure {
+    display: flex;
+    flex-direction: row;
+    gap: 2px
+}
+
+.fareText {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 214px;
+    /*gap: 1px;*/
+}
+
+.fareLabel {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+    .fareLabel label {
+        width: 84px;
+        height: 23px;
+    }
+
+.fareText input {
+    width: 84px;
+    height: 21px;
+    padding: 0 2px;
+}
+
+/*---運転日報---*/
+#operation-report {
+    display: flex;
+    flex-direction: column;
+}
+
+.Variable-Name {
+    display: flex;
+    flex-direction: row;
+    gap: 2px
+}
+
+.variableNameText {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 214px;
+}
+
+.variableNameLabel {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+    .variableNameLabel label {
+        width: 84px;
+        height: 23px;
+    }
+
+.variableNameText input {
+    width: 84px;
+    height: 21px;
+    align-items: center;
+    padding: 0 2px;
+}
+
+/*---運行手当---*/
+#operation-allowance {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.opAllowance {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+}
+
+    .opAllowance label {
+        width: 22px;
+        height: 167px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 12px;
+        font-weight: bold;
+        box-sizing: border-box;
+        text-align: center
+    }
+
+.opAllowanceText {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 166px;
+}
+
+.opAllowanceLabel {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+    .opAllowanceLabel label {
+        width: 84px;
+        height: 23px;
+    }
+
+.opAllowanceText input {
+    width: 84px;
+    height: 21px;
+    align-items: center;
+    padding: 0 2px;
+}
+
+.noticePeriod {
+    width: 193.949px;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    gap: 2px;
+}
+
+    .noticePeriod .label1 {
+        width: 108px;
+        height: 23px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 12px;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+
+    .noticePeriod input {
+        width: 54px;
+        height: 21px;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 2px;
+    }
+
+    .noticePeriod .label2 {
+        text-align: center;
+    }
+
+
+/*---経費伝票---*/
+#expense-voucher {
+    display: flex;
+    flex-direction: column;
+}
+
+.expVoucher {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2px;
+}
+
+    .expVoucher label {
+        width: 22px;
+        height: 119px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 12px;
+        font-weight: bold;
+        box-sizing: border-box;
+        text-align: center
+    }
+
+.expVoucherText {
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+    align-items: center;
+    height: 118px;
+}
+
+.expVoucherLabel {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+    .expVoucherLabel label {
+        width: 84px;
+        height: 23px;
+    }
+
+.expVoucherText input {
+    width: 84px;
+    height: 21px;
+    align-items: center;
+    padding: 0 2px;
+}
+
+
+/*---請求処理設定_billingProcessingSettings---*/
+#billingProcessingSettings {
+    margin-top: 8px;
+    margin-left: 216px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.billingProcessingSetting {
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+}
+
+    .billingProcessingSetting .cust_label {
+        width: 108px;
+        height: 23px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 12px;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+
+.eaMilage,
+.taxSurcharge,
+.noTaxSurcharge,
+.invoiceDateSetting {
+    width: 20px;
+    height: 21px;
+    padding: 0 2px;
+    justify-content: space-between;
+}
+
+/* =========================================
+         Serial Setting - Tab3
+   ========================================= */
+#serialNumberSetting {
+    display: flex;
+    flex-direction: column;
+}
+
+.serialNumber {
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    margin-top: 1px;
+}
+
+    /* box 6 (配送ﾃﾞｽ) is hidden as in legacy; display: flex above would otherwise show it */
+    .serialNumber[hidden] {
+        display: none;
+    }
+
+    .serialNumber .cust_label {
+        width: 130px;
+        height: 23px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 12px;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+
+    .serialNumber input {
+        display: flex;
+        width: 100px;
+        height: 21px;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0px 2px;
+    }
+
+/* =========================================
+         Option Setting - Tab4
+   ========================================= */
+.opSettingSections {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    gap: 2px;
+}
+
+/*---給与連動---*/
+.salary-Linked {
+    display: flex;
+    flex-direction: row;
+    margin-top: 2px;
+}
+
+    .salary-Linked label {
+        align-items: center;
+        align-content: center;
+        font-weight: bold;
+    }
+
+    .salary-Linked .cust_label {
+        width: 150px;
+        height: 23px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 12px;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+
+    .salary-Linked input {
+        width: 54px;
+        height: 21px;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 2px;
+        margin-left: 8px;
+    }
+
+#salaryClosingDay {
+    width: 21px;
+}
+
+.salary-Linked button {
+    width: 24px;
+    height: 23px;
+    margin-left: 8px;
+}
+
+/*---財務連動---*/
+.financial-Link {
+    display: flex;
+    flex-direction: row;
+    margin-top: 2px;
+}
+
+    .financial-Link label {
+        align-items: center;
+        align-content: center;
+        font-weight: bold;
+    }
+
+#salaryFile,
+.financial-Link input {
+    width: 404px;
+    height: 21px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2px;
+    margin-left: 8px;
+}
+
+    .financial-Link button {
+        width: 24px;
+        height: 23px;
+        margin-left: 8px;
+    }
+
+    .financial-Link .cust_label {
+        width: 150px;
+        height: 23px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 12px;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+
+/* 仕訳作成: both rows share one grid so the boxes line up in columns.
+   Column widths follow the legacy layout (FrmM_Kanri.designer.vb, measured from 売上):
+   labels at 0 / 76 / 196 / 320, boxes at 48 / 168 / 288 / 380. */
+.financial-Link > div {
+    display: grid;
+    grid-template-columns: 48px 28px 92px 28px 92px 32px 60px 28px auto;
+    row-gap: 2px;
+    align-items: center;
+    margin-left: 8px;
+}
+
+/* the two rows place their labels and boxes straight into the grid above */
+.labelInputs {
+    display: contents;
+}
+
+.labelInputs input {
+    width: 22px;
+    height: 21px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2px;
+    margin-left: 0;     /* the grid column sets the position (.financial-Link input adds 8px) */
+}
+
+/* labels left-aligned in their column, as in legacy */
+.labelInputs label {
+    white-space: nowrap;
+}
+
+    /* 3rd column: 下払 sits right next to its box (legacy Label152) */
+    .labelInputs > label:nth-child(5) {
+        justify-self: end;
+        padding-right: 3px;
+    }
+
+/*---送受信連動 _ Send-Receive Synchronization---*/
+/* margin-top like 給与連動 / 財務連動, so the 2px gap sits under 送受信連動 */
+.srSynchronization {
+    display: flex;
+    flex-direction: row;
+    margin-top: 2px;
+}
+
+    .srSynchronization .cust_label {
+        width: 150px;
+        height: 46px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 12px;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+
+.srInputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+    .srInputs input {
+        display: flex;
+        width: 394px;
+        height: 21px;
+        align-items: center;
+        padding: 0 2px;
+        margin-left: 8px;
+    }
+
+/*---ETC連動_ETC-linkage---*/
+/* margin-top like 給与連動 / 財務連動, so the 2px gap sits under ETC連動 */
+.etc-Link {
+    display: flex;
+    flex-direction: row;
+    margin-top: 2px;
+}
+
+    .etc-Link .cust_label {
+        width: 150px;
+        height: 23px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 12px;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+
+#cardPriority {
+    width: 20px;
+    height: 23px;
+    padding: 0 2px;
+    justify-content: center;
+    margin-left: 8px;
+    margin-right: 2px;
+}
+
+/* =========================================
+	Master Controls
+   ========================================= */
+.option-button-group {
+    display: flex;
+    gap: 4px;
+}
+
+.select-option-btn {
+    width: 100px;
+    height: 23px;
+    text-align: center;
+}
+
+    .select-option-btn.active {
+        width: 100px;
+        height: 23px;
+        text-align: center;
+    }
+
+#mmCode[readonly] {
+    background-color: #FFB6C1 !important;
+}

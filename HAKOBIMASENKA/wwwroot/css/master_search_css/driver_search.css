@@ -1,0 +1,513 @@
+﻿
+/* Driver Search full-screen popup. */
+.driver-search-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000002;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+    background: rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
+}
+
+    .driver-search-overlay.is-open {
+        display: flex;
+    }
+
+/* Main search window. */
+.driver-search-window {
+    width: min(600px, 96vw);
+    height: min(700px, 92vh);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #d4d4d4;
+    border: 1px solid #808080;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    color: #111;
+    font-family: "MS Gothic", "ＭＳ ゴシック", sans-serif;
+    font-size: 12px;
+    box-sizing: border-box;
+    position: fixed;
+}
+
+    .driver-search-window.is-minimized {
+        height: 100px;
+        flex: none;
+    }
+
+    .driver-search-window.is-maximized {
+        width: 100%;
+        height: 100%;
+    }
+
+/* Title bar and window controls. */
+.driver-search-titlebar {
+    height: 27px;
+    min-height: 27px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 7px;
+    background: #f2f2f2;
+    border-bottom: 1px solid #bdbdbd;
+    cursor: move;
+    user-select: none;
+}
+
+.driver-search-window-controls {
+    display: flex;
+    height: 100%;
+}
+
+    .driver-search-window-controls button {
+        width: 40px;
+        height: 19px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: #333;
+        font-size: 13px;
+        cursor: pointer;
+    }
+
+        .driver-search-window-controls button:hover {
+            background: #e5e5e5;
+        }
+
+#btnDriverSearchClose:hover {
+    background: #e81123;
+    color: #fff;
+}
+
+/* Heading and result count. */
+.driver-search-heading {
+    min-height: 27px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 3px 4px;
+    background: #c4c4c4;
+    box-sizing: border-box;
+}
+
+    .driver-search-heading label {
+        min-width: 110px;
+        padding: 4px 12px;
+        background: #444;
+        color: #fff;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .driver-search-heading strong {
+        min-width: 110px;
+        padding: 4px 12px;
+        background: #080878;
+        color: #fff;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+/* Search condition fields. */
+.driver-search-conditions {
+    flex-shrink: 0;
+    padding: 8px 10px;
+    border-bottom: 1px solid #aaa;
+}
+
+.driver-search-row {
+    min-height: 23px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 3px;
+}
+
+    .driver-search-row > label:first-child {
+        width: 88px;
+        min-width: 88px;
+        padding: 3px 5px;
+        background: #c5c5c5;
+        border: 1px solid #b8b8b8;
+        font-weight: bold;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .driver-search-row input[type="text"] {
+        min-width: 0;
+        width: 145px;
+        height: 21px;
+        padding: 1px 4px;
+        border: 1px solid #bdbdbd;
+        background: #fff;
+        font: inherit;
+        box-sizing: border-box;
+    }
+
+    .driver-search-row input:focus {
+        background: rgb(128, 255, 255);
+        outline: none;
+        border-color: darkblue;
+    }
+
+/* Driver category input and buttons. */
+#searchDriverCategory {
+    width: 20px;
+    height: 22px;
+    padding: 1px 3px;
+    text-align: center;
+    border: 1px solid #aaa;
+    background: #fff;
+    font: inherit;
+    box-sizing: border-box;
+}
+
+.driver-category-options {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+    .driver-category-options button {
+        min-width: 85px;
+        height: 22px;
+        padding: 1px 5px;
+        border: 1px solid #aaa;
+        background: #d4d4d4;
+        color: #222;
+        font-family: "MS Gothic", "Yu Gothic UI", Meiryo, sans-serif;
+        font-size: 12px;
+        cursor: pointer;
+    }
+
+        .driver-category-options button.active {
+            background: #ffff00;
+            border-color: #c8b900;
+        }
+
+/* Results grid fills the remaining screen. */
+.driver-search-results {
+    flex: 1;
+    min-height: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #bfbfbf;
+    border: 1px solid #999;
+    box-sizing: border-box;
+    border: 1px solid #000;
+}
+
+.driver-search-table-scroll {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: #bfbfbf;
+    box-sizing: border-box;
+    scrollbar-width: auto;
+}
+
+.driver-search-table {
+    width: max-content;
+    min-width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-family: "MS Gothic", "Yu Gothic UI", Meiryo, sans-serif;
+    font-size: 12px;
+    color: #111;
+}
+
+    .driver-search-table th:nth-child(1) {
+        width: 78px;
+    }
+
+    .driver-search-table th:nth-child(2) {
+        width: 118px;
+    }
+
+    .driver-search-table th:nth-child(3) {
+        width: 116px;
+    }
+
+    .driver-search-table th:nth-child(4) {
+        width: 48px;
+    }
+
+    .driver-search-table th:nth-child(5) {
+        width: 146px;
+    }
+
+    .driver-search-table th:nth-child(6) {
+        width: 118px;
+    }
+
+    .driver-search-table thead th {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        height: 21px;
+        padding: 1px 3px;
+        background: #fff;
+        color: #111;
+        border: 1px solid #999;
+        font-weight: normal;
+        text-align: center;
+        white-space: nowrap;
+        box-sizing: border-box;
+    }
+
+    .driver-search-table tbody td {
+        height: 21px;
+        padding: 1px 4px;
+        border: 1px solid #aaa;
+        overflow: hidden;
+        text-overflow: clip;
+        white-space: nowrap;
+        box-sizing: border-box;
+    }
+
+    .driver-search-table tbody tr:nth-child(odd) {
+        background: #fff;
+    }
+
+    .driver-search-table tbody tr:nth-child(even) {
+        background: #bfbfbf;
+    }
+
+    .driver-search-table tbody tr.is-selected {
+        background: #0078d7 !important;
+        color: #fff !important;
+    }
+
+        .driver-search-table tbody tr.is-selected td {
+            color: #fff;
+        }
+
+    .driver-search-table .driver-search-empty {
+        height: 60px;
+        text-align: center;
+        vertical-align: middle;
+        color: #333;
+    }
+
+/* Message area and function-key footer. */
+.driver-search-message {
+    border-top: 1px solid #A0A0A0;
+    border-bottom: 1px solid #fff;
+    padding: 6px 0 6px 6px;
+    flex-shrink: 0;
+    min-height: 24px;
+    display: flex;
+    align-items: center;
+    margin-top: 6px;
+    margin-bottom: 2px;
+    font-weight: bold;
+    background: silver;
+    box-sizing: border-box;
+}
+
+.driver-search-footer {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+    margin-top: auto;
+    margin-bottom: 1px;
+}
+
+    .driver-search-footer button {
+        flex: 1;
+        height: 35px;
+        font-size: 12px;
+        border: none;
+        border-radius: 4px;
+        background-color: #fff;
+    }
+
+        .driver-search-footer button:enabled {
+            cursor: pointer;
+        }
+
+            .driver-search-footer button:enabled:hover {
+                background-color: #D9EEFF;
+                border: 1px solid highlight;
+            }
+
+        .driver-search-footer button:disabled {
+            color: #888;
+        }
+
+@media (max-width: 650px) {
+    .driver-search-conditions {
+        padding: 4px;
+    }
+
+    .driver-search-row > label:first-child {
+        width: 85px;
+        min-width: 85px;
+    }
+
+    .driver-search-footer {
+        gap: 2px;
+    }
+
+        .driver-search-footer button {
+            font-size: 10px;
+        }
+}
+
+/* Driver Search Window Controls */
+.driver-search-window-controls {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+    /* Driver Search Window Control Buttons */
+    .driver-search-window-controls button {
+        width: 35px;
+        height: 26px;
+        border: none;
+        background: transparent;
+        color: #444;
+        font-size: 17px;
+        cursor: pointer;
+    }
+
+        /* Highlight Window Controls on Hover */
+        .driver-search-window-controls button:hover {
+            background: #e5e5e5;
+        }
+
+    /* Highlight the Close Control on Hover */
+    .driver-search-window-controls .driver-window-close:hover {
+        background: #e81123;
+        color: #fff;
+    }
+
+/* Maximized Driver Search Window */
+.driver-search-window.maximized {
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: none;
+}
+
+/* Minimized Driver Search Window */
+.driver-search-window.minimized {
+    height: 100px !important;
+    flex: none;
+}
+
+/* =========================================
+   Driver Search - Input Fields Focus Styling
+   ========================================= */
+
+/* Highlight Driver Search Inputs When Focused */
+#searchDriverFurigana:focus,
+#searchDriverName:focus,
+#searchDriverCategory:focus,
+#searchDriverSubcontractor:focus {
+    background: rgb(128, 255, 255);
+    outline: none;
+    box-sizing: border-box;
+    border-color: darkblue;
+    border-top: 1px;
+    border-left: 1px;
+    border-right: 1px;
+}
+
+/* =========================================
+   Driver Master Registration Modal
+   ========================================= */
+
+.driver-master-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000020;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.35);
+    box-sizing: border-box;
+}
+
+    .driver-master-modal.is-open {
+        display: flex;
+    }
+
+/* Modal window */
+.driver-master-modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 95vw;
+    height: 95vh;
+    background: #dcdcdc;
+    border: 1px solid #888;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+/* Title bar */
+.driver-master-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+    min-height: 30px;
+    padding: 1px 5px;
+    background: #aaa;
+    font-weight: bold;
+}
+
+/* Window controls */
+.driver-master-window-controls {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+    .driver-master-window-controls button {
+        width: 35px;
+        height: 28px;
+        border: none;
+        background: transparent;
+        color: #444;
+        font-size: 17px;
+        cursor: pointer;
+    }
+
+        .driver-master-window-controls button:hover {
+            background: #e5e5e5;
+        }
+
+#btnDriverMasterClose:hover {
+    background: #e81123;
+    color: #fff;
+}
+
+/* Embedded master page */
+#driverMasterFrame {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    border: none;
+    background: #fff;
+}
+
+/* Minimize */
+.driver-master-modal-content.is-minimized {
+    height: 30px;
+}
+
+/* Maximize */
+.driver-master-modal-content.is-maximized {
+    width: 100%;
+    height: 100%;
+}

@@ -1,0 +1,337 @@
+﻿/* =========================================
+   Screen: Order Entry
+
+   Navigation:
+        Main Menu
+            → Daily Processing(Entry)
+            → Order Entry
+
+   Migrated From: FrmN_Juchu.designer.vb
+
+   Purpose: Order Entry styling.
+
+  ========================================= */
+
+
+/* =========================================
+                HTML / BODY
+   ========================================= */
+
+html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background-color: silver;
+    color: #222;
+    overflow: hidden;
+}
+
+/* =========================================
+                MAIN PAGE
+   ========================================= */
+
+.main-container {
+    width: 100%;
+    height: 100vh;
+    padding: 0 2px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* =========================================
+            BASIC INFORMATION
+   ========================================= */
+.master-sections {
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    overflow:hidden;
+}
+
+.master-rows {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    width: 975px;
+}
+
+.compBranch {
+    margin-left:80px;
+}
+
+.vNumber {
+    margin-left: 25px;
+}
+
+.master-row {
+    display: flex;
+    flex-direction: row;
+}
+
+    .master-row label {
+        width: 100px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 12px;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+
+    .master-row input {
+        margin-left: 4px;
+        width: 125px;
+    }
+
+    .master-row button {
+        margin-left: 20px;
+        flex: 1;
+        height: 22px;
+        width:80px;
+        font-size: 12px;
+        border: none;
+        border-radius: 4px 4px 4px 4px;
+        background-color: #fff;
+    }
+
+.master-row button:enabled:hover {
+    background-color: #D9EEFF;
+    border: 1px solid highlight;
+}
+
+/* =========================================
+            LIST WINDOW OVERLAY
+   ========================================= */
+
+.list-window-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+}
+
+/* =========================================
+               Custom-code row
+   ========================================= */
+
+/*colors when new and editable mode*/
+/*light blue/cyan */
+.code-editable:focus {
+    background: #80FFFF;
+}
+
+/*pink*/
+.code-readonly {
+    background: #FFB6C1;
+}
+
+/* =========================================
+              Sections
+   ========================================= */
+#firstSection {
+    background-color: gainsboro;
+    min-height: 40px;
+}
+
+#secondSection {
+    display: flex;
+    flex-direction: column;
+    background-color: gainsboro;
+    gap: 10px;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+#scrollArea {
+    width: 1000px;
+    height: 600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.gridTrLbl {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: gainsboro;
+}
+
+#detailContainer{
+    height:800px;
+}
+
+.infoGrid {
+    display: grid;
+    grid-template-columns: 455px 1fr;
+    gap: 4px;
+    width: 100%;
+}
+
+/* Row targeted by F2/F3 while confirming */
+.infoGrid.row-target input {
+    background-color: pink;
+}
+
+.leftSection,
+.rightSection {
+    display:flex;
+    gap: 2px;
+}
+
+.labelColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+    .labelColumn label {
+        width: 75px;
+        height: 24px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 12px;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+
+.inputColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    justify-content: space-between;
+}
+
+.row {
+    display: flex;
+    gap: 2px;
+    align-items: stretch;
+}
+
+    .row label {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 12px;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+
+.rowNumber {
+    height: 174px;
+    width: 28px !important;
+    align-content: space-evenly;
+    text-align: center;
+    color: white;
+    background-color: #4b4b4b;
+    border: 1px solid;
+    border-color: #9e9e9e #fff #fff #9e9e9e;
+    font-size: 12px;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+
+/*========================================
+                grid section
+ =========================================*/
+.gridTrLbl {
+    display: grid;
+    grid-template-columns: 455px 1fr;
+    gap: 8px;
+    width: 100%;
+}
+
+.gridTrLbl1 {
+    display: flex;
+    margin-bottom: 7px;
+    margin-left:72px;
+    gap:2px;
+}
+
+.gridTrLbl1 label{
+    display: flex;
+    height: 22px;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    background-color: silver;
+    border: 1px solid;
+    border-color: #9e9e9e #fff #fff #9e9e9e;
+    font-size: 12px;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+.dividerLine {
+    height: 2px;
+    width: 975px;
+    text-align: center;
+    background-color: #4b4b4b;
+    border: 1px solid;
+    font-weight: bold;
+    box-sizing: border-box;
+    margin-bottom:4px;
+}
+
+/* =========================================
+                FUNCTION FOOTER
+   ========================================= */
+
+#btnList {
+    text-align: left;
+    text-indent: 30px;
+}
+/* 積日 / 卸日: the empty box shows ___/__/__ in the text colour, centred like legacy */
+.loadingDate,
+.unloadingDate {
+    text-align: center;
+}
+
+.loadingDate::placeholder,
+.unloadingDate::placeholder {
+    color: inherit;
+    opacity: 1;
+}
+
+/* 伝票番号 of a loaded voucher (修正): pink, like the read-only codes on the other screens.
+   common.css input[readonly] (silver) outranks .code-readonly, so the id is needed here (as #cvCode[Readonly] in 傭車マスタ) */
+#voucherNumber.code-readonly[readonly],
+#voucherNumber.code-readonly[readonly]:focus {
+    background-color: #FFB6C1;
+}
+
+/* Calendar popup: _OrderSearch.cshtml has its own copy inside the hidden overlay, and japanesecalendar.js opens the
+   last calendar on the page for every date box, which is this screen's (calendar_common at the end of Order_entry.cshtml).
+   It must show above the F5 order search overlay (z-index 1000000) for the search's own date boxes. */
+body .japanese-calendar {
+    z-index: 1000001;
+}
+
+/* 車種: the 運賃形態 list shown beside the box while it has focus (legacy Frame1B), placed by order_entry.js */
+.vehicle-type-list {
+    position: fixed;
+    z-index: 1000;
+    padding: 2px 6px;
+    background-color: #ffffe1;
+    border: 1px solid #808080;
+    font-size: 12px;
+    line-height: 16px;
+    white-space: pre;
+    pointer-events: none;
+}

@@ -1,0 +1,345 @@
+﻿@{
+	ViewData["Title"] = "ルートマスタ";
+}
+
+@section Styles
+{
+	<link rel="stylesheet" href="~/css/route_master.css" asp-append asp-append-version="true">
+	<link rel="stylesheet" href="~/css/listscreen.css" asp-append-version="true" />
+}
+ 
+
+	<div class="main-container">
+		<!-- HEADER -->
+
+		<header class="page-header">
+
+			<div class="screen-name">
+				ルートマスタ
+			</div>
+
+			<div class="new-screen">
+				<label class="lbl-new">
+					新規
+				</label>
+			</div>
+
+		</header>
+
+		<!-- MASTER SECTION -->
+		<section class="master-section">
+
+			<div class="master-row1">
+
+				<label>コード</label>
+
+				<input type="text"
+					   id="routeCode">
+
+			</div>
+
+			<div class="master-row">
+
+				<label>名称</label>
+
+				<input type="text"
+					   id="routeName">
+
+			</div>
+
+		</section>
+
+		<!-- MAIN CONTENT -->
+
+		<main class="route-layout">
+
+			<!-- Route Entry Area -->
+			<section class="route-entry-panel">
+
+				<!-- Upper Cost Area -->
+				<div>
+					<div class="route-entry-table">
+
+						<div class="column1">
+							<label id="routeRowNumber" class="number">1</label>
+						</div>
+
+						<div class="column2">
+
+							<label class="label-cell">区分</label>
+							<input type="text" class="code-cell" value="1">
+							<input type="text" class="name-cell" readonly>
+
+							<label class="label-cell">自社支店</label>
+							<input type="text" class="code-cell">
+							<input type="text" class="name-cell" value="PROTRUDE運輸" readonly>
+
+							<label class="label-cell">説区</label>
+
+							<div class="columnM">
+								<input type="text" class="code-cellM">
+								<input type="text" class="name-cellM" readonly>
+							</div>
+
+							<div class="columnN">
+								<label class="label-cell">部門</label>
+								<input type="text" class="code-cellN">
+								<input type="text" class="name-cellN" 　value="PROTRUDE運輸" readonly>
+							</div>
+
+							<label class="label-cell">荷主</label>
+							<input type="text" class="code-cell" value="1">
+							<input type="text" class="name-cell" readonly>
+						</div>
+
+						<div class="column3">
+
+							<label class="label-cell">発地</label>
+							<input type="text" class="code-cell" value="1">
+							<input type="text" class="name-cell" readonly>
+
+							<label class="label-cell">着地</label>
+							<input type="text" class="code-cell">
+							<input type="text" class="name-cell" value="PROTRUDE運輸" readonly>
+
+							<label class="label-cell">品名</label>
+							<input type="text" class="code-cell">
+							<input type="text" class="name-cell">
+
+							<label class="label-cell">変動</label>
+							<input type="text" class="code-cell">
+
+							<div class="columnO">
+								<label class="label-cell">数量</label>
+								<input type="text" class="code-cellO">
+							</div>
+						</div>
+
+					</div>
+
+					<!-- Lower Cost Area -->
+					<div class="route-cost-table">
+
+						<div class="columnP">
+							<label></label>
+
+							<div class="columnP-01">
+								<label>請求</label>
+								<label>下払</label>
+							</div>
+
+						</div>
+
+						<div class="columnR">
+
+							<label>単位</label>
+
+							<div>
+								<input type="text" class="code-cellUnit">
+								<input type="text" class="name-cellUnit" readonly>
+							</div>
+
+							<div>
+								<input type="text" class="code-cellUnit">
+								<input type="text" class="name-cellUnit" readonly>
+							</div>
+
+						</div>
+
+						<div class="columnP">
+							<label>重量</label>
+							<input type="text">
+							<input type="text">
+						</div>
+
+						<div class="columnP">
+							<label>単価</label>
+							<input type="text">
+							<input type="text">
+						</div>
+
+						<div class="columnP">
+							<label>運賃</label>
+							<input type="text">
+							<input type="text">
+						</div>
+
+						<div class="columnP">
+							<label>割増</label>
+							<input type="text">
+							<input type="text">
+						</div>
+
+						<div class="columnP">
+							<label>有料(請)</label>
+							<input type="text">
+							<input type="text">
+						</div>
+
+						<div class="columnR">
+							<label>運賃確定</label>
+
+							<div>
+								<input type="text" class="code-cellUnit">
+								<input type="text" class="name-cellUnit" readonly>
+							</div>
+
+							<div>
+								<input type="text" class="code-cellUnit">
+								<input type="text" class="name-cellUnit" readonly>
+							</div>
+						</div>
+
+						<div class="columnQ">
+							<label></label>
+
+							<div class="columnQ-01">
+								<label>組</label>
+								<input type="text">
+							</div>
+						</div>
+
+					</div>
+
+					<!-- Divider   -->
+					<div class="divider-label"></div>
+
+					<!-- Memo Area -->
+					<div class="memo-table">
+
+						<div class="memo-column">
+							<label class="label">摘要</label>
+							<input type="text">
+						</div>
+
+						<div class="memo-column1">
+							<label></label>
+							<input type="text">
+							<input type="text">
+							<input type="text">
+							<input type="text">
+							<input type="text">
+							<input type="text">
+							<input type="text">
+							<input type="text">
+							<input type="text">
+							<input type="text">
+							<input type="text">
+							<input type="text">
+						</div>
+
+					</div>
+				</div>
+
+				<!-- Scroll Buttons -->
+				<div>
+					<div class="route-scroll-panel">
+
+						<button type="button" class="scroll-btn scroll-up">▲</button>
+
+						<button type="button" class="scroll-btn scroll-down">▼</button>
+
+					</div>
+				</div>
+			</section>
+
+
+			<!-- GRID SECTION -->
+			<section class="route-grid-panel">
+
+				<table class="route-grid">
+
+					<thead>
+
+						<tr>
+
+							<th>No.</th>
+							<th>区分</th>
+							<th>荷主</th>
+							<th>発地</th>
+							<th>着地</th>
+							<th>品名</th>
+							<th>数量</th>
+							<th>重量</th>
+							<th>単位</th>
+							<th>単価</th>
+							<th>運賃</th>
+							<th>割増</th>
+							<th>有料(請)</th>
+							<th>下払単位</th>
+							<th>下払重量</th>
+							<th>下払単価</th>
+							<th>下払運賃</th>
+							<th>下払割増</th>
+							<th>下払有料</th>
+							<th>摘要</th>
+
+						</tr>
+					</thead>
+
+					<tbody></tbody>
+
+				</table>
+			</section>
+
+		</main>
+
+		<!-- Message -->
+		<section class="message-area">
+
+			<label>
+				メッセージ：
+			</label>
+
+		</section>
+
+		<!-- Footer -->
+		<footer class="function-footer">
+
+			<button>F1:登録</button>
+
+			<button disabled>F2:</button>
+
+			<button>F3:行削除</button>
+
+			<button>F4:削除</button>
+
+			<button>F5:検索</button>
+
+			<button>F6:マスタ検索</button>
+
+			<button>F7:≪ 前</button>
+
+			<button>F8:次 ≫</button>
+
+			@* <button type="button" id="vehicleMasterbtnList" onclick="openPrintPopup()">F9:リスト</button> *@
+		<button type="button" id="btnList">F9:リスト</button>
+
+			<button disabled>F10:</button>
+
+			<button>F11:中止</button>
+
+			<button type="button" id="btnExit">F12:終了</button>
+
+		</footer>
+
+		@* <!--POPUP Display-->
+		<div id="printPopup" class="popup-overlay">
+			<div id="printPopupWindow" class="popup-window">
+				<iframe id="printFrame" src="~/Master/ListScreen" class="popup-frame" frameborder="0"></iframe>
+			</div>
+		</div> *@
+
+	<!-- F9 List Popup -->
+	<div id="printPopup" class="popup-overlay">
+		<div id="printPopupWindow" class="popup-window">
+			<partial name="~/Views/Shared/MasterList/_MasterListPartial.cshtml" />
+		</div>
+	</div>
+
+		<script src="~/js/master_screen.js"></script>
+		<script src="~/js/route_master.js"></script>
+	<script src="~/js/listscreen.js" asp-append-version="true"></script>
+
+	</div>
+ 

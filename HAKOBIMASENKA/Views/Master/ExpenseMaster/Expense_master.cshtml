@@ -1,0 +1,188 @@
+@{
+	ViewData["Title"] = "経費マスタ";
+}
+
+<link rel="stylesheet" href="~/css/expense_master.css" asp-append-version="true">
+<link rel="stylesheet" href="~/css/common.css" asp-append-version="true">
+<link rel="stylesheet" href="~/css/listscreen.css" asp-append-version="true">
+
+ 
+<!-- Main window-->
+<div class="main-container">
+	<!-- Screen header-->
+	<header class="page-header">
+		<div class="screen-name">
+			経費マスタ
+		</div>
+		<div class="new-screen">
+			<label id="mode-lbl" class="lbl-new-em">新　規</label>
+		</div>
+
+	</header>
+	<section class="master-section">
+		<div class="master-row">
+			<label for="expenseCode">
+				コ ー ド
+			</label>
+			<input id="expenseCode" type="text" value="@Model.経費コード" class="input-value" maxlength="4" autocomplete="off">
+		</div>
+		<div class="master-row">
+			<label for="expenseName">
+				経 費 名
+			</label>
+			<input id="expenseName" type="text" value="@Model.名称" class="input-value" autocomplete="off">
+		</div>
+	</section>
+	<main class="mainContent-layout">
+		<!-- Editable Area(Left)-->
+		<section class="edit-panel">
+			<!--Tab1-->
+			<nav class="tab-navigation">
+				<button type="button" class="tab-button active" data-tab="basicSetting">
+					基本設定
+				</button>
+				@if (ViewBag.ShowDigitalTab)
+				{
+					<button type="button" class="tab-button" data-tab="digitacoSetting">
+						ﾃﾞｼﾞﾀｺｵﾌﾟｼｮﾝ設定
+					</button>
+				}
+			</nav>
+			<!--Tab details-->
+			<section class="tab-container">
+				<!--Basic settings-->
+				<section id="basicSetting" class="tab-content active">
+					<div class="tab-details">
+						<div class="tab-row">
+							<label>経費区分</label>
+							<div class="expenseCategory-row">
+								<input type="text" id="expenseCategory-code" class="master-code input-value" maxlength="2" autocomplete="off">
+
+								<select id="expenseCategory-name" class="master-name" readonly="" autocomplete="off">
+									<option value=""></option>
+									@foreach (var category in ViewBag.CategoryOptions)
+									{
+										<option value="@category.Code">
+											@category.Name
+										</option>
+									}
+								</select>
+							</div>
+						</div>
+						<div class="tab-row">
+							<label for="unitPrice">単　　価</label>
+							<div class="unit-price-input">
+								<input type="text" id="unitPrice" class="input-value" autocomplete="off">
+								<span id="yen" class="input-span">円</span>
+							</div>
+						</div>
+					</div>
+
+				</section>
+				@if (ViewBag.ShowDigitalTab)
+				{
+					<section id="digitacoSetting" class="tab-content">
+						<div class="tab-row">
+							<label id="digitaCodelbl">ﾃﾞｼﾞﾀｺｺｰﾄﾞ</label>
+							<input type="text" id="digitaco" class="input-value" maxlength="15" autocomplete="off">
+						</div>
+					</section>
+				}
+			</section>
+		</section>
+
+		<!-- Right Side Grid table-->
+		<aside class="list-panel">
+			<table class="table-list" data-grid-columns>
+				<thead>
+					<tr>
+						<th data-sort="numeric">ｺｰﾄﾞ</th>
+						<th data-sort="text">経　費　名</th>
+						<th data-sort="text">区　分</th>
+					</tr>
+				</thead>
+				<tbody class="table-body">
+					@foreach (var item in ViewBag.List)
+					{
+						<tr class="list-grid-row" data-code="@item.経費コード" tabindex="0">
+							<td>@item.経費コード</td>
+							<td>@item.名称</td>
+							<td>@item.経費区分名</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</aside>
+
+	</main>
+	<!-- Message Area -->
+	<section class="message-area">
+		<label>メッセージ：</label>
+		<span id="message-label"></span>
+	</section>
+
+	<!-- Footer Function Keys -->
+	<footer class="function-footer">
+
+		<button type="button" id="btnRegister">
+			F1:登 録
+		</button>
+
+		<button type="button" id="btnCopy" disabled>
+			F2:コピー
+		</button>
+
+		<button type="button" disabled>
+			F3:　　
+		</button>
+
+		<button type="button" id="btnDelete" disabled>
+			F4:削 除
+		</button>
+
+		<button type="button" disabled>
+			F5:　　
+		</button>
+
+		<button type="button" disabled>
+			F6:　　
+		</button>
+
+		<button type="button" disabled>
+			F7:　　
+		</button>
+
+		<button type="button" disabled>
+			F8:　　
+		</button>
+
+		<button type="button" id="btnList" disabled>F9:リスト</button>
+
+		<button type="button" disabled>
+			F10:　　
+		</button>
+
+		<button type="button" id="btnCancel">
+			F11:中 止
+		</button>
+
+		<button type="button" id="btnExit" data-exit-url="@Url.Action("Main_menu", "MainMenu")">
+			F12:終 了
+		</button>
+
+	</footer>
+
+</div>
+
+<!-- F9 List Popup -->
+<div id="printPopup" class="popup-overlay">
+	<div id="printPopupWindow" class="popup-window">
+		<partial name="~/Views/Shared/MasterList/_MasterListPartial.cshtml" />
+	</div>
+</div>
+
+<script src="~/js/master_screen.js" asp-append-version="true"></script>
+<script src="~/js/common_master.js" asp-append-version="true"></script>
+<script src="~/js/expense_master.js" asp-append-version="true"></script>
+<script src="~/js/listscreen.js" asp-append-version="true"></script>
+

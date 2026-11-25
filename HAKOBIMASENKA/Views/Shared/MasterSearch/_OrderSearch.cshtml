@@ -1,0 +1,418 @@
+﻿@*
+=========================================
+Order Search Popup (受注検索)
+
+Data Source:
+    作業明細
+
+Search Conditions:
+    荷主、傭車、運転手、車輌
+    発地、着地、品名
+
+Date Type:
+    0：受注日
+    1：積日
+    2：卸日
+
+=========================================
+*@
+
+@* Order Search Popup *@
+<div id="orderSearchOverlay"
+     class="order-search-overlay"
+     aria-hidden="true">
+
+    @await Html.PartialAsync("~/Views/Controls/calendar_common.cshtml")
+
+    <section id="orderSearchWindow"
+             class="order-search-window"
+             data-search-url="/SearchScreen/OrderSearch">
+
+        @* Title bar *@
+        <header class="order-search-titlebar">
+
+            <span>受注検索</span>
+
+            <div class="order-search-window-controls">
+
+                <button type="button"
+                        id="btnOrderSearchMinimize"
+                        aria-label="最小化">
+                    −
+                </button>
+
+                <button type="button"
+                        id="btnOrderSearchMaximize"
+                        aria-label="最大化">
+                    □
+                </button>
+
+                <button type="button"
+                        id="btnOrderSearchClose"
+                        aria-label="閉じる">
+                    ×
+                </button>
+
+            </div>
+
+        </header>
+
+        @* Heading and result count *@
+        <div class="order-search-heading">
+
+            <label>受注検索</label>
+
+            <strong id="orderSearchCount">件数：0</strong>
+
+        </div>
+
+        @* Search conditions *@
+        <div class="order-search-conditions">
+
+            <div class="order-search-condition-layout">
+
+                @* Left column *@
+                <div class="order-search-condition-column">
+
+                    @* Shipper *@
+                    <div class="order-search-row">
+
+                        <label for="searchOrderShipperCode">荷　主</label>
+
+                        <input type="text"
+                               id="searchOrderShipperCode"
+                               maxlength="10"
+                               autocomplete="off" />
+
+                        <input type="text"
+                               id="searchOrderShipperName"
+                               readonly
+                               tabindex="-1" />
+
+                    </div>
+
+                    @* Chartered Company *@
+                    <div class="order-search-row">
+
+                        <label for="searchOrderCharteringCompanyCode">傭　車</label>
+
+                        <input type="text"
+                               id="searchOrderCharteringCompanyCode"
+                               maxlength="10"
+                               autocomplete="off" />
+
+                        <input type="text"
+                               id="searchOrderCharteringCompanyName"
+                               readonly
+                               tabindex="-1" />
+
+                    </div>
+
+                    @* Driver *@
+                    <div class="order-search-row">
+
+                        <label for="searchOrderDriverCode">運転手</label>
+
+                        <input type="text"
+                               id="searchOrderDriverCode"
+                               maxlength="10"
+                               autocomplete="off" />
+
+                        <input type="text"
+                               id="searchOrderDriverName"
+                               readonly
+                               tabindex="-1" />
+
+                    </div>
+
+                    @* Vehicle *@
+                    <div class="order-search-row">
+
+                        <label for="searchOrderVehicleCode">車　輌</label>
+
+                        <input type="text"
+                               id="searchOrderVehicleCode"
+                               maxlength="10"
+                               autocomplete="off" />
+
+                        <input type="text"
+                               id="searchOrderVehicleName"
+                               readonly
+                               tabindex="-1" />
+
+                    </div>
+
+                </div>
+
+                @* Right column *@
+                <div class="order-search-condition-column">
+
+                    @* Origin *@
+                    <div class="order-search-row">
+
+                        <label for="searchOrderOriginCode">発　地</label>
+
+                        <input type="text"
+                               id="searchOrderOriginCode"
+                               maxlength="10"
+                               autocomplete="off" />
+
+                        <input type="text"
+                               id="searchOrderOriginName"
+                               readonly
+                               tabindex="-1" />
+
+                    </div>
+
+                    @* Destination *@
+                    <div class="order-search-row">
+
+                        <label for="searchOrderDestinationCode">着　地</label>
+
+                        <input type="text"
+                               id="searchOrderDestinationCode"
+                               maxlength="10"
+                               autocomplete="off" />
+
+                        <input type="text"
+                               id="searchOrderDestinationName"
+                               readonly
+                               tabindex="-1" />
+
+                    </div>
+
+                    @* Product Name *@
+                    <div class="order-search-row">
+
+                        <label for="searchOrderProductCode">品　名</label>
+
+                        <input type="text"
+                               id="searchOrderProductCode"
+                               maxlength="10"
+                               autocomplete="off" />
+
+                        <input type="text"
+                               id="searchOrderProductName"
+                               readonly
+                               tabindex="-1" />
+
+                    </div>
+
+                </div>
+
+            </div>
+             
+            @* Date Type *@
+            <div class="order-search-date-row">
+
+                <label>日付設定</label>
+
+                <div class="order-search-date-container">
+
+                    <input type="text"
+                           id="orderSearchDateType"
+                           value="0"
+                           maxlength="1"
+                           inputmode="numeric"
+                           autocomplete="off"
+                           oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+
+                    <button type="button"
+                            class="order-search-date-type active"
+                            data-value="0">
+                        0：受注日
+                    </button>
+
+                    <button type="button"
+                            class="order-search-date-type"
+                            data-value="1">
+                        1：積　日
+                    </button>
+
+                    <button type="button"
+                            class="order-search-date-type"
+                            data-value="2">
+                        2：卸　日
+                    </button>
+
+                </div>
+
+            </div>
+
+            @* Date Range *@
+            <div class="order-search-date-row">
+
+                <label class="order-search-date-label">期　間</label>
+
+                <!-- START DATE -->
+                <div class="order-search-date-wrapper">
+
+                    <input type="text"
+                           id="searchOrderStartDate"
+                           class="jp-calendar-input order-search-date-input"
+                           data-show-day="true"
+                           placeholder="__ __年__月__日"
+                           autocomplete="off" />
+
+                </div>
+
+                <span>から</span>
+
+                <!-- END DATE -->
+                <div class="order-search-date-wrapper">
+
+                    <input type="text"
+                           id="searchOrderEndDate"
+                           class="jp-calendar-input order-search-date-input"
+                           data-show-day="true"
+                           placeholder="__ __年__月__日"
+                           autocomplete="off" />
+
+                </div>
+
+                <span>まで</span>
+
+            </div> 
+        </div> 
+        @* Results grid *@
+        <div class="order-search-results">
+
+            <div class="order-search-table-scroll" tabindex="0">
+
+                <table class="order-search-table"
+                       id="orderSearchTable" data-grid-columns>
+
+                    <thead>
+                        <tr>
+                            <th>受注№</th>
+                            <th>内　容</th>
+                            <th>積　日</th>
+                            <th>積時間</th>
+                            <th>卸　日</th>
+                            <th>卸時間</th>
+                            <th>傭　車</th>
+                            <th>運送会社</th>
+                            <th>運転手</th>
+                            <th>車　番</th>
+                            <th>車　種</th>
+                            <th>荷　主</th>
+                            <th>発　地</th>
+                            <th>着　地</th>
+                            <th>品　名</th>
+                            <th>数　量</th>
+                            <th>重　量</th>
+                            <th>単　位</th>
+                            <th>単　価</th>
+                            <th>請求運賃</th>
+                            <th>割　増</th>
+                            <th>有料(請)</th>
+                            <th>下払単位</th>
+                            <th>下払単価</th>
+                            <th>下払運賃</th>
+                            <th>下払割増</th>
+                            <th>有料(払)</th>
+                            <th>荷　姿</th>
+                            <th>社内備考</th>
+                            <th>日報備考</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="orderSearchTableBody">
+
+                        <tr>
+                            <td colspan="30"
+                                class="order-search-empty">
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        @* Message area *@
+        <div class="order-search-message">
+
+            <span>ﾒｯｾｰｼ：</span>
+
+            <span id="orderSearchMessage"
+                  role="status"
+                  aria-live="polite"></span>
+
+        </div>
+
+        @* Function-key footer *@
+        <footer class="order-search-footer">
+
+            <button type="button" id="btnOrderSearchF1">F1:選 択</button>
+
+            <button type="button"
+                    id="btnOrderSearchF2"
+                    disabled>
+                F2:　　
+            </button>
+
+            <button type="button"
+                    id="btnOrderSearchF3"
+                    disabled>
+                F3:　　
+            </button>
+
+            <button type="button"
+                    id="btnOrderSearchF4"
+                    disabled>
+                F4:　　
+            </button>
+
+            <button type="button"
+                    id="btnOrderSearchF5">
+                F5:検 索
+            </button>
+
+            <button type="button"
+                    id="btnOrderSearchF6" disabled>
+                F6:ﾏｽﾀ検索
+            </button>
+
+            <button type="button"
+                    id="btnOrderSearchF7"
+                    disabled>
+                F7:　　
+            </button>
+
+            <button type="button"
+                    id="btnOrderSearchF8"
+                    disabled>
+                F8:　　
+            </button>
+
+            <button type="button"
+                    id="btnOrderSearchF9"
+                    disabled>
+                F9:　　
+            </button>
+            <button type="button"
+                    id="btnOrderSearchF10"
+                    disabled>
+                F10:　　
+            </button>
+
+            <button type="button"
+                    id="btnOrderSearchF11">
+                F11:中 止
+            </button>
+
+            <button type="button"
+                    id="btnOrderSearchF12">
+                F12:終 了
+            </button>
+
+        </footer>
+
+    </section>
+
+</div>
+<script src="~/js/grid_columns.js" asp-append-version="true"></script>

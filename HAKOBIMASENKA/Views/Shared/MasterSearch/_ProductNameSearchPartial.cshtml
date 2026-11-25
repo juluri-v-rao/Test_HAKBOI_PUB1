@@ -1,0 +1,274 @@
+﻿@* ========================================= *@
+@* Product Name Search Popup *@
+@* ========================================= *@
+
+<div id="productNameSearchPopup"
+     class="product-name-search-overlay"
+     aria-hidden="true">
+
+    <section id="productNameSearchWindow"
+             class="product-name-search-window"
+             data-search-url="@Url.Action("ProductNameSearch", "SearchScreen")"
+             data-category-url="@Url.Action("GetProductCategory", "SearchScreen")"
+             data-transportation-url="@Url.Action("GetTransportationRecord", "SearchScreen")">
+
+        @* Title bar *@
+        <header class="product-name-search-titlebar">
+
+            <span>品名検索</span>
+
+            <div class="product-name-search-window-controls">
+
+                <button type="button"
+                        id="btnProductNameSearchMinimize"
+                        aria-label="最小化">
+                    −
+                </button>
+
+                <button type="button"
+                        id="btnProductNameSearchMaximize"
+                        aria-label="最大化">
+                    □
+                </button>
+
+                <button type="button"
+                        id="btnProductNameSearchClose"
+                        aria-label="閉じる">
+                    ×
+                </button>
+
+            </div>
+        </header>
+
+        @* Heading and result count *@
+        <div class="product-name-search-heading">
+
+            <label>品名検索</label>
+
+            <strong id="productNameSearchCount">件数:0</strong>
+
+        </div>
+
+        @* Search conditions *@
+        <div class="product-name-search-conditions">
+
+            @* Furigana *@
+            <div class="product-name-search-row">
+
+                <label for="searchProductNameFurigana">フリガナ</label>
+
+                <input type="text"
+                       id="searchProductNameFurigana"
+                       autocomplete="off" />
+
+            </div>
+
+            @* Product name *@
+            <div class="product-name-search-row">
+
+                <label for="searchProductName">品　名</label>
+
+                <input type="text"
+                       id="searchProductName"
+                       autocomplete="off" />
+
+            </div>
+
+            @* Product category *@
+            <div class="product-name-search-row">
+
+                <label for="searchProductCategoryCode">品名区分</label>
+
+                <input type="text"
+                       id="searchProductCategoryCode"
+                       class="product-name-code-input"
+                       maxlength="4"
+                       inputmode="numeric"
+                       autocomplete="off" />
+
+                <input type="text"
+                       id="searchProductCategoryName"
+                       class="product-name-description-input"
+                       readonly
+                       tabindex="-1" />
+
+            </div>
+
+            @* Transportation record *@
+            <div class="product-name-search-row">
+
+                <label for="searchTransportationRecordCode">輸送実績区分</label>
+
+                <input type="text"
+                       id="searchTransportationRecordCode"
+                       class="product-name-code-input"
+                       maxlength="4"
+                       inputmode="numeric"
+                       autocomplete="off" />
+
+                <input type="text"
+                       id="searchTransportationRecordName"
+                       class="product-name-description-input"
+                       readonly
+                       tabindex="-1" />
+
+            </div>
+
+        </div>
+
+        @* Search results *@
+        <div class="product-name-search-results">
+
+            <div class="product-name-search-table-scroll">
+
+                <table class="product-name-search-table" data-grid-columns>
+
+                    <thead>
+                        <tr>
+                            <th data-sort="code">コード</th>
+                            <th data-sort="productName">品　　名 </th>
+                            <th data-sort="productCategory">品名区分</th>
+                            <th data-sort="transportationRecord">輸送実績</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="productNameSearchResults"></tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        @* Message area *@
+        <div class="product-name-search-message">
+
+            <span>メッセージ：</span>
+
+            <span id="productNameSearchMessage"
+                  role="status"
+                  aria-live="polite"></span>
+
+        </div>
+
+        @* Function-key footer *@
+        <footer class="product-name-search-footer">
+
+            <button type="button" id="btnProductNameSearchSelect">
+                F1:選 択
+            </button>
+
+            <button type="button" disabled>
+                F2:　　
+            </button>
+
+            <button type="button" disabled>
+                F3:　　
+            </button>
+
+            <button type="button" disabled>
+                F4:　　
+            </button>
+
+            <button type="button" id="btnProductNameSearchExecute">
+                F5:検 索
+            </button>
+
+            <button type="button"
+                    id="btnProductNameSearchF6"
+                    disabled>
+                F6:ﾏｽﾀ検索
+            </button>
+
+            <button type="button" disabled>
+                F7:　　
+            </button>
+
+            <button type="button" disabled>
+                F8:　　
+            </button>
+
+            <button type="button" id="btnProductNameSearchF9" disabled>
+                F9:　　
+            </button>
+
+            <button type="button" id="btnProductNameSearchRegister">
+                F10:ﾏｽﾀ登録
+            </button>
+
+            <button type="button" id="btnProductNameSearchCancel">
+                F11:中 止
+            </button>
+
+            <button type="button" id="btnProductNameSearchExit">
+                F12:終 了
+            </button>
+
+        </footer>
+
+    </section>
+
+    <script src="~/js/grid_columns.js"
+            asp-append-version="true"></script>
+    @* ========================================= *@
+    @* Product Master Registration Modal *@
+    @* ========================================= *@
+
+    <div id="productMasterModal"
+         class="product-master-modal"
+         style="display: none;">
+
+        <div id="productMasterWindow"
+             class="product-master-modal-content">
+
+            @* Modal title bar and window controls *@
+            <header class="product-search-titlebar">
+
+                <span>品名マスタ登録</span>
+
+                <div class="product-search-window-controls">
+
+                    <button type="button"
+                            id="btnProductMasterMinimize"
+                            aria-label="最小化">
+                        −
+                    </button>
+
+                    <button type="button"
+                            id="btnProductMasterMaximize"
+                            aria-label="最大化">
+                        □
+                    </button>
+
+                    <button type="button"
+                            id="btnProductMasterClose"
+                            class="product-window-close"
+                            aria-label="閉じる">
+                        ×
+                    </button>
+
+                </div>
+
+            </header>
+
+            @* Product Master registration page *@
+            <iframe id="productMasterFrame"
+                    title="品名マスタ登録"
+                    src="about:blank">
+            </iframe>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+@* ========================================= *@
+@* Product Classification Search Popup *@
+@* Keep this OUTSIDE Product Name Search Popup *@
+@* ========================================= *@
+
+@await Html.PartialAsync(
+"~/Views/Shared/MasterSearch/_ProductClassificationSearchPartial.cshtml"
+)

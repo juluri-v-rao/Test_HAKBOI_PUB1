@@ -1,0 +1,515 @@
+﻿/* Vehicle Search Popup */
+.vehicle-search-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000003;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
+}
+
+    /* Display the vehicle search popup when opened */
+    .vehicle-search-overlay.is-open {
+        display: flex;
+    }
+
+/* Vehicle Search Window Layout */
+.vehicle-search-window {
+    width: min(600px, 96vw);
+    height: min(700px, 92vh);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #d4d4d4;
+    border: 1px solid #808080;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    color: #111;
+    font-family: "MS Gothic", "ＭＳ ゴシック", sans-serif;
+    font-size: 12px;
+    box-sizing: border-box;
+    position: fixed;
+}
+
+/* Vehicle Search Title Bar */
+.vehicle-search-titlebar {
+    height: 27px;
+    min-height: 27px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 7px;
+    background: #f2f2f2;
+    border-bottom: 1px solid #bdbdbd;
+    cursor: move;
+    user-select: none;
+}
+
+/* Vehicle Search Window Close Button */
+.vehicle-window-close {
+    width: 35px;
+    height: 26px;
+    border: 0;
+    background: transparent;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+    /* Highlight the Close Button on Hover */
+    .vehicle-window-close:hover {
+        background: #e81123;
+        color: #fff;
+    }
+
+/* Vehicle Search Heading */
+.vehicle-search-heading {
+    min-height: 27px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 3px 4px;
+    background: #c4c4c4;
+    box-sizing: border-box;
+}
+
+    /* Vehicle Search Heading Label */
+    .vehicle-search-heading label {
+        min-width: 110px;
+        padding: 4px 12px;
+        background: #444;
+        color: #fff;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    /* Vehicle Search Heading Status */
+    .vehicle-search-heading strong {
+        min-width: 110px;
+        padding: 4px 12px;
+        background: #080878;
+        color: #fff;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+/* Vehicle Search Conditions Section */
+.vehicle-search-conditions {
+    flex-shrink: 0;
+    padding: 8px 10px;
+    border-bottom: 1px solid #aaa;
+}
+
+/* Vehicle Search Condition Row */
+.vehicle-search-row {
+    min-height: 23px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 3px;
+}
+
+    /* Remove Bottom Margin from the Last Condition Row */
+    .vehicle-search-row:last-child {
+        margin-bottom: 0;
+    }
+
+    /* Vehicle Search Condition Labels */
+    .vehicle-search-row > label:first-child {
+        width: 88px;
+        min-width: 88px;
+        padding: 3px 5px;
+        background: #c5c5c5;
+        border: 1px solid #b8b8b8;
+        font-weight: bold;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    /* Vehicle Search Text and Number Inputs */
+    .vehicle-search-row input[type="text"],
+    .vehicle-search-row input[type="number"] {
+        min-width: 0;
+        width: 145px;
+        height: 21px;
+        padding: 1px 4px;
+        border: 1px solid #bdbdbd;
+        background: #fff;
+        font: inherit;
+        box-sizing: border-box;
+    }
+
+    /* Vehicle Search Number Input Width */
+    .vehicle-search-row input[type="number"] {
+        width: 65px;
+    }
+
+/* Vehicle Category Input and Options */
+#searchVehicleCategory {
+    width: 20px;
+    height: 22px;
+    padding: 1px 3px;
+    text-align: center;
+    border: 1px solid #aaa;
+    background: #fff;
+    font: inherit;
+    box-sizing: border-box;
+}
+
+/* Vehicle Category Option Buttons Layout */
+.vehicle-category-options {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+    /* Vehicle Category Option Buttons */
+    .vehicle-category-options button {
+        min-width: 85px;
+        height: 22px;
+        padding: 1px 5px;
+        border: 1px solid #aaa;
+        background: #d4d4d4;
+        color: #222;
+        font-family: "MS Gothic", "Yu Gothic UI", Meiryo, sans-serif;
+        font-size: 12px;
+        cursor: pointer;
+    }
+
+        /* Highlight the Selected Vehicle Category */
+        .vehicle-category-options button.active {
+            background: #ffff00;
+            border-color: #c8b900;
+        }
+
+        /* Highlight Vehicle Category Buttons on Hover */
+        .vehicle-category-options button:hover {
+            border-color: darkblue;
+        }
+
+/* Vehicle Category Input Focus Styling */
+#searchVehicleCategory:focus {
+    background: rgb(128, 255, 255);
+    outline: none;
+    border-color: darkblue;
+}
+
+/* Vehicle Search Results Container */
+.vehicle-search-results {
+    flex: 1;
+    min-height: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #bfbfbf;
+    border: 1px solid #999;
+    box-sizing: border-box;
+    border: 1px solid #000;
+}
+
+/* Result Grid Container with Horizontal and Vertical Scrollbars */
+.vehicle-search-table-scroll {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: #bfbfbf;
+    box-sizing: border-box;
+    scrollbar-width: auto;
+}
+
+/* Vehicle Search Result Table */
+.vehicle-search-table {
+    width: max-content;
+    min-width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-family: "MS Gothic", "Yu Gothic UI", Meiryo, sans-serif;
+    font-size: 12px;
+    color: #111;
+}
+
+    /* Set Vehicle Search Result Column Widths */
+    .vehicle-search-table th:nth-child(1) {
+        width: 90px;
+    }
+
+    .vehicle-search-table th:nth-child(2) {
+        width: 170px;
+    }
+
+    .vehicle-search-table th:nth-child(3) {
+        width: 168px;
+    }
+
+    .vehicle-search-table th:nth-child(4) {
+        width: 48px;
+    }
+
+    .vehicle-search-table th:nth-child(5) {
+        width: 180px;
+    }
+
+    .vehicle-search-table th:nth-child(6) {
+        width: 95px;
+    }
+
+    .vehicle-search-table th:nth-child(7) {
+        width: 65px;
+    }
+
+    .vehicle-search-table th:nth-child(8) {
+        width: 58px;
+    }
+
+    /* Sticky White Result Table Headers */
+    .vehicle-search-table thead th {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        height: 21px;
+        padding: 1px 3px;
+        background: #fff;
+        color: #111;
+        border: 1px solid #999;
+        font-weight: normal;
+        text-align: center;
+        white-space: nowrap;
+        box-sizing: border-box;
+    }
+
+    /* Vehicle Search Result Data Cells */
+    .vehicle-search-table tbody td {
+        height: 21px;
+        padding: 1px 4px;
+        border: 1px solid #aaa;
+        overflow: hidden;
+        text-overflow: clip;
+        white-space: nowrap;
+        box-sizing: border-box;
+    }
+
+    /* Alternate Background Colors for Result Rows */
+    .vehicle-search-table tbody tr:nth-child(odd) {
+        background: #fff;
+    }
+
+    .vehicle-search-table tbody tr:nth-child(even) {
+        background: #bfbfbf;
+    }
+
+    /* Highlight the Selected Result Row */
+    .vehicle-search-table tbody tr.is-selected {
+        background: #0078d7 !important;
+        color: #fff !important;
+    }
+
+        /* Set Selected Result Row Text to White */
+        .vehicle-search-table tbody tr.is-selected td {
+            color: #fff;
+        }
+
+    /* Empty Vehicle Search Result Message */
+    .vehicle-search-table .vehicle-search-empty {
+        height: 60px;
+        text-align: center;
+        vertical-align: middle;
+        color: #333;
+    }
+/* Normal Horizontal and Vertical Scrollbars */
+.vehicle-search-table-scroll {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    box-sizing: border-box;
+}
+
+/* Vehicle Search Message Area */
+.vehicle-search-message {
+    border-top: 1px solid #A0A0A0;
+    border-bottom: 1px solid #fff;
+    padding: 6px 0 6px 6px;
+    flex-shrink: 0;
+    min-height: 24px;
+    display: flex;
+    align-items: center;
+    margin-top: 6px;
+    margin-bottom: 2px;
+    font-weight: bold;
+    background: silver;
+    box-sizing: border-box;
+}
+
+/* Vehicle Search Function Button Footer */
+.vehicle-search-footer {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+    margin-top: auto;
+    margin-bottom: 1px;
+}
+
+    /* Vehicle Search Function Buttons */
+    .vehicle-search-footer button {
+        flex: 1;
+        height: 35px;
+        font-size: 12px;
+        border: none;
+        border-radius: 4px;
+        background-color: #fff;
+    }
+
+        /* Highlight Enabled Function Buttons on Hover */
+        .vehicle-search-footer button:enabled:hover {
+            background-color: #D9EEFF;
+            border: 1px solid highlight;
+        }
+
+    /* Add Spacing After the 1 and 3 Footer Buttons */
+    .vehicle-search-footer > :nth-child(1),
+    .vehicle-search-footer > :nth-child(3) {
+        margin-right: 12px;
+    }
+
+/* Align F6 and F9 Button Text to the Left */
+#btnF6, #btnF9 {
+    text-align: left;
+    text-indent: 30px;
+}
+
+/* Adjust Vehicle Search Popup for Small Screens */
+@media (max-width: 560px) {
+    .vehicle-search-window {
+        width: 98vw;
+    }
+
+    .vehicle-search-conditions {
+        padding: 5px;
+    }
+
+    .vehicle-search-row > label:first-child {
+        width: 80px;
+        min-width: 80px;
+    }
+}
+
+/* Vehicle Search Window Controls */
+.vehicle-search-window-controls {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+    /* Vehicle Search Window Control Buttons */
+    .vehicle-search-window-controls button {
+        width: 35px;
+        height: 26px;
+        border: none;
+        background: transparent;
+        color: #444;
+        font-size: 17px;
+        cursor: pointer;
+    }
+
+        /* Highlight Window Controls on Hover */
+        .vehicle-search-window-controls button:hover {
+            background: #e5e5e5;
+        }
+
+    /* Highlight the Close Control on Hover */
+    .vehicle-search-window-controls .vehicle-window-close:hover {
+        background: #e81123;
+        color: #fff;
+    }
+
+/* Maximized Vehicle Search Window */
+.vehicle-search-window.maximized {
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: none;
+}
+
+/* Minimized Vehicle Search Window */
+.vehicle-search-window.minimized {
+    height: 100px !important;
+    flex: none;
+}
+
+/* Highlight Vehicle Search Inputs When Focused */
+#searchVehicleNumber:focus,
+#searchVehicleMaker:focus,
+#searchVehicleModel:focus,
+#searchVehicleLoadMin:focus,
+#searchVehicleLoadMax:focus {
+    background: rgb(128, 255, 255);
+    outline: none;
+    padding: 0 2px;
+    justify-content: center;
+    box-sizing: border-box;
+    border-color: darkblue;
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    border-right: 2px solid #fff;
+}
+
+/* Vehicle Master Modal */
+.vehicle-master-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.35);
+}
+
+/* Vehicle Master Modal Content Layout */
+.vehicle-master-modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: min(1000px, 95vw);
+    height: min(750px, 90vh);
+    background: #dcdcdc;
+    border: 1px solid #888;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+}
+
+/* Vehicle Master Modal Header */
+.vehicle-master-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1px 5px;
+    background: #aaa;
+    font-weight: bold;
+}
+
+/* Vehicle Master Modal Close Button */
+#btnCloseVehicleMasterModal {
+    cursor: pointer;
+}
+
+/* Vehicle Master Embedded Page Frame */
+#vehicleMasterFrame {
+    flex: 1;
+    width: 100%;
+    min-height: 0;
+    border: none;
+    background: #dcdcdc;
+    padding: 3px;
+}
+
+/* Minimized Vehicle Master Modal */
+.vehicle-master-modal-content.is-minimized {
+    height: 28px;
+}
+
+/* Maximized Vehicle Master Modal */
+.vehicle-master-modal-content.is-maximized {
+    width: 100%;
+    height: 100%;
+}

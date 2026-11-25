@@ -1,0 +1,63 @@
+﻿
+/* Dummy Master Registration Overlay */
+.dummy-master-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483647;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+/* Dummy window */
+.dummy-master-window {
+    width: min(1100px, 95vw);
+    height: min(750px, 90vh);
+    min-height: 600px;
+    background: #dcdcdc;
+    border: 1px solid #888;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    overflow: auto;
+}
+
+/* Title bar */
+.dummy-master-titlebar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 32px;
+    padding-left: 10px;
+    background: #c5c5c5;
+    color: #222;
+    font-weight: bold;
+}
+
+/* Close button */
+.dummy-master-close {
+    width: 38px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    color: #333;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+    .dummy-master-close:hover {
+        background: #e81123;
+        color: white;
+    }
+
+/* Message area */
+.dummy-master-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 185px;
+    padding: 20px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}

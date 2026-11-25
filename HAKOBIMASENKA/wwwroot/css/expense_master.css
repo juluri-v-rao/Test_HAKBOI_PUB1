@@ -1,0 +1,333 @@
+﻿html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    font-family: "MS Gothic", "ＭＳ ゴシック", sans-serif;
+    font-size: 14px;
+    background-color: silver;
+    color: #222;
+}
+
+/*=========================================
+   Main Page Layout & Container Structure
+  ========================================= */
+.main-container {
+    width: 100%;
+    height: 100vh;
+    padding: 0px 2px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Main Layout */
+.mainContent-layout {
+    display: flex;
+    gap: 8px;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.edit-panel {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 60%;
+    min-width: 0;
+    overflow: hidden;
+}
+
+/*	=========================================
+    Header Section (New Label)
+    ========================================= */
+
+.lbl-new-em {
+    display: inline-flex;
+    border-bottom: 1px solid #fff !important;
+    border-right: 1px solid #fff;
+    align-items: center;
+    justify-content: center;
+    background-color: darkblue;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 4px 20px;
+}
+
+/* =========================================
+	Master Information Entry Area
+   ========================================= */
+.master-section {
+    background-color: gainsboro;
+    padding: 12px;
+    margin-top: 0px;
+}
+
+.master-row {
+    display: flex;
+    margin-bottom: 2px;
+}
+
+    .master-row.branch {
+        gap: 0px;
+    }
+
+        .master-row.branch label {
+            width: 85px
+        }
+
+    .master-row label {
+        width: 105px;
+        height: 24PX;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #c8c8c8;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .master-row input {
+        margin-left: 6px;
+        width: 225px;
+        height: 23px;
+        padding: 0 2px;
+    }
+
+#unitPrice {
+    text-align: right;
+    width: 100%;
+    max-width: 180px;
+}
+/* =========================================
+	Master Code & Name Lookup Fields
+   ========================================= */
+#shipper-code, #department-code, #unit-code {
+    width: 120px;
+}
+
+#shipper-name, #department-name, #unit-name {
+    width: 255px;
+    background-color: #c8c8c8;
+    border: 2px solid #fff;
+}
+/* =========================================
+	Tab Navigation
+   ========================================= */
+.tab-navigation {
+    display: flex;
+    width: fit-content;
+    margin-top: 10px;
+}
+
+.tab-button {
+    flex: none;
+    width: auto;
+    min-width: 80px;
+    padding: 6px 10px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    font-size: 14px;
+    text-wrap: nowrap;
+    border-bottom: 0.5px solid #bcbcbc;
+    border-right: 0.5px solid #bcbcbc;
+    background-color: #ececec;
+}
+
+    .tab-button.active {
+        margin-top: -3px;
+        background-color: #fff;
+        border: none;
+    }
+/* =========================================
+	Tab Container & Content Area
+   ========================================= */
+.tab-container {
+    border: 2px solid #fff;
+    min-height: 550px;
+    padding: 12px;
+    background-color: gainsboro;
+    flex: 1;
+    min-height: 0;
+}
+
+.tab-content {
+    display: none;
+}
+
+    .tab-content.active {
+        display: block;
+    }
+
+/* =========================================
+	Tab Form Layout & Input Controls
+   ========================================= */
+.tab-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.tab-row {
+    display: grid;
+    grid-template-columns: 105px 1fr;
+    align-items: center;
+    gap: 8px;
+}
+
+    .tab-row label {
+        width: 105px;
+        height: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: silver;
+        border: 1px solid;
+        border-color: #9e9e9e #fff #fff #9e9e9e;
+        font-size: 12px;
+        font-weight: bold;
+        text-wrap: nowrap;
+    }
+
+    .tab-row input {
+        width: 100%;
+        max-width: 255px;
+        height: 24px;
+        padding: 0 4px;
+        font-size: 14px;
+    }
+
+.expenseCategory-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+/* =========================================
+	Master Lookup Display Controls
+   ========================================= */
+.tab-row .master-code {
+    width: 35px;
+}
+
+.tab-row .master-name {
+    width: 100%;
+    max-width: 121px;
+    height: 24px;
+    background-color: #c8c8c8;
+    border-top: 1px solid #ffffff;
+    border-left: 1px solid #ffffff;
+    border-right: 1px solid #ffffff;
+    font-size: 13px;
+}
+
+.input-span {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* =========================================
+	Common Button Styles
+   ========================================= */
+button {
+    padding: 1px 1px;
+    background-color: #fff;
+    border: 1px solid #bcbcbc;
+    font-size: 14px;
+}
+
+/* =========================================
+	List Panel Layout
+   ========================================= */
+/*Right Grid*/
+.list-panel {
+    flex: 1 1 25%;
+    min-width: 280px;
+    width: auto;
+    background-color: #A0A0A0;
+    border: 1px solid #5e5e5e;
+    margin-top: 10px;
+    flex-shrink: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 0;
+}
+
+/* =========================================
+	Master List Grid
+   ========================================= */
+.table-list {
+    width: 80%;
+    border-collapse: collapse;
+}
+
+    .table-list th, .table-list td {
+        border: 1px solid #d0d0d0;
+        padding: 6px 8px;
+        text-align: left;
+        font-size: 14px;
+    }
+
+    .table-list th {
+        background-color: #fff;
+        font-weight: bold;
+        text-wrap: nowrap;
+    }
+
+    .table-list tbody tr:nth-child(odd) td {
+        cursor: pointer;
+        background-color: #fff;
+    }
+
+    .table-list tbody tr:nth-child(even) td {
+        cursor: pointer;
+        background-color: silver;
+    }
+
+.table-body {
+    background-color: #fff;
+}
+
+    .table-body tr.selected td {
+        background-color: #0078d7 !important;
+        color: #fff;
+    }
+
+/* =========================================
+	Focus Highlight & Validation Styles
+   ========================================= */
+/* Existing Expense Code */
+.existing-code {
+    background-color: #F8C6CC !important;
+    color: #000000 !important;
+    border: 2px solid #fff !important;
+}
+
+    .existing-code:focus {
+        background-color: #F8C6CC !important;
+        border-bottom: 2px solid #0078D7 !important;
+    }
+
+/*Digitaco Code Label*/
+#digitaco {
+    width: 128px;
+}
+
+/* =========================================
+	Expense Master Specific Fields
+   ========================================= */
+/* Expense Code*/
+#expenseCode {
+    width: 54px;
+}
+/*Expense Name*/
+#expenseName {
+    width: 264px;
+}

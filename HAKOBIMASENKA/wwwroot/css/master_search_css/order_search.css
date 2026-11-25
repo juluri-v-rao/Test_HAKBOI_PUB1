@@ -1,0 +1,709 @@
+﻿
+/* =========================================
+   Order Search (受注検索)
+   ========================================= */
+
+/* Overlay */
+.order-search-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000000;
+    display: none;
+    align-items: center;
+    /*justify-content: center;*/
+    padding: 4px;
+    background: rgba(0, 0, 0, 0.15);
+    box-sizing: border-box;
+}
+
+    .order-search-overlay.is-open {
+        display: flex;
+    }
+
+/* Main Window */
+.order-search-window {
+    width: 1000px;
+    max-width: 99vw;
+    height: min(720px, 96vh);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #d4d4d4;
+    border: 1px solid #808080;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    color: #111;
+    font-family: "MS Gothic", "ＭＳ ゴシック", sans-serif;
+    font-size: 12px;
+    box-sizing: border-box;
+    position: fixed;
+}
+
+    .order-search-window.is-minimized {
+        height: 100px;
+        flex: none;
+    }
+
+    .order-search-window.is-maximized {
+        width: 100%;
+        height: 100%;
+    }
+
+/* Title Bar */
+.order-search-titlebar {
+    height: 27px;
+    min-height: 27px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 7px;
+    background: #f2f2f2;
+    border-bottom: 1px solid #bdbdbd;
+    cursor: move;
+    user-select: none;
+}
+
+.order-search-title {
+    font-size: 12px;
+}
+
+.order-search-window-controls {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+    .order-search-window-controls button {
+        width: 35px;
+        height: 26px;
+        padding: 0;
+        border: none;
+        background: transparent;
+        color: #444;
+        font-size: 17px;
+        cursor: pointer;
+    }
+
+        .order-search-window-controls button:hover {
+            background: #e5e5e5;
+        }
+
+#btnOrderSearchClose:hover {
+    background: #e81123;
+    color: #fff;
+}
+
+/* Heading and Count */
+.order-search-heading {
+    min-height: 27px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 3px 4px;
+    background: #c4c4c4;
+    box-sizing: border-box;
+}
+
+    .order-search-heading label {
+        min-width: 160px;
+        padding: 3px 12px;
+        background: #444;
+        color: #fff;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .order-search-heading strong {
+        min-width: 150px;
+        padding: 3px 12px;
+        background: #080878;
+        color: #fff;
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+/* =========================================
+   Search Conditions
+   ========================================= */
+
+.order-search-conditions {
+    flex-shrink: 0;
+    padding: 8px 10px;
+    border-bottom: 1px solid #aaa;
+}
+
+.order-search-condition-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 24px;
+}
+
+.order-search-condition-column {
+    min-width: 0;
+}
+
+.order-search-row {
+    min-height: 23px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 2px;
+}
+
+    .order-search-row > label:first-child {
+        width: 96px;
+        min-width: 96px;
+        padding: 3px 5px;
+        background: #c5c5c5;
+        border: 1px solid #b8b8b8;
+        font-weight: bold;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .order-search-row input[type="text"] {
+        height: 22px;
+        min-width: 0;
+        padding: 1px 4px;
+        border: 1px solid #bdbdbd;
+        background: #fff;
+        font: inherit;
+        box-sizing: border-box;
+    }
+
+    .order-search-row input:not([readonly]):focus {
+        background: rgb(128, 255, 255);
+        outline: none;
+        border-color: darkblue;
+    }
+
+    .order-search-row input[readonly] {
+        background: silver;
+        cursor: default;
+    }
+
+/* Date Type Input */
+#orderSearchDateType {
+    width: 20px;
+    min-width: 20px;
+    height: 22px;
+    padding: 1px 2px;
+    text-align: center;
+    background: #fff;
+    border: 1px solid #aaa;
+    font: inherit;
+    box-sizing: border-box;
+}
+
+    #orderSearchDateType:focus {
+        background: rgb(128, 255, 255);
+        outline: none;
+        border-color: darkblue;
+    }
+
+/* Date Type Labels */
+.order-search-date-label {
+    padding: 3px 8px;
+    background: #eee;
+    border: 1px solid #aaa;
+    white-space: nowrap;
+}
+
+/* Code Inputs */
+#searchOrderShipperCode,
+#searchOrderCharteringCompanyCode,
+#searchOrderDriverCode,
+#searchOrderVehicleCode,
+#searchOrderOriginCode,
+#searchOrderDestinationCode,
+#searchOrderProductCode {
+    width: 88px;
+    min-width: 88px;
+}
+
+/* Name Inputs */
+#searchOrderShipperName,
+#searchOrderCharteringCompanyName,
+#searchOrderDriverName,
+#searchOrderVehicleName,
+#searchOrderOriginName,
+#searchOrderDestinationName,
+#searchOrderProductName {
+    flex: 1;
+    min-width: 0;
+}
+
+/* =========================================
+   Date Conditions
+   ========================================= */
+
+.order-search-date-row {
+    min-height: 25px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 5px;
+}
+
+    .order-search-date-row > label:first-child {
+        width: 96px;
+        min-width: 96px;
+        padding: 3px 5px;
+        background: #c5c5c5;
+        border: 1px solid #b8b8b8;
+        font-weight: bold;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+.order-search-date-options {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.order-search-date-option {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 6px;
+    background: #eee;
+    border: 1px solid #aaa;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+    .order-search-date-option input {
+        margin: 0;
+    }
+
+.order-search-date-row input[type="date"] {
+    width: 145px;
+    height: 22px;
+    padding: 1px 4px;
+    border: 1px solid #aaa;
+    background: #fff;
+    font: inherit;
+    box-sizing: border-box;
+}
+
+.order-search-date-row span {
+    white-space: nowrap;
+}
+
+/* =========================================
+   Results Grid
+   ========================================= */
+
+.order-search-results {
+    flex: 1;
+    min-height: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #bfbfbf;
+    border: 1px solid #000;
+    box-sizing: border-box;
+}
+    .order-search-results tbody tr.is-selected {
+        background-color: #fff2a8;
+    }
+
+.order-search-table-scroll {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: #999;
+    box-sizing: border-box;
+}
+
+.order-search-table {
+    width: max-content;
+    min-width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-family: "MS Gothic", "ＭＳ ゴシック", Meiryo, sans-serif;
+    font-size: 12px;
+    color: #111;
+}
+
+    /* Column Widths */
+    .order-search-table th:nth-child(1) {
+        width: 100px;
+    }
+
+    .order-search-table th:nth-child(2) {
+        width: 150px;
+    }
+
+    .order-search-table th:nth-child(3) {
+        width: 100px;
+    }
+
+    .order-search-table th:nth-child(4) {
+        width: 90px;
+    }
+
+    .order-search-table th:nth-child(5) {
+        width: 100px;
+    }
+
+    .order-search-table th:nth-child(6) {
+        width: 90px;
+    }
+
+    .order-search-table th:nth-child(7) {
+        width: 120px;
+    }
+
+    .order-search-table th:nth-child(8) {
+        width: 130px;
+    }
+
+    .order-search-table th:nth-child(9) {
+        width: 120px;
+    }
+
+    .order-search-table th:nth-child(10) {
+        width: 100px;
+    }
+
+    .order-search-table th:nth-child(11) {
+        width: 100px;
+    }
+
+    .order-search-table th:nth-child(12) {
+        width: 130px;
+    }
+
+    .order-search-table th:nth-child(13) {
+        width: 130px;
+    }
+
+    .order-search-table th:nth-child(14) {
+        width: 130px;
+    }
+
+    .order-search-table th:nth-child(15) {
+        width: 130px;
+    }
+
+    .order-search-table th:nth-child(16) {
+        width: 90px;
+    }
+
+    .order-search-table th:nth-child(17) {
+        width: 90px;
+    }
+
+    .order-search-table th:nth-child(18) {
+        width: 80px;
+    }
+
+    .order-search-table th:nth-child(19) {
+        width: 100px;
+    }
+
+    .order-search-table th:nth-child(20) {
+        width: 110px;
+    }
+
+    .order-search-table th:nth-child(21) {
+        width: 90px;
+    }
+
+    .order-search-table th:nth-child(22) {
+        width: 100px;
+    }
+
+    .order-search-table th:nth-child(23) {
+        width: 100px;
+    }
+
+    .order-search-table th:nth-child(24) {
+        width: 100px;
+    }
+
+    .order-search-table th:nth-child(25) {
+        width: 110px;
+    }
+
+    .order-search-table th:nth-child(26) {
+        width: 100px;
+    }
+
+    .order-search-table th:nth-child(27) {
+        width: 100px;
+    }
+
+    .order-search-table th:nth-child(28) {
+        width: 110px;
+    }
+
+    .order-search-table th:nth-child(29) {
+        width: 180px;
+    }
+
+    .order-search-table th:nth-child(30) {
+        width: 180px;
+    }
+
+    .order-search-table thead th {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        height: 21px;
+        padding: 1px 3px;
+        background: #fff;
+        color: #111;
+        border: 1px solid #999;
+        font-weight: normal;
+        text-align: center;
+        white-space: nowrap;
+        box-sizing: border-box;
+        cursor: pointer;
+    }
+
+    .order-search-table tbody td {
+        height: 21px;
+        padding: 1px 4px;
+        border: 1px solid #aaa;
+        overflow: hidden;
+        text-overflow: clip;
+        white-space: nowrap;
+        box-sizing: border-box;
+    }
+
+    .order-search-table tbody tr:nth-child(odd) {
+        background: #fff;
+    }
+
+    .order-search-table tbody tr:nth-child(even) {
+        background: #bfbfbf;
+    }
+
+    .order-search-table tbody tr.is-selected {
+        background: #0078d7 !important;
+        color: #fff !important;
+    }
+
+        .order-search-table tbody tr.is-selected td {
+            color: #fff;
+        }
+
+    .order-search-table .order-search-empty {
+        height: 60px;
+        text-align: center;
+        vertical-align: middle;
+        color: #333;
+    }
+
+/* =========================================
+   Message Area
+   ========================================= */
+
+.order-search-message {
+    border-top: 1px solid #a0a0a0;
+    border-bottom: 1px solid #fff;
+    padding: 6px 0 6px 6px;
+    flex-shrink: 0;
+    min-height: 24px;
+    display: flex;
+    align-items: center;
+    margin-top: 6px;
+    margin-bottom: 2px;
+    font-weight: bold;
+    background: silver;
+    box-sizing: border-box;
+}
+
+/* =========================================
+   Function Key Footer
+   ========================================= */
+
+.order-search-footer {
+    display: flex;
+    gap: 4px;
+    flex-shrink: 0;
+    margin-top: auto;
+    margin-bottom: 1px;
+}
+
+    .order-search-footer button {
+        flex: 1;
+        height: 35px;
+        font-size: 12px;
+        border: none;
+        border-radius: 4px;
+        background-color: #fff;
+    }
+
+        .order-search-footer button:enabled {
+            cursor: pointer;
+        }
+
+            .order-search-footer button:enabled:hover {
+                background-color: #D9EEFF;
+                border: 1px solid highlight;
+            }
+
+        .order-search-footer button:disabled {
+            color: #888;
+        }
+
+    /* Spacing After First Two Buttons */
+    .order-search-footer > :nth-child(4),
+    .order-search-footer > :nth-child(8) {
+        margin-right: 12px;
+    }
+
+/* =========================================
+   Responsive Layout
+   ========================================= */
+
+@media (max-width: 800px) {
+
+    .order-search-conditions {
+        padding: 4px;
+    }
+
+    .order-search-condition-layout {
+        column-gap: 8px;
+    }
+
+    .order-search-row > label:first-child,
+    .order-search-date-row > label:first-child {
+        width: 75px;
+        min-width: 75px;
+    }
+
+    .order-search-footer {
+        gap: 2px;
+    }
+
+        .order-search-footer button {
+            font-size: 10px;
+        }
+}
+
+/* =========================================
+   Order Search - Date Type Selection
+   ========================================= */
+
+.order-search-date-container {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+#orderSearchDateType {
+    width: 32px;
+    min-width: 32px;
+    height: 24px;
+    padding: 1px 2px;
+    text-align: center;
+    background: #fff;
+    border: 1px solid #bdbdbd;
+    font: inherit;
+    box-sizing: border-box;
+}
+
+.order-search-date-type {
+    min-width: 96px;
+    height: 24px;
+    padding: 0 5px;
+    white-space: nowrap;
+    border: 1px solid #bdbdbd;
+    background-color: silver;
+    font: inherit;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+    .order-search-date-type.active {
+        background: #ffff66;
+        font-weight: bold;
+    }
+
+    .order-search-date-type:hover {
+        border-color: #888;
+    }
+
+/* =========================================
+  order-search - Input Fields Focus Styling
+   ========================================= */
+
+/* Highlight order-search Inputs When Focused */
+
+#searchOrderShipperCode:focus,
+#searchOrderShipperName:focus,
+#searchOrderCharteringCompanyCode:focus,
+#searchOrderCharteringCompanyName:focus,
+#searchOrderDriverCode:focus,
+#searchOrderDriverName:focus,
+#searchOrderVehicleCode:focus,
+#searchOrderVehicleName:focus,
+#searchOrderOriginCode:focus,
+#searchOrderOriginName:focus,
+#searchOrderDestinationCode:focus,
+#searchOrderDestinationName:focus,
+#searchOrderProductCode:focus,
+#searchOrderProductName:focus,
+#orderSearchDateType:focus,
+#searchOrderStartDate:focus,
+#searchOrderEndDate:focus {
+    background: rgb(128, 255, 255);
+    padding: 0 2px;
+    outline: none;
+    box-sizing: border-box;
+    border-color: darkblue;
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    border-right: 2px solid #fff;
+}
+/* =========================================
+   Order Search - Date Range Compact Layout
+   Match legacy screen dimensions
+   ========================================= */
+
+.order-search-date-row:has(#searchOrderStartDate) {
+    min-height: 25px;
+    height: 25px;
+    gap: 6px;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+    .order-search-date-row:has(#searchOrderStartDate) > .order-search-date-label {
+        width: 106px;
+        min-width: 106px;
+        height: 25px;
+        padding: 3px 5px;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+
+    .order-search-date-row:has(#searchOrderStartDate) .order-search-date-wrapper {
+        width: 140px;
+        min-width: 140px;
+        flex: 0 0 140px;
+    }
+
+    .order-search-date-row:has(#searchOrderStartDate) .order-search-date-input {
+        width: 140px;
+        min-width: 140px;
+        max-width: 140px;
+        height: 24px;
+        padding: 1px 4px;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+
+    .order-search-date-row:has(#searchOrderStartDate) span {
+        font-size: 14px;
+        white-space: nowrap;
+    }
+#orderSearchMessage {
+    color: blue;
+}

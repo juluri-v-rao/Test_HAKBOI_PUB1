@@ -1,0 +1,1275 @@
+﻿@{
+    ViewData["Title"] = "傭車マスタ";
+}
+<link rel="stylesheet" href="~/css/chartered_vehicle_master.css" />
+<link rel="stylesheet" href="~/css/common.css" />
+<link rel="stylesheet" href="~/css/master_search_css/chartered_search.css" />
+<link rel="stylesheet" href="~/css/japanesecalendar.css" asp-append-version="true" />
+
+    @Html.AntiForgeryToken()
+
+    <div class="main-container">
+
+        <!-- ========================================= -->
+        <!-- HEADER -->
+        <!-- ========================================= -->
+
+        <header class="page-header">
+
+            <div class="screen-name">
+                傭車マスタ
+            </div>
+
+            <label type="button"
+               id="mode-lbl"
+               class="lbl-new">
+                新　規
+            </label>
+
+        </header>
+
+
+        <!-- ========================================= -->
+        <!-- INFORMATION -->
+        <!-- ========================================= -->
+
+        <div class="master-sections">
+
+            <div class="master-row">
+                <label>コ ー ド</label>
+
+                <input type="text"
+                       id="cvCode"
+                       class="code-input"/>
+            </div>
+
+            <div class="master-row">
+                <label>傭車名(1)</label>
+
+                <input type="text"
+                       id="cvName1"
+                       class="name-input" />
+            </div>
+
+            <div class="master-row">
+                <label>傭車名(2)</label>
+
+                <input type="text"
+                       id="cvName2"
+                       class="name-input" />
+            </div>
+
+        </div>
+
+        <!-- ========================================= -->
+        <!-- TAB + LIST -->
+        <!-- ========================================= -->
+
+        <div class="mainContent-layout">
+
+            <!-- LEFT / CENTER CONTENT -->
+            <div class="edit-panel">
+
+                <!-- TABS -->
+                <nav class="tab-navigation">
+
+                    <button type="button"
+                        class="tab-button active"
+                        data-tab="basicSettings">
+                        基本設定
+                    </button>
+
+                    @* style="display: none;" *@
+                    <button type="button"
+                            class="tab-button"
+                            data-tab="paymentSettings">
+                        支払設定
+                    </button>
+
+                    <button type="button"
+                            class="tab-button"
+                            data-tab="calculationSettings">
+                        計算設定
+                    </button>
+
+                    <button type="button"
+                            class="tab-button"
+                            data-tab="paymentHistory">
+                        支払履歴
+                    </button>
+
+                    <button type="button"
+                            class="tab-button"
+                            data-tab="accountsPayableHistory">
+                        買掛履歴
+                    </button>
+
+                    <button type="button"
+                            class="tab-button"
+                            data-tab="digitalTachocode">
+                        ﾃﾞｼﾞﾀｺｵﾌﾟｼｮﾝ設定
+                    </button>
+
+                </nav>
+
+
+                <div class="body-area">
+
+                    <section id="basicSettings" class="tab-content active">
+
+                        <!-- フリガナ -->
+                        <div class="form-row">
+                            <label>フリガナ</label>
+                            <input type="text" id="furigana" class="form-input input-lg" />
+                        </div>
+
+                        <!-- 略称 -->
+                        <div class="form-row">
+                            <label>略　　称</label>
+                            <input type="text" id="abbreviation" class="form-input input-md" />
+                        </div>
+
+                        <!-- 郵便番号 -->
+                        <div class="form-row">
+                            <label>郵便番号</label>
+                            <input type="text" id="postalCode" class="form-input input-md" />
+
+                            <button type="button" id="btnPostToAddress" class="address-button">  〒→住所 </button>
+
+                            <button type="button" id="btnAddressToPost" class="address-button">  住所→〒 </button>
+                        </div>
+
+                        <!-- 住所 -->
+                        <div class="form-row address-row">
+                            <label>住　　所</label>
+
+                            <div class="address-inputs">
+                                <input type="text" id="address1" class="form-input input-lg" />
+
+                                <input type="text" id="address2" class="form-input input-lg" />
+                            </div>
+                        </div>
+
+                        <!-- 電話番号 -->
+                        <div class="form-row">
+                            <label>電話番号</label>
+
+                            <input type="text" id="phoneNumber" class="form-input input-md" />
+                        </div>
+
+                        <!-- FAX -->
+                        <div class="form-row">
+                            <label>Ｆ Ａ Ｘ</label>
+
+                            <input type="text" id="faxNumber" class="form-input input-md" />
+                        </div>
+
+                        <!-- 取引開始日 -->
+                        <div class="form-row">
+                            <label>取引開始日</label>
+
+                            <input type="text" id="transactionStartDate" class="form-input input-md date-input jp-calendar-input"
+                                   data-no-era="true" data-show-day="true" />
+                        </div>
+
+                        <!-- 取引終了日 -->
+                        <div class="form-row">
+                            <label>取引終了日</label>
+
+                            <input type="text" id="transactionEndDate" class="form-input input-md date-input jp-calendar-input"
+                                   data-no-era="true" data-show-day="true" />
+                        </div>
+
+                        <!-- 摘要・備考 -->
+                        <div class="form-row remarks-row">
+                            <label>摘要・備考</label>
+
+                            <input type="text" id="remarks" class="form-input input-xl" />
+                        </div>
+
+                        <!-- E-Mail -->
+                        <div class="form-row">
+                            <label>E-Mail</label>
+
+                            <input type="text" id="email" class="form-input input-xl" />
+                        </div>
+
+
+                    </section>
+
+                    <!-- TAB 2 -->
+                    <section id="paymentSettings" class="tab-content">
+
+                        <!-- 締め日 -->
+                        <div class="form-row">
+                            <label>締 め 日</label>
+
+                            <input type="text" id="closingDate" class="form-input input-xs" value="31" />
+
+                            <span class="form-text">
+                                日締め
+                            </span>
+                        </div>
+
+                        <!-- 精算先 -->
+                        <div class="form-row">
+                            <label>精 算 先</label>
+
+                            <input type="text" id="settlementCode" class="form-input input-md" />
+
+                            <input type="text" id="settlementName" class="form-input input-md" readonly tabindex="-1" />
+                        </div>
+
+
+                        <!-- 精算区分 -->
+                        <div class="form-row">
+                            <label>精算区分</label>
+
+                            <input type="text" id="settlementCategory" class="form-input input-xs" />
+
+                            <select id="settlementCategorySelect" class="payment-select" tabindex="-1">
+                                <option></option>
+                            </select>
+                        </div>
+
+
+                        <!-- 支払サイト -->
+                        <div class="form-row">
+                            <label>支払サイト</label>
+
+                            <input type="text" id="paymentSite" class="form-input input-xs" />
+
+                            <span class="form-text">
+                                [0:当月 1:翌月 2:翌々月 ……… 9:9ヶ月後]
+                            </span>
+                        </div>
+
+
+                        <!-- 支払日 -->
+                        <div class="form-row">
+                            <label>支 払 日</label>
+
+                            <input type="text" id="paymentDay" class="form-input input-xs" />
+
+                            <span class="form-text">
+                                [末日:31]
+                            </span>
+                        </div>
+
+
+                        <!-- 支払方法1 -->
+                        <div class="form-row">
+                            <label>支払方法1</label>
+
+                            <input type="text"
+                                   id="paymentMethod1"
+                                   class="form-input input-xs" />
+
+                            <select id="paymentMethod1Select" class="payment-select" tabindex="-1">
+                                <option></option>
+                            </select>
+                        </div>
+
+
+                        <!-- 支払条件 -->
+                        <div class="form-row">
+                            <label>支払条件</label>
+
+                            <input type="text"
+                                   id="paymentCondition"
+                                   class="form-input input-md"
+                                   value="0" />
+                        </div>
+
+
+                        <!-- 支払方法2 -->
+                        <div class="form-row">
+                            <label>支払方法2</label>
+
+                            <input type="text"
+                                   id="paymentMethod2"
+                                   class="form-input input-xs" />
+
+                            <select id="paymentMethod2Select" class="payment-select" tabindex="-1">
+                                <option></option>
+                            </select>
+                        </div>
+
+
+                        <!-- 銀行名 -->
+                        <div class="form-row">
+                            <label>銀 行 名</label>
+
+                            <input type="text"
+                                   id="bankName"
+                                   class="form-input input-md" />
+                        </div>
+
+
+                        <!-- 支店名 -->
+                        <div class="form-row">
+                            <label>支 店 名</label>
+
+                            <input type="text"
+                                   id="bankBranchName"
+                                   class="form-input input-md" />
+                        </div>
+
+
+                        <!-- 口座種別 -->
+                        <div class="form-row">
+                            <label>口座種別</label>
+
+                            <div class="option-button-group">
+
+                                <input type="text" id="accountType" class="form-input input-xs radBtnInpt" value="0" maxlength="1" />
+
+                                <button type="button" class="select-option-btn active" onclick="optionButton(this)" > 0：普　通 </button>
+
+                                <button type="button" class="select-option-btn" onclick="optionButton(this)" > 1：当　座 </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- 口座番号 -->
+                        <div class="form-row">
+                            <label>口座番号</label>
+
+                            <input type="text"
+                                   id="accountNumber"
+                                   class="form-input input-sm radBtnInpt" />
+                        </div>
+
+
+                        <!-- 口座名義 -->
+                        <div class="form-row">
+                            <label>口座名義</label>
+
+                            <input type="text"
+                                   id="accountHolder"
+                                   class="form-input input-lg" />
+                        </div>
+
+                    </section>
+
+                    @* TAB 3 *@
+                    <section id="calculationSettings" class="tab-content">
+
+                        <div class="form-row">
+
+                            <label class="form-label">
+                                端数桁数
+                            </label>
+
+                            <div class="option-button-group">
+
+                                <input type="text" id="fractionaldigits" class="form-input input-xs radBtnInpt" value="0"  maxlength="1">
+
+                                <button type="button" class="select-option-btn active" onclick="optionButton(this)" >0：1円未満</button>
+
+                                <button type="button" class="select-option-btn" onclick="optionButton(this)" >1：10円未満</button>
+
+                                <button type="button" class="select-option-btn" onclick="optionButton(this)" >2：100円未満</button>
+
+                            </div>
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <label class="form-label">
+                                下払端数
+                            </label>
+
+                            <div class="option-button-group">
+
+                                <input type="text" id="roundingType" class="form-input input-xs radBtnInpt" value="0" maxlength="1">
+
+                                <button type="button" class="select-option-btn active" onclick="optionButton(this)" > 0：切り捨て </button>
+
+                                <button type="button" class="select-option-btn" onclick="optionButton(this)" > 1：四捨五入 </button>
+
+                                <button type="button" class="select-option-btn" onclick="optionButton(this)" > 2：切り上げ </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <label class="form-label">
+                                消費税区分
+                            </label>
+
+                            <div class="option-button-group">
+
+                                <input type="text" id="taxCategory" class="form-input input-xs radBtnInpt" value="0" maxlength="1">
+
+                                <button type="button" class="select-option-btn active" onclick="optionButton(this)" > 0：請 求 毎 </button>
+
+                                <button type="button" class="select-option-btn" onclick="optionButton(this)" > 1：明 細 毎 </button>
+
+                                <button type="button" class="select-option-btn" onclick="optionButton(this)" > 2：非 課 税 </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <label class="form-label">
+                                消費税端数
+                            </label>
+
+                            <div class="option-button-group">
+
+                                <input type="text" id="taxRounding" class="form-input input-xs radBtnInpt" value="0" maxlength="1">
+
+                                <button type="button" class="select-option-btn active" onclick="optionButton(this)" > 0：切り捨て </button>
+
+                                <button type="button" class="select-option-btn" onclick="optionButton(this)" > 1：四捨五入 </button>
+
+                                <button type="button" class="select-option-btn" onclick="optionButton(this)" > 2：切り上げ </button>
+                            
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <label class="form-label">
+                                値 引 率
+                            </label>
+
+                            <input type="text"
+                                   id="discountRate"
+                                   class="form-input input-percent radBtnInpt"
+                                   value="0.00">
+
+                            <span class="form-text">
+                                ％
+                            </span>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <label class="form-label">
+                                課税割増
+                            </label>
+
+                            <div class="option-button-group">
+
+                                <input type="text" id="taxableSurcharge" class="form-input input-xs radBtnInpt" value="0" maxlength="1">
+
+                                <button type="button" class="select-option-btn active" onclick="optionButton(this)" > 0：値引対象内 </button>
+
+                                <button type="button" class="select-option-btn" onclick="optionButton(this)" > 1：値引対象外 </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <label class="form-label">
+                                非課税割増
+                            </label>
+
+                            <div class="option-button-group">
+
+                                <input type="text" id="nonTaxableSurcharge" class="form-input input-xs radBtnInpt" value="0" maxlength="1">
+
+                                <button type="button" class="select-option-btn active" onclick="optionButton(this)" > 0：値引対象内 </button>
+
+                                <button type="button" class="select-option-btn" onclick="optionButton(this)" > 1：値引対象外 </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <label class="form-label">
+                                値引端数
+                            </label>
+
+                            <div class="option-button-group">
+
+                                <input type="text" id="discountRounding" class="form-input input-xs radBtnInpt" value="0" maxlength="1">
+
+                                <button type="button" class="select-option-btn active" onclick="optionButton(this)" > 0：切り捨て </button>
+
+                                <button type="button" class="select-option-btn" onclick="optionButton(this)" > 1：四捨五入 </button>
+
+                                <button type="button" class="select-option-btn" onclick="optionButton(this)" > 2：切り上げ </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <label class="form-label">
+                                支払日設定
+                            </label>
+
+                            <div class="option-button-group">
+
+                                <input type="text" id="paymentDaySetting" class="form-input input-xs radBtnInpt" value="0" maxlength="1">
+
+                                <button type="button" class="select-option-btn active" onclick="optionButton(this)" > 0：運 行 日 </button>
+
+                                <button type="button" class="select-option-btn" onclick="optionButton(this)" > 1：積　　日 </button>
+
+                                <button type="button" class="select-option-btn" onclick="optionButton(this)" > 2：卸　　日 </button>
+                            
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <label class="form-label">
+                                数量小数点
+                            </label>
+
+                            <input type="text"
+                                   id="quantityDecimal"
+                                   class="form-input input-digit radBtnInpt"
+                                   value="3">
+
+                            <span class="form-text">
+                                桁
+                            </span>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <label class="form-label">
+                                重量小数点
+                            </label>
+
+                            <input type="text"
+                                   id="weightDecimal"
+                                   class="form-input input-digit"
+                                   value="3">
+
+                            <span class="form-text">
+                                桁
+                            </span>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <label class="form-label">
+                                単価小数点
+                            </label>
+
+                            <input type="text"
+                                   id="unitPriceDecimal"
+                                   class="form-input input-digit"
+                                   value="2">
+
+                            <span class="form-text">
+                                桁
+                            </span>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <label class="form-label">
+                                単価表示
+                            </label>
+
+                            <input type="checkbox"
+                                   id="hideUnitPrice"
+                                   class="form-checkbox">
+
+                            <span class="form-text">
+                                表示しない
+                            </span>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <label class="form-label">
+                                支払残計算
+                            </label>
+
+                            <input type="checkbox"
+                                   id="noPaymentBalance"
+                                   class="form-checkbox">
+
+                            <span class="form-text">
+                                計算しない
+                            </span>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <label class="form-label">
+                                買掛残計算
+                            </label>
+
+                            <input type="checkbox"
+                                   id="noPayableBalance"
+                                   class="form-checkbox">
+
+                            <span class="form-text">
+                                計算しない
+                            </span>
+
+                        </div>
+
+                    </section>
+
+                    <!-- TAB 4 -->
+                    <section id="paymentHistory" class="tab-content" data-history="payment">
+
+
+                        <!-- 対象期間 -->
+                        <div class="payment-period-row">
+
+                            <label class="form-label">対象期間</label>
+
+                            <input data-field="開始日" type="text"
+                                   class="payment-date-input date-input jp-calendar-input"
+                                   data-no-era="true" data-show-day="true">
+
+                            <span>～</span>
+
+                            <input data-field="更新日" type="text"
+                                   class="payment-date-input date-input jp-calendar-input"
+                                   data-no-era="true" data-show-day="true">
+
+                        </div>
+
+
+                        <!-- Main Payment History Table -->
+                        <div class="payment-history-table">
+
+                            <!-- 前回買掛額 -->
+                            <div class="payment-column previous-column">
+
+                                <div class="payment-header single-header">
+                                    前回買掛額
+                                </div>
+
+                                <input data-field="前回買掛額" type="text"
+                                       class="payment-input">
+
+                            </div>
+
+
+                            <!-- 今回支払額 / 支払調整額 -->
+                            <div class="payment-column">
+
+                                <div class="payment-header double-header">
+                                    <div>今回支払額</div>
+                                    <div>支払調整額</div>
+                                </div>
+
+                                <input data-field="今回支払額" type="text"
+                                       class="payment-input">
+
+                                <input data-field="今回調整額" type="text"
+                                       class="payment-input">
+
+                            </div>
+
+
+                            <!-- 今回繰越額 -->
+                            <div class="payment-column">
+
+                                <div class="payment-header single-header">
+                                    今回繰越額
+                                </div>
+
+                                <div class="payment-disabled">
+                                    <input data-field="今回繰越額" type="text" readonly>
+                                </div>
+
+                            </div>
+
+
+                            <!-- 今回下払額 -->
+                            <div class="payment-column previous-column">
+
+                                <div class="payment-header single-header">
+                                    今回下払額
+                                </div>
+
+                                <input data-field="今回仕入額" type="text"
+                                       class="payment-input">
+
+                            </div>
+
+
+                            <!-- 割増額 -->
+                            <div class="payment-column">
+
+                                <div class="payment-header double-header">
+                                    <div>割増額(課)</div>
+                                    <div>割増額(非)</div>
+                                </div>
+
+                                <input data-field="今回割増額" type="text"
+                                       class="payment-input">
+
+                                <input data-field="今回非割増" type="text"
+                                       class="payment-input">
+
+                            </div>
+
+
+                            <!-- 課税値引額 -->
+                            <div class="payment-column">
+
+                                <div class="payment-header double-header">
+                                    <div>課税値引額</div>
+                                    <div>非課税値引</div>
+                                </div>
+
+                                <input data-field="課税値引額" type="text"
+                                       class="payment-input">
+
+                                <input data-field="非課税値引" type="text"
+                                       class="payment-input">
+
+                            </div>
+
+
+                            <!-- 今回消費税 -->
+                            <div class="payment-column previous-column">
+
+                                <div class="payment-header single-header">
+                                    今回消費税
+                                </div>
+
+                                @* <div class="payment-disabled"></div> *@
+                                <input data-field="今回消費税" type="text"
+                                       class="payment-input">
+
+                            </div>
+
+
+                            <!-- 今回値引額 -->
+                            <div class="payment-column">
+
+                                <div class="payment-header single-header">
+                                    今回値引額
+                                </div>
+
+                                <div class="payment-disabled">
+                                    <input data-field="今回値引額" type="text" readonly>
+                                </div>
+
+                            </div>
+
+
+                            <!-- 今回合計額 -->
+                            <div class="payment-column">
+
+                                <div class="payment-header single-header">
+                                    今回合計額
+                                </div>
+
+                                <div class="payment-disabled">
+                                    <input data-field="今回合計額" type="text" readonly>
+                                </div>
+
+                            </div>
+
+
+                            <!-- 今回買掛額 -->
+                            <div class="payment-column">
+
+                                <div class="payment-header single-header">
+                                    今回買掛額
+                                </div>
+
+                                <div class="payment-disabled">
+                                    <input data-field="今回買掛額" type="text" readonly>
+                                </div>
+
+                            </div>
+
+
+                            <!-- 支払予定日 / 支払方法 -->
+                            <div class="payment-column payment-method-column">
+
+                                <!-- 支払予定日 -->
+                                <div class="payment-schedule-column">
+
+                                    <div class="history-header">
+                                        支払予定日
+                                    </div>
+                                    <!-- 支払方法 -->
+                                    <div class="history-header payment-method-header">
+                                        支払方法
+                                    </div>
+
+
+                                    <input data-field="支払日付" type="text"
+                                           class="payment-date-input date-input jp-calendar-input"
+                                           data-no-era="true" data-show-day="true">
+
+
+                                    <div class="payment-method-row">
+
+                                        <!-- Small textbox -->
+                                        <input id="historyPaymentMethod" data-field="支払方法" maxlength="2" type="text"
+                                               class="payment-small-input">
+
+                                        <!-- Dropdown -->
+                                        <select id="historyPaymentMethodSelect" class="payment-method-select" tabindex="-1">
+                                        </select>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Function Buttons -->
+                        <div class="payment-history-buttons">
+
+                            <button type="button" data-action="update">↓　修 正</button>
+
+                            <button type="button" data-action="load">↑　呼 出</button>
+
+                            <button type="button" data-action="delete">削 除</button>
+
+                            <button type="button" data-action="cancel">中 止</button>
+
+                        </div>
+
+                        <!-- =========================
+                             History Table
+                             ========================= -->
+                        <div class="history-table-wrapper">
+
+                            <table class="history-table" data-grid-columns>
+
+                                <thead>
+                                    <tr>
+
+                                        <th>
+                                            開始日
+                                        </th>
+                                        <th>
+                                            終了日
+                                        </th>
+                                        <th>
+                                            前回買掛額
+                                        </th>
+                                        <th>
+                                            今回支払額
+                                        </th>
+                                        <th>
+                                            支払調整額
+                                        </th>
+                                        <th> 今回繰越額</th>
+                                        <th>今回下払額</th>
+                                        <th>
+                                            割増額(課)
+                                        </th>
+                                        <th> 割増額(非)</th>
+                                        <th> 課税値引額</th>
+                                        <th> 非課税値引</th>
+                                        <th> 今回消費税</th>
+                                        <th> 今回値引額</th>
+                                        <th> 今回合計額</th>
+                                        <th>今回買掛額</th>
+                                        <th>支払予定日</th>
+                                        <th>支払方法</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+
+                    </section>
+
+                    <!-- TAB 5 -->
+                    <section id="accountsPayableHistory" class="tab-content" data-history="payable">
+
+
+                        <div class="payment-period-row">
+
+                            <label class="form-label">対象期間</label>
+
+                            <input data-field="開始日" type="text"
+                                   class="payment-date-input date-input jp-calendar-input"
+                                   data-no-era="true" data-show-day="true">
+
+                            <span>～</span>
+
+                            <input data-field="更新日" type="text"
+                                   class="payment-date-input date-input jp-calendar-input"
+                                   data-no-era="true" data-show-day="true">
+
+                        </div>
+
+
+                        <!-- Main Payment History Table -->
+                        <div class="payment-history-table">
+
+                            <!-- 前回買掛額 -->
+                            <div class="payment-column previous-column">
+
+                                <div class="payment-header single-header">
+                                    前月買掛残
+                                </div>
+
+                                <input data-field="前回買掛額" type="text"
+                                       class="payment-input">
+
+                            </div>
+
+
+                            <!-- 今回支払額 / 支払調整額 -->
+                            <div class="payment-column">
+
+                                <div class="payment-header double-header">
+                                    <div>今月支払額</div>
+                                    <div>支払調整額</div>
+                                </div>
+
+                                <input data-field="今回支払額" type="text"
+                                       class="payment-input">
+
+                                <input data-field="今回調整額" type="text"
+                                       class="payment-input">
+
+                            </div>
+
+
+                            <!-- 今回繰越額 -->
+                            <div class="payment-column">
+
+                                <div class="payment-header single-header">
+                                    今月繰越額
+                                </div>
+
+                                <div class="payment-disabled">
+                                    <input data-field="今回繰越額" type="text" readonly>
+                                </div>
+
+                            </div>
+
+
+                            <!-- 今回下払額 -->
+                            <div class="payment-column previous-column">
+
+                                <div class="payment-header single-header">
+                                    今月下払額
+                                </div>
+
+                                <input data-field="今回仕入額" type="text"
+                                       class="payment-input">
+
+                            </div>
+
+
+                            <!-- 割増額 -->
+                            <div class="payment-column">
+
+                                <div class="payment-header double-header">
+                                    <div>割増額(課)</div>
+                                    <div>割増額(非)</div>
+                                </div>
+
+                                <input data-field="今回割増額" type="text"
+                                       class="payment-input">
+
+                                <input data-field="今回非割増" type="text"
+                                       class="payment-input">
+
+                            </div>
+
+
+                            <!-- 課税値引額 -->
+                            <div class="payment-column">
+
+                                <div class="payment-header double-header">
+                                    <div>課税値引額</div>
+                                    <div>非課税値引</div>
+                                </div>
+
+                                <input data-field="課税値引額" type="text"
+                                       class="payment-input">
+
+                                <input data-field="非課税値引" type="text"
+                                       class="payment-input">
+
+                            </div>
+
+
+                            <!-- 今回消費税 -->
+                            <div class="payment-column previous-column">
+
+                                <div class="payment-header single-header">
+                                    今月消費税
+                                </div>
+
+                                @* <div class="payment-disabled"></div> *@
+                                <input data-field="今回消費税" type="text"
+                                       class="payment-input">
+
+                            </div>
+
+
+                            <!-- 今回値引額 -->
+                            <div class="payment-column">
+
+                                <div class="payment-header single-header">
+                                    今月値引額
+                                </div>
+
+                                <div class="payment-disabled">
+                                    <input data-field="今回値引額" type="text" readonly>
+                                </div>
+
+                            </div>
+
+
+                            <!-- 今回合計額 -->
+                            <div class="payment-column">
+
+                                <div class="payment-header single-header">
+                                    今月合計額
+                                </div>
+
+                                <div class="payment-disabled">
+                                    <input data-field="今回合計額" type="text" readonly>
+                                </div>
+
+                            </div>
+
+
+                            <!-- 今回買掛額 -->
+                            <div class="payment-column">
+
+                                <div class="payment-header single-header">
+                                    今月買掛残
+                                </div>
+
+                                <div class="payment-disabled">
+                                    <input data-field="今回買掛額" type="text" readonly>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- Function Buttons -->
+                        <div class="payment-history-buttons">
+
+                            <button type="button" data-action="update">↓　修 正</button>
+
+                            <button type="button" data-action="load">↑　呼 出</button>
+
+                            <button type="button" data-action="delete">削 除</button>
+
+                            <button type="button" data-action="cancel">中 止</button>
+
+                        </div>
+
+                        <!-- =========================
+                             History Table
+                             ========================= -->
+                        <div class="history-table-wrapper">
+
+                            <table class="history-table" data-grid-columns>
+
+                                <thead>
+                                    <tr>
+
+                                        <th>
+                                            開始日
+                                        </th>
+                                        <th>
+                                            終了日
+                                        </th>
+                                        <th>
+                                            前回買掛残
+                                        </th>
+                                        <th>
+                                            今回支払額
+                                        </th>
+                                        <th>
+                                            支払調整額
+                                        </th>
+                                        <th> 今回繰越額</th>
+                                        <th>今回下払額</th>
+                                        <th>
+                                            割増額(課)
+                                        </th>
+                                        <th> 割増額(非)</th>
+                                        <th> 課税値引額</th>
+                                        <th> 非課税値引</th>
+                                        <th> 今回消費税</th>
+                                        <th> 今回値引額</th>
+                                        <th> 今回合計額</th>
+                                        <th>今回買掛残</th>
+
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </section>
+
+                    <!-- TAB 6 -->
+                    <section id="digitalTachocode"
+                         class="tab-content">
+
+                        <div class="form-row">
+                            <label class="form-label">ﾃﾞｼﾞﾀｺｺｰﾄﾞ</label>
+                            <input type="text" id="digitalTachoCode" class="form-input input-md" />
+                        </div>
+
+                    </section>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ========================================= -->
+        <!-- MESSAGE -->
+        <!-- ========================================= -->
+
+        <section class="message-area">
+
+        <label> ﾒｯｾｰｼﾞ: </label>
+
+        <span id="message-label"></span>
+
+        </section>
+
+        <!-- =========================================
+         FREEZE MASTER WHILE LIST POPUP OPEN
+         ========================================= -->
+        @* <div id="listWindowOverlay" class="list-window-overlay"></div> *@
+
+        <!-- ========================================= -->
+        <!-- FUNCTION KEYS -->
+        <!-- ========================================= -->
+
+        <div class="function-footer">
+
+            <button id="btnRegister">F1:登 録</button>
+            <button id="btnCopy">F2:コピー</button>
+            <button id="btnF3" disabled>F3:　　</button>
+            <button id="btnDelete">F4:削 除</button>
+
+            @* opened from a search (legacy SYORID2 = "検索"): F5 / F9 / F10 are off, their text blank *@
+            @if (ViewBag.FromSearch == true)
+            {
+                <button id="btnF5" disabled>F5:　　</button>
+            }
+            else
+            {
+                <button id="btnF5">F5:検 索</button>
+            }
+            <button id="btnF6">F6:ﾏｽﾀ検索</button>
+
+            <button id="btnF7">
+            F7:≪ 前
+            </button>
+
+            <button id="btnF8">
+            F8:次 ≫
+            </button>
+
+            @if (ViewBag.FromSearch == true)
+            {
+                <button type="button" id="btnList" disabled>F9:　　</button>
+            }
+            else
+            {
+                @* F9 リスト is not in this phase *@
+                <button type="button" id="btnList" disabled>F9:リスト</button>
+            }
+
+            <button id="btnF10" disabled>F10:　　</button>
+
+            <button id="btnBack">F11:中 止</button>
+
+            <button type="button"
+                id="btnExit"
+                data-exit-url="@Url.Action("Main_menu", "MainMenu")" >
+                F12:終 了
+            </button>
+
+        </div>
+    </div>
+
+    <!-- F9 List Popup -->
+    @* <div id="printPopup" class="popup-overlay">
+        <div id="printPopupWindow" class="popup-window">
+            <partial name="~/Views/Shared/MasterList/_MasterListPartial.cshtml" />
+        </div>
+    </div> *@
+
+    <!-- Japanese calendar (Space in a date box) -->
+    @await Html.PartialAsync("~/Views/Controls/calendar_common.cshtml")
+
+    <!-- F5 / F6 傭車検索 Popup -->
+    <partial name="~/Views/Shared/MasterSearch/_CharteredSearchPartial.cshtml" />
+
+    @section Scripts
+    {
+        <script src="~/js/common_master.js"asp-append-version="true"></script> @* having validation of Nuber 0,1,2, in text box & validation of date formate *@            
+
+        <script src="~/js/master_search_js/chartered_search.js" asp-append-version="true"></script>
+
+        @* date boxes typed slot by slot (取引開始日 / 取引終了日 / 履歴) *@
+        <script src="~/js/date_slots.js" asp-append-version="true"></script>
+
+        <script src="~/js/chartered_vehicle_master.js" asp-append-version="true"></script>
+
+        <script src="~/js/japanesecalendar.js" asp-append-version="true"></script>
+
+        @* columns resizable and movable by drag, like the legacy DataGridViewEx *@
+        <script src="~/js/grid_columns.js" asp-append-version="true"></script>
+                
+        @* <script src="~/js/listscreen.js" asp-append-version="true"></script> *@
+    }
+

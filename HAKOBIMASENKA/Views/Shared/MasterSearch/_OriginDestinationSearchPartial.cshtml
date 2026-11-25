@@ -1,0 +1,217 @@
+﻿@* Origin/Destination Search Popup *@
+<div id="originDestinationSearchPopup"
+     class="origin-destination-search-overlay"
+     aria-hidden="true">
+
+    <section id="originDestinationSearchWindow"
+             class="origin-destination-search-window"
+             data-search-url="/SearchScreen/OriginDestinationSearch">
+
+        @* Title bar *@
+        <header class="origin-destination-search-titlebar">
+            <span>発着地検索</span>
+
+            <div class="origin-destination-search-window-controls">
+                <button type="button"
+                        id="btnOriginDestinationSearchMinimize"
+                        aria-label="最小化">
+                    −
+                </button>
+
+                <button type="button"
+                        id="btnOriginDestinationSearchMaximize"
+                        aria-label="最大化">
+                    □
+                </button>
+
+                <button type="button"
+                        id="btnOriginDestinationSearchClose"
+                        aria-label="閉じる">
+                    ×
+                </button>
+            </div>
+        </header>
+
+        @* Result count *@
+        <div class="origin-destination-search-heading">
+            <label>発着地検索</label>
+            <strong id="originDestinationSearchCount">件数:0</strong>
+        </div>
+
+        @* Search conditions *@
+        <div class="origin-destination-search-conditions">
+
+            <div class="origin-destination-search-row"
+                 id="originDestinationShipperRow">
+
+                <label for="searchOriginDestinationShipperCode">荷 主</label>
+
+                <input type="text"
+                       id="searchOriginDestinationShipperCode"
+                       class="origin-destination-shipper-code"
+                       maxlength="10"
+                       inputmode="numeric"
+                       autocomplete="off"
+                       readonly
+                       tabindex="-1" />
+
+                <input type="text"
+                       id="searchOriginDestinationShipperName"
+                       class="origin-destination-shipper-name"
+                       readonly
+                       tabindex="-1" />
+            </div>
+
+            <div class="origin-destination-search-row">
+                <label for="searchOriginDestinationFurigana">フリガナ</label>
+
+                <input type="text"
+                       id="searchOriginDestinationFurigana"
+                       autocomplete="off" />
+            </div>
+
+            <div class="origin-destination-search-row">
+                <label for="searchOriginDestinationName">発着地名</label>
+
+                <input type="text"
+                       id="searchOriginDestinationName"
+                       autocomplete="off" />
+            </div>
+
+            <div class="origin-destination-search-row">
+                <label for="searchOriginDestinationAreaCode">エリア</label>
+
+                <input type="text"
+                       id="searchOriginDestinationAreaCode"
+                       class="origin-destination-area-code"
+                       maxlength="4"
+                       inputmode="numeric"
+                       autocomplete="off"
+                       oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                       data-lookup-url="@Url.Action("GetArea", "SearchScreen")" />
+
+                <input type="text"
+                       id="searchOriginDestinationArea"
+                       class="origin-destination-area-name"
+                       readonly />
+            </div>
+
+        </div>
+
+        @* Search results *@
+        <div class="origin-destination-search-results">
+            <div class="origin-destination-search-table-scroll">
+                <table class="origin-destination-search-table" data-grid-columns>
+                    <thead>
+                        <tr>
+                            <th data-sort="originDestinationCode">コード</th>
+                            <th data-sort="originDestinationName">発着地名</th>
+                            <th data-sort="areaName">ｴﾘｱ</th>
+                            <th data-sort="phoneNumber">電話番号</th>
+                            <th data-sort="address1">住　　所</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="originDestinationSearchResults"></tbody>
+                </table>
+            </div>
+        </div>
+
+        @* Message area *@
+       @*  <div id="originDestinationSearchMessage"
+             class="origin-destination-search-message">
+            メッセージ：
+        </div> *@
+
+        <div class="origin-destination-search-message">
+            <span>メッセージ：</span>
+            <span id="originDestinationSearchMessage"
+                  role="status"
+                  aria-live="polite"></span>
+        </div>
+
+        @* Function-key footer *@
+        <footer class="origin-destination-search-footer">
+            <button type="button" id="btnOriginDestinationSearchSelect">
+                F1:選 択
+            </button>
+
+            <button type="button" disabled>F2:　　</button>
+            <button type="button" disabled>F3:　　</button>
+            <button type="button" disabled>F4:　　</button>
+
+            <button type="button" id="btnOriginDestinationSearchExecute">
+                F5:検 索
+            </button>
+
+            <button type="button" id="btnOriginDestinationSearchF6">
+                F6:ﾏｽﾀ検索
+            </button>
+
+            <button type="button" disabled>F7:　　</button>
+            <button type="button" disabled>F8:　　</button>
+            <button type="button" id="btnOriginDestinationSearchF9" disabled>
+                F9:　　
+            </button>
+
+            <button type="button" id="btnOriginDestinationSearchRegister">
+                F10:ﾏｽﾀ登録
+            </button>
+
+            <button type="button" id="btnOriginDestinationSearchCancel">
+                F11:中 止
+            </button>
+
+            <button type="button" id="btnOriginDestinationSearchExit">
+                F12:終 了
+            </button>
+        </footer>
+
+    </section>
+</div>
+
+<script src="~/js/grid_columns.js" asp-append-version="true"></script>
+
+
+
+<div id="originDestinationMasterModal"
+     class="origin-destination-master-modal"
+     style="display: none;">
+
+    <div id="originDestinationMasterWindow"
+         class="origin-destination-master-modal-content">
+
+        <header class="origin-destination-master-titlebar">
+
+            <span>発着地マスタ登録</span>
+
+            <div class="origin-destination-master-window-controls">
+
+                <button type="button"
+                        id="btnOriginDestinationMasterMinimize"
+                        aria-label="最小化">
+                    −
+                </button>
+
+                <button type="button"
+                        id="btnOriginDestinationMasterMaximize"
+                        aria-label="最大化">
+                    □
+                </button>
+
+                <button type="button"
+                        id="btnOriginDestinationMasterClose"
+                        aria-label="閉じる">
+                    ×
+                </button>
+
+            </div>
+        </header>
+
+        <iframe id="originDestinationMasterFrame"
+                title="発着地マスタ登録"
+                src="about:blank">
+        </iframe>
+
+    </div>
+</div>

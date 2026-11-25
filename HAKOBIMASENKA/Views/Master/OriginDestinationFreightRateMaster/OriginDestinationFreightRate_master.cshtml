@@ -1,0 +1,406 @@
+﻿@{
+	ViewData["Title"] = "発着地運賃マスタ";
+}
+
+<link rel="stylesheet" href="~/css/originDestFrieghtRate_master.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/common.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/listscreen.css" asp-append-version="true" />
+
+<!-- Main window-->
+<div class="main-container">
+
+	<!-- Screen header-->
+	<header class="page-header">
+		<div class="screen-name">
+			発着地運賃マスタ
+		</div>
+
+		<label id="mode-lbl" class="lbl-new">新　規</label>
+	</header>
+	<section class="master-section">
+		<div id="customerInfoSection" class="tab-row">
+			<label>
+				荷　　主
+			</label>
+			<div>
+				<input type="text" id="shipper-code" value="" class="master-input">
+
+				<input type="text" id="shipper-name" value="" readonly="" class="master-input">
+			</div>
+		</div>
+		<div class="master-group">
+			<div id="originInfoSection" class="tab-row">
+				<label>
+					発　　地
+				</label>
+				<div>
+					<input type="text" id="originCode" value="" class="master-input">
+
+					<input type="text" id="originName" value="" readonly="" class="master-input">
+				</div>
+			</div>
+
+			<div id="productCategoryInfoSection" class="tab-row">
+				<label>
+					品名区分
+				</label>
+				<div>
+					<input type="text" id="productCategoryCode" value="" class="master-input">
+
+					<input type="text" id="productCategoryName" value="" readonly="" class="master-input">
+				</div>
+			</div>
+		</div>
+		<div class="master-group">
+			<div id="destinationInfoSection" class="tab-row">
+				<label>
+					着　　地
+				</label>
+				<div>
+					<input type="text" id="destinationCode" value="" class="master-input">
+
+					<input type="text" id="destinationName" value="" readonly="" class="master-input">
+				</div>
+			</div>
+			<div id="commuteCategoryInfoSection" class="tab-row">
+				<label>
+					行帰区分
+				</label>
+				<div>
+					<input type="text" id="commuteCategoryCode" value="" class="master-input">
+
+					<input type="text" id="commuteCategoryName" value="" readonly="" class="master-input">
+				</div>
+			</div>
+		</div>
+	</section>
+	<main class="mainContent-layout">
+		<!-- Editable Area(Left)-->
+		<section class="edit-panel">
+			<!--Tab1-->
+			<nav class="tab-navigation">
+				<button type="button" class="tab-button active" data-tab="ownCompanyUnitPrice">
+					自社単価
+				</button>
+				<button type="button" class="tab-button" data-tab="charteredVehicleUnitPrice">
+					傭車単価
+				</button>
+				<button type="button" class="tab-button" data-tab="ownCompanyVariableUnitPrice">
+					自社変動単価
+				</button>
+				<button type="button" class="tab-button" data-tab="charteredVehicleUnitPrice">
+					傭車変動単価
+				</button>
+			</nav>
+			<!--Tab details-->
+			<section class="tab-container">
+				<!--Basic settings-->
+				<section id="ownCompanyUnitPrice" class="tab-content active">
+					<div class="tab-details">
+						<div class="rate-grid-panel">
+
+							<table class="rate-table">
+
+								<thead>
+
+									<tr>
+										<th id="row-header-id" class="row-header"></th>
+
+										<th>2t車</th>
+										<th>4t車</th>
+										<th>8t車</th>
+										<th>10t車</th>
+										<th>20t車</th>
+										<th>30t車</th>
+										<th>40t車</th>
+										<th>50t車</th>
+										<th>60t車</th>
+										@for (int j = 0; j < 9; j++)
+										{
+											<td id="">
+											</td>
+										}
+									</tr>
+
+								</thead>
+
+								<tbody>
+									@{
+										string[] rowTitles =
+										{
+											"tes",
+											"tes",
+											"時",
+											"okt",
+											"",
+											"",
+											"1",
+											"個",
+											""
+										};
+									}
+
+									@for (int i = 0; i < 9; i++)
+									{
+										<tr>
+											<td id="unitValue@(i)" class="row-title">@rowTitles[i]</td>
+
+											@for (int j = 0; j < 9; j++)
+											{
+												<td>
+													<input type="text">
+												</td>
+											}
+										</tr>
+									}
+
+								</tbody>
+
+							</table>
+
+						</div>
+					</div>
+
+				</section>
+				<section id="charteredVehicleUnitPrice" class="tab-content">
+					<div class="tab-details">
+						<div class="rate-grid-panel">
+
+							<table class="rate-table">
+
+								<thead>
+
+									<tr>
+										<th class="row-header"></th>
+
+										<th>2t車</th>
+										<th>4t車</th>
+										<th>8t車</th>
+										<th>10t車</th>
+										<th>20t車</th>
+										<th>30t車</th>
+										<th>40t車</th>
+										<th>50t車</th>
+										<th>60t車</th>
+									</tr>
+
+								</thead>
+
+								<tbody>
+
+									@for (int i = 0; i < 9; i++)
+									{
+										<tr>
+											<td class="row-title"></td>
+
+											@for (int j = 0; j < 9; j++)
+											{
+												<td>
+													<input type="text">
+												</td>
+											}
+										</tr>
+									}
+
+								</tbody>
+
+							</table>
+
+						</div>
+					</div>
+
+				</section>
+				<section id="ownCompanyVariableUnitPrice" class="tab-content">
+					<div class="tab-details">
+						<div class="rate-grid-panel">
+
+							<table class="rate-table">
+
+								<thead>
+
+									<tr>
+										<th class="row-header"></th>
+
+										<th>2t車</th>
+										<th>4t車</th>
+										<th>8t車</th>
+										<th>10t車</th>
+										<th>20t車</th>
+										<th>30t車</th>
+										<th>40t車</th>
+										<th>50t車</th>
+										<th>60t車</th>
+									</tr>
+
+								</thead>
+
+								<tbody>
+
+									@for (int i = 0; i < 9; i++)
+									{
+										<tr>
+											<td class="row-title"></td>
+
+											@for (int j = 0; j < 9; j++)
+											{
+												<td>
+													<input type="text">
+												</td>
+											}
+										</tr>
+									}
+
+								</tbody>
+
+							</table>
+
+						</div>
+					</div>
+
+				</section>
+				<section id="charteredVehicleUnitPrice" class="tab-content">
+					<div class="tab-details">
+						<div class="rate-grid-panel">
+
+							<table class="rate-table">
+
+								<thead>
+
+									<tr>
+										<th class="row-header"></th>
+
+										<th>2t車</th>
+										<th>4t車</th>
+										<th>8t車</th>
+										<th>10t車</th>
+										<th>20t車</th>
+										<th>30t車</th>
+										<th>40t車</th>
+										<th>50t車</th>
+										<th>60t車</th>
+									</tr>
+
+								</thead>
+
+								<tbody>
+
+									@* @{
+										string[] rowTitles =
+										{
+											"tes",
+											"tes",
+											"時",
+											"okt",
+											"",
+											"",
+											"1",
+											"個",
+											""
+										};
+									} *@
+
+									@for (int i = 0; i < 9; i++)
+									{
+										<tr>
+											<td class="row-title"></td>
+
+											@for (int j = 0; j < 9; j++)
+											{
+												<td>
+													<input type="text">
+												</td>
+											}
+										</tr>
+									}
+
+								</tbody>
+
+							</table>
+
+						</div>
+					</div>
+
+				</section>
+			</section>
+		</section>
+
+	</main>
+	<!-- Grid -->
+	<div class="freightRate-grid-wrapper">
+		<table class="freightRate-grid" data-grid-columns>
+			<thead>
+				<tr>
+					<th data-sort="numeric">ｺｰﾄﾞ</th>
+					<th data-sort="text">発 地 名</th>
+					<th data-sort="numeric">ｺｰﾄﾞ</th>
+					<th data-sort="text">着 地 名</th>
+					<th data-sort="numeric">ｺｰﾄﾞ</th>
+					<th data-sort="text">品名区分名</th>
+					<th data-sort ="numeric">ｺｰﾄﾞ</th>
+					<th data-sort="text">行帰区分名</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+	<!-- Message Area -->
+	<section class="message-area">
+		<label>メッセージ：</label>
+	</section>
+
+	<!-- Footer Function Keys -->
+	<footer class="function-footer">
+
+		<button type="button" id="btnRegister">
+			F1:登 録
+		</button>
+
+		<button type="button" disabled>
+			F2:　　
+		</button>
+
+		<button type="button" disabled>
+			F3:　　
+		</button>
+
+		<button type="button" id="btnDelete">
+			F4:削 除
+		</button>
+
+		<button type="button" disabled>
+			F5:　　
+		</button>
+
+		<button type="button" id="btnMasterSearch" disabled>
+			F6:ﾏｽﾀ検索
+		</button>
+
+		<button type="button" disabled>
+			F7:　　
+		</button>
+
+		<button type="button" disabled>
+			F8:　　
+		</button>
+
+		<button type="button" id="btnList" disabled>
+			F9:リスト
+		</button>
+		<button type="button" disabled>
+			F10:　　
+		</button>
+
+		<button type="button" id="btnCancel">
+			F11:中 止
+		</button>
+
+		<button type="button" id="btnExit" data-exit-url="@Url.Action("Main_menu", "MainMenu")">
+			F12:終 了
+		</button>
+
+	</footer>
+</div>
+
+<script src="~/js/originDestFreightRate_master.js" asp-append-version="true"></script>
+<script src="~/js/common_master.js" asp-append-version="true"></script>

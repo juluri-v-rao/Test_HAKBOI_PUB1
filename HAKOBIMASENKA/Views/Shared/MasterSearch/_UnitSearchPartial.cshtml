@@ -1,0 +1,162 @@
+﻿@* Unit Search Popup *@
+<div id="unitSearchPopup"
+     class="unit-search-overlay"
+     aria-hidden="true">
+
+    <section id="unitSearchWindow"
+             class="unit-search-window"
+             data-search-url="/SearchScreen/UnitSearch">
+
+        @* Title bar *@
+        <header class="unit-search-titlebar-model">
+            <span>単位検索</span>
+
+            <div class="unit-search-window-controls">
+                <button type="button"
+                        id="btnUnitSearchMinimize"
+                        aria-label="最小化">
+                    −
+                </button>
+
+                <button type="button"
+                        id="btnUnitSearchMaximize"
+                        aria-label="最大化">
+                    □
+                </button>
+
+                <button type="button"
+                        id="btnUnitSearchClose"
+                        aria-label="閉じる">
+                    ×
+                </button>
+            </div>
+        </header>
+
+        @* Heading *@
+        <div class="unit-search-heading">
+            <label>単位検索</label>
+        </div>
+
+        @* Search results *@
+        <div class="unit-search-results">
+            <div class="unit-search-table-scroll">
+                <table class="unit-search-table" data-grid-columns>
+                    <thead>
+                        <tr>
+                            <th data-sort="code">ｺｰﾄﾞ</th>
+                            <th data-sort="unitName">単　位</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="unitSearchResults"></tbody>
+                </table>
+            </div>
+        </div>
+
+        @* Message area *@
+        <div id="unitSearchMessage"
+             class="unit-search-message">
+            メッセージ：
+        </div>
+
+        @* Function-key footer *@
+        <footer class="unit-search-footer">
+
+            <button type="button" id="btnUnitSearchSelect">
+                F1:選 択
+            </button>
+
+            <button type="button" disabled>
+                F2:　　
+            </button>
+
+            <button type="button" disabled>
+                F3:　　
+            </button>
+
+            <button type="button" disabled>
+                F4:　　
+            </button>
+
+            <button type="button" disabled>
+                F5:検 索
+            </button>
+
+            <button type="button" disabled>
+                F6:　　
+            </button>
+
+            <button type="button" disabled>
+                F7:　　
+            </button>
+
+            <button type="button" disabled>
+                F8:　　
+            </button>
+
+            <button type="button" disabled>
+                F9:　　
+            </button>
+
+            <button type="button" id="btnUnitSearchRegister">
+                F10:ﾏｽﾀ登録
+            </button>
+
+            <button type="button" disabled>
+                F11:中 止
+            </button>
+
+            <button type="button" id="btnUnitSearchExit">
+                F12:終 了
+            </button>
+
+        </footer>
+
+    </section>
+
+    <script src="~/js/grid_columns.js" asp-append-version="true"></script>
+    <!-- Unit Master registration modal displayed above the Unit Search popup -->
+    <div id="unitMasterModal"
+         class="unit-master-modal"
+         style="display: none;">
+
+        <!-- Unit Master modal window -->
+        <div id="unitMasterWindow"
+             class="unit-master-modal-content">
+
+            <!-- Modal title bar and window controls -->
+            <header class="unit-search-titlebar">
+                <span>単位マスタ登録</span>
+
+                <div class="unit-search-window-controls">
+                    <button type="button"
+                            id="btnUnitMasterMinimize"
+                            aria-label="最小化">
+                        −
+                    </button>
+
+                    <button type="button"
+                            id="btnUnitMasterMaximize"
+                            aria-label="最大化">
+                        □
+                    </button>
+
+                    <button type="button"
+                            id="btnUnitMasterClose"
+                            class="unit-window-close"
+                            aria-label="閉じる">
+                        ×
+                    </button>
+                </div>
+            </header>
+
+            <!-- Load the Unit Master screen inside this iframe -->
+            <iframe id="unitMasterFrame"
+                    title="単位マスタ登録"
+                    src="about:blank">
+            </iframe>
+
+        </div>
+    </div>
+
+</div>

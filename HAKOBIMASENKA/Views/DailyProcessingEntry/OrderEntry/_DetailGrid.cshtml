@@ -1,0 +1,148 @@
+﻿@using HAKOBIMASENKA.Models.ViewModels.DailyProcessingEntryViewModels.OrderEntryViewModel
+
+@model OrderDetailViewModel
+
+<div class="informationGrids">
+        <div class="infoGrid" data-row="@Model.RowNo">
+
+            <div class="leftSection">
+
+                <label class="rowNumber">@Model.RowNo</label>
+
+                <div class="labelColumn">
+                <label>荷　　主</label>
+                <label>積込日時</label>
+                <label>荷卸日時</label>
+                <label>発　　地</label>
+                <label>着　　地</label>
+                <label>品名/荷姿</label>
+                <label>数　　量</label>
+                </div>
+
+                <div class="inputColumn">
+                    <div class="row supplier">
+                    <input type="text" id="supplierCode" class="supplierCmbKey w-100 h-21" maxlength="10" value="@Model.SupplierCode" />
+                    <input type="text" class="supplierCmbValue w-256 h-21" readonly value="@Model.SupplierName" />
+                    </div>
+
+                    <div class="row loadingDateTime">
+                    <input type="text" id="loadingDate" class="loadingDate h-21 w-100" value="@Model.LoadingDate" />
+                    <input type="text" id="loadingNotes" class="loadingNotes h-21 w-256" maxlength="20" value="@Model.LoadingNotes" />
+                    </div>
+
+                    <div class="row unloadingDateTime">
+                    <input type="text" id="unloadingDate" class="unloadingDate h-21 w-100" value="@Model.UnloadingDate" />
+                    <input type="text" id="unloadingNotes" class="unloadingNotes h-21 w-256" maxlength="20" value="@Model.UnloadingNotes" />
+                    </div>
+
+                    <div class="row departure">
+                    <input type="text" class="departureCmbKey h-21 w-100"   maxlength="10" value="@Model.DepartureCode"/>
+                    <input type="text" class="departureCmbValue h-21 w-127"   maxlength="32" value="@Model.DepartureName"/>
+                    <input type="text" class="departureNotes  h-21 w-127" maxlength="64" value="@Model.DepartureAddress" />
+                    </div>
+
+                    <div class="row arrival">
+                    <input type="text" class="arrivalCmbKey h-21 w-100"   maxlength="10" value="@Model.ArrivalCode"/>
+                    <input type="text" class="arrivalCmbValue h-21 w-127"   maxlength="32" value="@Model.ArrivalName"/>
+                    <input type="text" class="arrivalNotes  h-21 w-127" maxlength="64" value="@Model.ArrivalAddress" />
+                    </div>
+
+                    <div class="row product">
+                    <input type="text" class="productCmbKey h-21 w-100"   maxlength="10" value="@Model.ProductCode"/>
+                    <input type="text" class="productCmbValue w-165 h-21"   maxlength="30" value="@Model.ProductName"/>
+                    <input type="text" class="productNotes w-89 h-21" maxlength="26" value="@Model.ProductType" />
+                    </div>
+
+                    <div class="row quantityRow">
+                    <input type="text" class="quantity h-21 w-127 decimal-input" data-int-digits="6" data-dec-digits="3" data-max-value="999,999.999" data-allow-negative="true" value="@Model.Quantity" />
+
+                    <label class="w-60 h-22">重　　量</label>
+                    <input type="text" class="weight h-21 w-167 decimal-input" data-int-digits="6" data-dec-digits="3" data-max-value="999,999.999" data-allow-negative="true" value="@Model.Weight"/>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="rightSection">
+
+                <div class="labelColumn">
+                    <label>請　　求</label>
+                    <label>下　　払</label>
+                    <label>運 転 手</label>
+                    <label>車　　番</label>
+                    <label>傭　　車</label>
+                    <label>発地担当</label>
+                    <label>社内備考</label>
+                </div>
+
+                <div class="inputColumn">
+                    <div class="row billing">
+
+                        <input type="text" class="billCmbKey h-21 w-22" maxlength="1" value="@Model.BillingUnitCode" />
+                        <input type="text" class="billCmbValue h-21 w-45" readonly value="@Model.BillingUnitName" />
+
+                    <input type="text" value="@Model.BillingUnitPrice" class="unitBill h-21 w-104 decimal-input" data-int-digits="6" data-dec-digits="2" data-max-value="999,999.99" data-allow-negative="true" />
+                        <input type="text" value="@Model.FreightCharge" class="fCharge h-21 w-90 decimal-input" data-int-digits="7" data-dec-digits="0" data-max-value="9,999,999" data-allow-negative="true" />
+                        <input type="text" value="@Model.Surcharge" class="sCharge h-21 w-83 decimal-input" data-int-digits="6" data-dec-digits="0" data-max-value="999,999" data-allow-negative="true" />
+                        <input type="text" value="@Model.TollCharge" class="tCharge h-21 w-83 decimal-input" data-int-digits="6" data-dec-digits="0" data-max-value="999,999" data-allow-negative="true" />
+                    </div>
+
+                    <div class="row payment">
+
+                        <input type="text" class="payCmbKey h-21 w-22" maxlength="1" value="@Model.PaymentUnitCode" />
+                        <input type="text" class="payCmbValue h-21 w-45" readonly value="@Model.PaymentUnitName" />
+
+                        <input type="text" value="@Model.PaymentUnitPrice" class="unitPay h-21 w-104 decimal-input" data-int-digits="6" data-dec-digits="2" data-max-value="999,999.99" data-allow-negative="true" />
+                        <input type="text" value="@Model.FreightPay" class="fPay h-21 w-90 decimal-input" data-int-digits="7" data-dec-digits="0" data-max-value="9,999,999" data-allow-negative="true" />
+                        @* 割増 then 高速代, as the header and the 請求 row (legacy YWari → YWariN) *@
+                        <input type="text" value="@Model.SurchargePay" class="sPay h-21 w-83 decimal-input" data-int-digits="6" data-dec-digits="0" data-max-value="999,999" data-allow-negative="true" />
+                        <input type="text" value="@Model.TollPay" class="tPay h-21 w-83 decimal-input" data-int-digits="6" data-dec-digits="0" data-max-value="999,999" data-allow-negative="true" />
+                    </div>
+
+                    <div class="row driverInfo">
+                        <input type="text" class="driverCode h-21 w-100" maxlength="10" value="@Model.DriverCode" />
+                        <input type="text" class="driverName h-21 w-165" maxlength="16" value="@Model.DriverName" />
+                        <input type="text" class="driverContact h-21 w-168" maxlength="16" value="@Model.DriverContact" />
+                    </div>
+
+                    <div class="row vehicleInfo">
+                        <input type="text" class="vehicleCode h-21 w-100" maxlength="10" value="@Model.VehicleCode" />
+                        <input type="text" class="vehicleNumber h-21 w-165" maxlength="20" value="@Model.VehicleNumber" />
+
+                        <label class="w-40 h-22">車種</label>
+                        <input type="text" class="vehicleCmbKey h-21 w-22" maxlength="1" value="@Model.VehicleTypeCode" />
+                        <input type="text" class="vehicleCmbValue h-21 w-102" readonly value="@Model.VehicleTypeName" />
+
+                    </div>
+
+                    <div class="row charteredVehicle">
+                        <input type="text" class="cVehicleCode h-21 w-100" maxlength="10" value="@Model.CharteredVehicleCode" />
+                        <input type="text" class="cVehicleNumber h-21 w-165" readonly value="@Model.CharteredVehicleName" />
+
+                        <label class="w-40 h-22">実運</label>
+                        <input type="text" class="actualMileage h-21 w-126" maxlength="32" value="@Model.ActualOperation" />
+
+                    </div>
+
+                    <div class="row departureAdmin">
+                        <input type="text" class="dAdminName h-21 w-100" maxlength="16" value="@Model.DepartureAdminName" />
+                        <input type="text" class="dAdminNumber h-21 w-73" maxlength="16" value="@Model.DepartureAdminPhone" />
+
+                        <label class="w-60 h-22">着地担当</label>
+                        <input type="text" class="aAdminName h-21 w-100" maxlength="16" value="@Model.ArrivalAdminName" />
+                        <input type="text" class="aAdminNumber h-21 w-96" maxlength="16" value="@Model.ArrivalAdminPhone" />
+                    </div>
+
+                    <div class="row internalNotes">
+                        <input type="text" class="internalNoteComments h-21 w-175" maxlength="70" value="@Model.InternalNotes" />
+
+                        <label class="w-60 h-22">日報備考</label>
+                        <input type="text" class="reportNoteComments h-21 w-198" maxlength="70" value="@Model.ReportNotes" />
+                    </div>
+                </div>
+            </div>
+
+            <label class="dividerLine"></label>
+
+        </div>
+</div>
